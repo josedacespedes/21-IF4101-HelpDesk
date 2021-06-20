@@ -2,27 +2,35 @@
   background-color: rgb(36, 39, 49);
 }
 
-input {
-  width: 22em;
-  height: 2.5em;
+input,
+button {
+  width: 22rem;
+  height: 2.5rem;
 }
 
-.card{
-    box-shadow: 0 0 6px 0 rgb(0 0 0 / 15%);
+.card {
+  box-shadow: 0 0 6px 0 rgb(0 0 0 / 15%);
 }
 
 .card-title {
-  font-weight: 300;
+  font-weight: 350;
   font-size: 1.5rem;
 }
 
-.centered {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+button {
+  font-size: 18px;
+  clear:left;
 }
 
-button {
-  width: 25em;
-  height: 2.5em;
+.div-alert {
+  max-width: 17rem;
+}
+
+@media only screen and (min-width: 1050px) {
+  .alert-message {
+    position: relative;
+    float: left;
+    bottom: 2.4rem;
+    left: 22.5rem;
+  }
 }
