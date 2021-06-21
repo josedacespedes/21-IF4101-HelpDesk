@@ -21,10 +21,17 @@ export class LoginComponent implements OnInit {
     private loginService: LoginService, private router: Router) {
     this.loginForm = this.fb.group({
       id: 0,
-      email: ['', [Validators.required]],
+      email: new FormControl('', [
+        Validators.required,
+        Validators.pattern(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/),
+        Validators.minLength(3),
+        Validators.maxLength(320),
+      ]),
       password: new FormControl('', [
         Validators.required,
-        /*Validators.pattern('^[a-zA-Z0-9]{5,8}$')*/
+        Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$/),
+        Validators.minLength(8),
+        Validators.maxLength(8)
       ]),
     })
   }

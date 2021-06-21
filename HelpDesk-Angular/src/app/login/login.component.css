@@ -2,14 +2,16 @@
   background-color: rgb(36, 39, 49);
 }
 
-input,
-button {
+/* mat-form-field,button {
   width: 22rem;
-  height: 2.5rem;
-}
+} */
 
 .card {
   box-shadow: 0 0 6px 0 rgb(0 0 0 / 15%);
+}
+
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+  background-color: white;
 }
 
 .card-title {
@@ -17,20 +19,6 @@ button {
   font-size: 1.5rem;
 }
 
-button {
-  font-size: 18px;
-  clear:left;
-}
-
-.div-alert {
-  max-width: 17rem;
-}
-
-@media only screen and (min-width: 1050px) {
-  .alert-message {
-    position: relative;
-    float: left;
-    bottom: 2.4rem;
-    left: 22.5rem;
-  }
-}
+/* button {
+  font-size: 15px;
+} */
