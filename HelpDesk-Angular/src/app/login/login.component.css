@@ -2,27 +2,23 @@
   background-color: rgb(36, 39, 49);
 }
 
-input {
-  width: 22em;
-  height: 2.5em;
+/* mat-form-field,button {
+  width: 22rem;
+} */
+
+.card {
+  box-shadow: 0 0 6px 0 rgb(0 0 0 / 15%);
 }
 
-.card{
-    box-shadow: 0 0 6px 0 rgb(0 0 0 / 15%);
+::ng-deep .mat-form-field-appearance-outline .mat-form-field-outline {
+  background-color: white;
 }
 
 .card-title {
-  font-weight: 300;
+  font-weight: 350;
   font-size: 1.5rem;
 }
 
-.centered {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-button {
-  width: 25em;
-  height: 2.5em;
-}
+/* button {
+  font-size: 15px;
+} */

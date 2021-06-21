@@ -7,26 +7,47 @@
 
 <div class="container">
   <div class="card bg-light">
-    <article class="card-body mx-auto">
-      <p class="card-title  text-center mt-3">Log In</p>
+    <div class="card-body mx-auto">
+      <p class="card-title text-center mt-3">Iniciar Sesión</p>
       <hr>
-      <form>
-        <div class="form-group mb-4 centered">
-          <input class="form-control" type="email" name="email" placeholder="Email" autofocus />
+
+      <form [formGroup]="loginForm" #formDir="ngForm" (ngSubmit)="login()" autocomplete="off">
+        <div class="form-group mx-auto mb-2">
+          <mat-form-field floatLabel="auto" hideRequiredMarker appearance="outline">
+            <mat-label>Correo electrónico</mat-label>
+            <input maxlength="320" type="email" formControlName="email" matInput>
+            <mat-hint class="text-danger" *ngIf="loginForm.hasError('required', 'email') && formDir.submitted">
+              *Campo requerido
+            </mat-hint>
+            <mat-hint class="text-danger" *ngIf="loginForm.hasError('pattern', 'email') 
+                || loginForm.hasError('minlength', 'email')
+                || loginForm.hasError('maxlength', 'email')
+                && formDir.submitted">
+              *Correo invalido
+            </mat-hint>
+          </mat-form-field>
         </div>
 
-        <div class="form-group mb-4 centered">
-          <input class="form-control" type="password" name="password" placeholder="Password" />
+        <div class="form-group mx-auto mb-2">
+          <mat-form-field floatLabel="auto" hideRequiredMarker appearance="outline">
+            <mat-label>Contraseña</mat-label>
+            <input maxlength="8" type="password" formControlName="password" matInput>
+            <mat-hint class="text-danger" *ngIf="loginForm.hasError('required', 'password') && formDir.submitted">
+              *Campo requerido
+            </mat-hint>
+            <mat-hint class="text-danger" *ngIf="loginForm.hasError('pattern', 'password')
+              || loginForm.hasError('minlength', 'password') 
+              || loginForm.hasError('maxlength', 'password')
+              && formDir.submitted">
+              *8 carácteres, al menos 1 mayúscula, 1 minúscula, 1 número, 1 símbolo
+            </mat-hint>
+          </mat-form-field>
         </div>
-
-        <div class="form-group centered mb-4">
-          <button id="btnLogin" class="bg-primary text-white" mat-raised-button (click)="login()">Log In</button>
-        </div>
-
+        <button type="submit" class="bg-primary text-white" mat-raised-button>Iniciar Sesión</button>
       </form>
       <hr>
-      <p class="text-center">Don't you have account ? <a id="register" routerLink="/register" href="">Sign up</a></p>
-
-    </article>
+      <p class="text-center">No tienes una cuenta? <a id="register" routerLink="/register" href="">Registrarse</a></p>
+    </div>
   </div>
 </div>
+
