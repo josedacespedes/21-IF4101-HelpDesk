@@ -8,6 +8,8 @@ import { MaterialModule } from './material/material.module';
 import { LoginComponent } from './login/login.component';
 import { FooterComponent } from './footer/footer.component';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
+import { RegisterClientComponent } from './register-client/register-client.component';
+import { HeaderRegisterComponent } from './header-register/header-register.component';
 import { UserAddComponent } from './user-add/user-add.component';
 import { ClientRequestAddComponent } from './client-request-add/client-request-add.component';
 
@@ -24,6 +26,8 @@ const appRoutes: Routes = [
     AppComponent,
     LoginComponent,
     FooterComponent,
+    RegisterClientComponent,
+    HeaderRegisterComponent,
     UserAddComponent,
     ClientRequestAddComponent
   ],

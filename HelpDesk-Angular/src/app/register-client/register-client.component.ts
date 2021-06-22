@@ -5,25 +5,43 @@ import { LoginService } from '../services/login.service';
 import Swal from 'sweetalert2';
 import { Client } from '../models/client.model';
 import { Regex } from '../regex/regex.validation';
-
+import { requireCheckboxesToBeCheckedValidator } from '../regex/checkbox.validation';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  selector: 'app-register-client',
+  templateUrl: './register-client.component.html',
+  styleUrls: ['./register-client.component.css']
 })
-export class LoginComponent implements OnInit {
-  ngOnInit() {
-  }
-
-  loginForm: FormGroup;
+export class RegisterClientComponent implements OnInit {
+  registerForm: FormGroup;
   client: Client = new Client();
   regex: Regex = new Regex();
 
+  ngOnInit() {
+  }
+
   constructor(private fb: FormBuilder, private route: ActivatedRoute,
     private loginService: LoginService, private router: Router) {
-    this.loginForm = this.fb.group({
+    this.registerForm = this.fb.group({
       id: 0,
+      name: new FormControl('', [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(50),
+        Validators.pattern(this.regex.name)
+      ]),
+      firstName: new FormControl('', [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(50),
+        Validators.pattern(this.regex.surname)
+      ]),
+      secondName: new FormControl('', [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(50),
+        Validators.pattern(this.regex.surname)
+      ]),
       email: new FormControl('', [
         Validators.required,
         Validators.email,
@@ -36,15 +54,38 @@ export class LoginComponent implements OnInit {
         Validators.minLength(8),
         Validators.maxLength(8)
       ]),
+      adress: new FormControl('', [
+        Validators.minLength(20),
+        Validators.maxLength(255)
+      ]),
+      phone: new FormControl('', [
+        Validators.minLength(8),
+        Validators.maxLength(8),
+        Validators.pattern(this.regex.number)
+      ]),
+      secondContact: new FormControl('', [
+        Validators.minLength(8),
+        Validators.maxLength(8),
+        Validators.pattern(this.regex.number)
+      ]),
+      servcicesCheckboxGroup: new FormGroup({
+        mobilePhone: new FormControl(false),
+        channel: new FormControl(false),
+        internet: new FormControl(false),
+        fixedTelephony: new FormControl(false),
+      }, requireCheckboxesToBeCheckedValidator())
     })
   }
 
-  login() {
-    if (!this.loginForm.valid) {
+
+
+  register() {
+    if (!this.registerForm.valid) {
       return;
     }
 
-    Swal.fire({ title: "Correcto", timer: 1000 });
+    Swal.fire({ title: "Registrado", timer: 1000 });
+    this.router.navigateByUrl("/login");
 
     // this.loginService.login(this.loginForm.value).subscribe((result) => {
     //   if (result) {
@@ -76,5 +117,6 @@ export class LoginComponent implements OnInit {
   //     }
   //   })
   // }
+
 
 }

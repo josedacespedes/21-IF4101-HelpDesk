@@ -1,9 +1,4 @@
-<article class="mb-5 grey">
-  <div class="card-body text-center">
-    <h2 class="text-white mt-3">HelpDesk TeleAtlántico</h2>
-  </div>
-  <br><br>
-</article>
+<app-header-register></app-header-register>
 
 <div class="container">
   <div class="card bg-light">
@@ -12,14 +7,14 @@
       <hr>
 
       <form [formGroup]="loginForm" #formDir="ngForm" (ngSubmit)="login()" autocomplete="off">
-        <div class="form-group mx-auto mb-2">
-          <mat-form-field floatLabel="auto" hideRequiredMarker appearance="outline">
+        <div class="form-group mx-auto mb-3">
+          <mat-form-field floatLabel="auto" hideRequiredMarker>
             <mat-label>Correo electrónico</mat-label>
-            <input maxlength="320" type="email" formControlName="email" matInput>
+            <input type="email" maxlength="320" formControlName="email" matInput>
             <mat-hint class="text-danger" *ngIf="loginForm.hasError('required', 'email') && formDir.submitted">
               *Campo requerido
             </mat-hint>
-            <mat-hint class="text-danger" *ngIf="loginForm.hasError('pattern', 'email') 
+            <mat-hint class="text-danger" *ngIf="loginForm.hasError('email', 'email') 
                 || loginForm.hasError('minlength', 'email')
                 || loginForm.hasError('maxlength', 'email')
                 && formDir.submitted">
@@ -28,8 +23,8 @@
           </mat-form-field>
         </div>
 
-        <div class="form-group mx-auto mb-2">
-          <mat-form-field floatLabel="auto" hideRequiredMarker appearance="outline">
+        <div class="form-group mx-auto mb-3">
+          <mat-form-field floatLabel="auto" hideRequiredMarker>
             <mat-label>Contraseña</mat-label>
             <input maxlength="8" type="password" formControlName="password" matInput>
             <mat-hint class="text-danger" *ngIf="loginForm.hasError('required', 'password') && formDir.submitted">
@@ -46,7 +41,7 @@
         <button type="submit" class="bg-primary text-white" mat-raised-button>Iniciar Sesión</button>
       </form>
       <hr>
-      <p class="text-center">No tienes una cuenta? <a id="register" routerLink="/register" href="">Registrarse</a></p>
+      <p class="text-center">No tienes una cuenta? <a id="register" routerLink="/register-client" href="">Registrarse</a></p>
     </div>
   </div>
 </div>
