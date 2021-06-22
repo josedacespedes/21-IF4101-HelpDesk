@@ -9,6 +9,7 @@ import { LoginComponent } from './login/login.component';
 import { FooterComponent } from './footer/footer.component';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { UserAddComponent } from './user-add/user-add.component';
+import { ClientRequestAddComponent } from './client-request-add/client-request-add.component';
 
 const appRoutes: Routes = [
   {
@@ -23,7 +24,8 @@ const appRoutes: Routes = [
     AppComponent,
     LoginComponent,
     FooterComponent,
-    UserAddComponent
+    UserAddComponent,
+    ClientRequestAddComponent
   ],
   imports: [
     RouterModule.forRoot(appRoutes),
