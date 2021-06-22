@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 import { AppRoutingModule } from './app-routing.module';
+import { RouterModule, Routes } from '@angular/router';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MaterialModule } from './material/material.module';
@@ -9,7 +10,16 @@ import { FooterComponent } from './footer/footer.component';
 import { FormsModule,ReactiveFormsModule } from '@angular/forms';
 import { RegisterClientComponent } from './register-client/register-client.component';
 import { HeaderRegisterComponent } from './header-register/header-register.component';
+import { UserAddComponent } from './user-add/user-add.component';
+import { ClientRequestAddComponent } from './client-request-add/client-request-add.component';
 
+const appRoutes: Routes = [
+  {
+    path: 'user-add',
+    component: UserAddComponent,
+    data: { title: 'User add' }
+  }
+];
 
 @NgModule({
   declarations: [
@@ -18,8 +28,11 @@ import { HeaderRegisterComponent } from './header-register/header-register.compo
     FooterComponent,
     RegisterClientComponent,
     HeaderRegisterComponent,
+    UserAddComponent,
+    ClientRequestAddComponent
   ],
   imports: [
+    RouterModule.forRoot(appRoutes),
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
