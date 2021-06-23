@@ -67,15 +67,10 @@ export class UserAddComponent implements OnInit {
     }
 
     Swal.fire({ title: "Registro Exitoso", timer: 1500 });
-    
-    
-    
+    this.clear();
   }
 
   clear() {
     this.addUserForm.reset();
   }
-
-
-
 }

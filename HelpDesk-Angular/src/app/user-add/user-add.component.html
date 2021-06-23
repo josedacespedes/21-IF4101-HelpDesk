@@ -121,11 +121,11 @@
                       <mat-hint class="text-danger service-alert"
                         *ngIf="addUserForm.controls['servicesCheckboxGroup'].errors && addUserForm.controls['servicesCheckboxGroup'].errors.requireCheckboxesToBeChecked">
                       <small>*Elija al menos un servicio</small></mat-hint>
-                      <hr>
-                      <div class="d-flex justify-content-center">
-                        <button type="submit" class="bg-primary text-white mb-3" mat-raised-button>Aceptar</button>
-                        <button type="submit" class="bg-danger  text-white mb-3" (click)="clear()" mat-raised-button>Cancelar</button>
-                      </div>
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-center">
+                      <button type="submit" class="bg-primary text-white mb-3" mat-raised-button>Aceptar</button>
+                      <button type="submit" class="bg-danger  text-white mb-3" (click)="clear()" mat-raised-button>Cancelar</button>
                     </div>
                 </div>
             </form>
