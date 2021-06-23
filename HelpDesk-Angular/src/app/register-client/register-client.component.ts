@@ -85,7 +85,8 @@ export class RegisterClientComponent implements OnInit {
     }
 
     Swal.fire({ title: "Registrado", timer: 1000 });
-    this.router.navigateByUrl("/login");
+    console.log(this.registerForm.value);
+    // this.router.navigateByUrl("/login");
 
     // this.loginService.login(this.loginForm.value).subscribe((result) => {
     //   if (result) {

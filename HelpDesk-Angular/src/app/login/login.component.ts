@@ -45,6 +45,7 @@ export class LoginComponent implements OnInit {
     }
 
     Swal.fire({ title: "Correcto", timer: 1000 });
+    console.log(this.loginForm.value);
 
     // this.loginService.login(this.loginForm.value).subscribe((result) => {
     //   if (result) {
