@@ -2,13 +2,13 @@
 
 <div class="container">
   <div class="card bg-light">
-    <div class="card-body mx-auto">
+    <div class="card-body mx-auto text-center">
       <p class="card-title text-center mt-3">Iniciar Sesión</p>
       <hr>
 
       <form [formGroup]="loginForm" #formDir="ngForm" (ngSubmit)="login()" autocomplete="off">
-        <div class="form-group mx-auto mb-3">
-          <mat-form-field floatLabel="auto" hideRequiredMarker>
+        <div class="form-group mb-3">
+          <mat-form-field>
             <mat-label>Correo electrónico</mat-label>
             <input type="email" maxlength="320" formControlName="email" matInput>
             <mat-hint class="text-danger" *ngIf="loginForm.hasError('required', 'email') && formDir.submitted">
@@ -23,8 +23,8 @@
           </mat-form-field>
         </div>
 
-        <div class="form-group mx-auto mb-3">
-          <mat-form-field floatLabel="auto" hideRequiredMarker>
+        <div class="form-group mb-3">
+          <mat-form-field>
             <mat-label>Contraseña</mat-label>
             <input maxlength="8" type="password" formControlName="password" matInput>
             <mat-hint class="text-danger" *ngIf="loginForm.hasError('required', 'password') && formDir.submitted">
