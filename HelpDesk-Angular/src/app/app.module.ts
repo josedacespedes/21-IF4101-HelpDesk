@@ -11,6 +11,7 @@ import { RegisterClientComponent } from './register-client/register-client.compo
 import { HeaderRegisterComponent } from './header-register/header-register.component';
 import { UserAddComponent } from './user-add/user-add.component';
 import { ClientRequestAddComponent } from './client-request-add/client-request-add.component';
+import { HeaderClientComponent } from './header-client/header-client.component';
 
 
 
@@ -22,7 +23,8 @@ import { ClientRequestAddComponent } from './client-request-add/client-request-a
     RegisterClientComponent,
     HeaderRegisterComponent,
     UserAddComponent,
-    ClientRequestAddComponent
+    ClientRequestAddComponent,
+    HeaderClientComponent
   ],
   imports: [
     BrowserModule,
