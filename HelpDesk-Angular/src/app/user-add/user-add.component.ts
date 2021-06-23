@@ -4,6 +4,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { UserAddService } from '../services/user-add.service';
 import Swal from 'sweetalert2';
 import { Client } from '../models/client.model';
+import { Regex } from '../regex/regex.validation';
+import { requireCheckboxesToBeCheckedValidator } from '../regex/checkbox.validation';
 
 
 @Component({
@@ -17,6 +19,7 @@ export class UserAddComponent implements OnInit {
 
   addUserForm: FormGroup;
   client: Client = new Client();
+  regex: Regex = new Regex();
 
   constructor(private fb: FormBuilder, private route: ActivatedRoute,
     private loginService: UserAddService, private router: Router) {
@@ -24,28 +27,37 @@ export class UserAddComponent implements OnInit {
       id: 0,
       name: new FormControl('', [
         Validators.required,
-        Validators.pattern(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/),
+        Validators.pattern(this.regex.name),
         Validators.minLength(3),
         Validators.maxLength(50),
       ]),
       lastName: new FormControl('', [
         Validators.required,
-        Validators.pattern(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/),
+        Validators.pattern(this.regex.surname),
         Validators.minLength(3),
         Validators.maxLength(50),
       ]),
       email: new FormControl('', [
         Validators.required,
-        Validators.pattern(/^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/),
+        Validators.email,
         Validators.minLength(3),
         Validators.maxLength(320),
       ]),
       password: new FormControl('', [
         Validators.required,
-        Validators.pattern(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*\W).*$/),
+        Validators.pattern(this.regex.password),
         Validators.minLength(8),
         Validators.maxLength(8)
       ]),
+      control:new FormControl('',
+        Validators.required
+      ),
+      servicesCheckboxGroup: new FormGroup({
+        mobilePhone: new FormControl(false),
+        channel: new FormControl(false),
+        internet: new FormControl(false),
+        fixedTelephony: new FormControl(false),
+      }, requireCheckboxesToBeCheckedValidator())
     })
   }
 
@@ -54,9 +66,14 @@ export class UserAddComponent implements OnInit {
       return;
     }
 
-    Swal.fire({ title: "Correcto", timer: 1000 });
+    Swal.fire({ title: "Registro Exitoso", timer: 1500 });
+    
+    
+    
+  }
 
-
+  clear() {
+    this.addUserForm.reset();
   }
 
 
