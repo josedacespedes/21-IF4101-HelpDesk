@@ -1,7 +1,9 @@
-<div class="container mt-5">
-    <div class="card bg-light">
+<app-header-client></app-header-client>
+
+<div id="content" class="container mt-3">
+    <div class="card bg-light" id="example2">
         <div class="card-body mx-auto ">
-            <p class="card-title text-center mt-3">Ingresar Solicitud de Servicio</p>
+            <p class="card-title text-center mt-1">Ingresar Solicitud de Servicio</p>
             <hr>
             <form class="example-form" [formGroup]="addUserRequestForm" #formDir="ngForm" (ngSubmit)="addRequestClient()" autocomplete="off">
                 <div class="form-group mx-auto mb-2">
@@ -81,7 +83,7 @@
                     <hr>
                     <div class="d-flex justify-content-center">
                         <button type="submit" class="bg-primary text-white mb-3" mat-raised-button>Aceptar</button>
-                        <button type="submit" class="bg-danger  text-white mb-3" (click)="clear()" mat-raised-button>Cancelar</button>
+                        <button type="submit" class="bg-danger  text-white mb-3" id="button_cancel" (click)="clear()" mat-raised-button>Cancelar</button>
                     </div>
 
                 </div>
