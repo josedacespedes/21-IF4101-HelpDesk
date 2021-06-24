@@ -1,0 +1,183 @@
+<app-header-register></app-header-register>
+
+<div id="content" class="container">
+  <div class="card bg-light">
+    <div class="card-body mx-auto">
+      <p class="card-title text-center mt-3">Registro</p>
+      <hr>
+
+      <form [formGroup]="registerForm" #formDir="ngForm" (ngSubmit)="register()" autocomplete="off">
+        <div class="row">
+          <div class="col">
+            <div class="form-group mb-2">
+              <mat-form-field floatLabel="auto" hideRequiredMarker>
+                <mat-label>Nombre</mat-label>
+                <input maxlength="50" type="text" formControlName="name" matInput>
+                <mat-hint class="text-danger" *ngIf="registerForm.hasError('required', 'name') && formDir.submitted">
+                  *Campo requerido
+                </mat-hint>
+                <mat-hint class="text-danger" *ngIf="registerForm.hasError('minlength', 'name') 
+                || registerForm.hasError('maxlength', 'name') 
+                || registerForm.hasError('pattern', 'name') 
+                && formDir.submitted">
+                  *Nombre invalido
+                </mat-hint>
+              </mat-form-field>
+            </div>
+
+            <div class="form-group mb-2">
+              <mat-form-field floatLabel="auto" hideRequiredMarker>
+                <mat-label>Primer apellido</mat-label>
+                <input maxlength="50" type="text" formControlName="firstName" matInput>
+                <mat-hint class="text-danger"
+                  *ngIf="registerForm.hasError('required', 'firstName') && formDir.submitted">
+                  *Campo requerido
+                </mat-hint>
+                <mat-hint class="text-danger" *ngIf="registerForm.hasError('minlength', 'firstName') 
+                || registerForm.hasError('maxlength', 'firstName') 
+                || registerForm.hasError('pattern', 'firstName') 
+                && formDir.submitted">
+                  *Primer apellido invalido
+                </mat-hint>
+              </mat-form-field>
+            </div>
+
+            <div class="form-group mb-2">
+              <mat-form-field floatLabel="auto" hideRequiredMarker>
+                <mat-label>Segundo apellido</mat-label>
+                <input maxlength="50" type="text" formControlName="secondName" matInput>
+                <mat-hint class="text-danger"
+                  *ngIf="registerForm.hasError('required', 'secondName') && formDir.submitted">
+                  *Campo requerido
+                </mat-hint>
+                <mat-hint class="text-danger" *ngIf="registerForm.hasError('minlength', 'secondName') 
+                || registerForm.hasError('maxlength', 'secondName') 
+                || registerForm.hasError('pattern', 'secondName') 
+                && formDir.submitted">
+                  *Segundo apellido invalido
+                </mat-hint>
+              </mat-form-field>
+            </div>
+
+            <div class="form-group mb-2">
+              <mat-form-field floatLabel="auto" hideRequiredMarker>
+                <mat-label>Correo electrónico</mat-label>
+                <input type="email" maxlength="320" formControlName="email" matInput>
+                <mat-hint class="text-danger" *ngIf="registerForm.hasError('required', 'email') && formDir.submitted">
+                  *Campo requerido
+                </mat-hint>
+                <mat-hint class="text-danger" *ngIf="registerForm.hasError('email', 'email') 
+                    || registerForm.hasError('minlength', 'email')
+                    || registerForm.hasError('maxlength', 'email')
+                    && formDir.submitted">
+                  *Correo invalido
+                </mat-hint>
+              </mat-form-field>
+            </div>
+
+            <div class="form-group mb-2">
+              <mat-form-field floatLabel="auto" hideRequiredMarker>
+                <mat-label>Contraseña</mat-label>
+                <input maxlength="8" [type]="hide ? 'password' : 'text'" formControlName="password" matInput>
+                <button type="button" mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+                  <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+                <mat-hint class="text-danger"
+                  *ngIf="registerForm.hasError('required', 'password') && formDir.submitted">
+                  *Campo requerido
+                </mat-hint>
+                <mat-hint class="text-danger" *ngIf="registerForm.hasError('pattern', 'password')
+                  || registerForm.hasError('minlength', 'password') 
+                  || registerForm.hasError('maxlength', 'password')
+                  && formDir.submitted">
+                  *8 carácteres, al menos 1 mayúscula, 1 minúscula, 1 número, 1 símbolo
+                </mat-hint>
+              </mat-form-field>
+            </div>
+          </div>
+
+          <div class="col">
+            <div class="form-group mb-2">
+              <mat-form-field floatLabel="auto" hideRequiredMarker>
+                <mat-label>Dirección</mat-label>
+                <input maxlength="255" type="text" formControlName="adress" matInput>
+                <mat-hint align="end">Opcional</mat-hint>
+                <mat-hint class="text-danger" *ngIf="registerForm.hasError('required', 'adress') && formDir.submitted">
+                  *Campo requerido
+                </mat-hint>
+                <mat-hint class="text-danger" *ngIf="registerForm.hasError('minlength', 'adress')
+                || registerForm.hasError('maxlength', 'adress')
+                && formDir.submitted">
+                  *Dirección invalida
+                </mat-hint>
+              </mat-form-field>
+            </div>
+
+            <div class="form-group mb-2">
+              <mat-form-field floatLabel="auto" hideRequiredMarker>
+                <mat-label>Télefono</mat-label>
+                <input maxlength="8" type="tel" formControlName="phone" matInput>
+                <mat-hint align="end">Opcional</mat-hint>
+                <mat-hint class="text-danger" *ngIf="registerForm.hasError('required', 'phone') && formDir.submitted">
+                  *Campo requerido
+                </mat-hint>
+                <mat-hint class="text-danger" *ngIf="registerForm.hasError('minlength', 'phone')
+                || registerForm.hasError('maxlength', 'phone')
+                || registerForm.hasError('pattern', 'phone')
+                && formDir.submitted">
+                  *Télefono invalido
+                </mat-hint>
+              </mat-form-field>
+            </div>
+
+            <div class="form-group mb-2">
+              <mat-form-field floatLabel="auto" hideRequiredMarker>
+                <mat-label>Télefono alternativo</mat-label>
+                <input maxlength="8" type="tel" formControlName="secondContact" matInput>
+                <mat-hint align="end">Opcional</mat-hint>
+                <mat-hint class="text-danger"
+                  *ngIf="registerForm.hasError('required', 'secondContact') && formDir.submitted">
+                  *Campo requerido
+                </mat-hint>
+                <mat-hint class="text-danger" *ngIf="registerForm.hasError('minlength', 'secondContact')
+                || registerForm.hasError('maxlength', 'secondContact')
+                || registerForm.hasError('pattern', 'secondContact')
+                && formDir.submitted">
+                  *Télefono alternativo invalido
+                </mat-hint>
+              </mat-form-field>
+            </div>
+
+            <div class="form-group mb-2" formGroupName="servcicesCheckboxGroup">
+              <label class="mb-2">Selecciona tus servicios:</label>
+              <div class="row">
+                <div class="col">
+                  <p>
+                    <mat-checkbox color="primary" formControlName="mobilePhone">Telefonía movil</mat-checkbox>
+                  </p>
+                  <p>
+                    <mat-checkbox color="primary" formControlName="channel">Cable</mat-checkbox>
+                  </p>
+                </div>
+                <div class="col">
+                  <p>
+                    <mat-checkbox color="primary" formControlName="internet">Internet</mat-checkbox>
+                  </p>
+                  <p>
+                    <mat-checkbox color="primary" formControlName="fixedTelephony">Telefonía fija</mat-checkbox>
+                  </p>
+                </div>
+              </div>
+              <mat-hint class="text-danger service-alert"
+              *ngIf="registerForm.controls['servcicesCheckboxGroup'].errors && registerForm.controls['servcicesCheckboxGroup'].errors.requireCheckboxesToBeChecked">
+              <small>*Elija al menos un servicio</small></mat-hint>
+            </div>
+          </div>
+        </div>
+        <div class="d-flex justify-content-center">
+          <button type="submit" class="bg-primary text-white mb-3" mat-raised-button>Registrarse</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
