@@ -35,6 +35,11 @@
   #button_cancel{
     margin-left: 1rem;
   }
+
+  mat-icon {
+    transform: scale(1.5);
+  }
+  
   #content {
     /*Space for footer*/
     padding-bottom: 7em;

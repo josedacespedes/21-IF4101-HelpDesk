@@ -41,7 +41,7 @@
                         <mat-hint class="text-danger" *ngIf="addUserForm.hasError('required', 'email') && formDir.submitted">
                             *Campo requerido
                         </mat-hint>
-                        <mat-hint class="text-danger" *ngIf="addUserForm.hasError('pattern', 'email') 
+                        <mat-hint class="text-danger" *ngIf="addUserForm.hasError('email', 'email') 
                                 || addUserForm.hasError('minlength', 'email')
                                 || addUserForm.hasError('maxlength', 'email')
                                 && formDir.submitted">
