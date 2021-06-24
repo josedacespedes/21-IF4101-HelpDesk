@@ -1,38 +1,6 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#">TeleAtlántico</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="#">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="#">Link</a>
-          </li>
-          <li class="nav-item dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Dropdown
-            </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
-            </ul>
-          </li>
-        </ul>
-        <form class="d-flex">
-          <button class="btn btn-outline-dark" routerLink="/login" href="">Cerrar Sesión</button>
-        </form>
-      </div>
-    </div>
-  </nav>
+<app-header-user></app-header-user>
 
-
-<div class="container mt-5">
+<div id="content" class="container mt-5">
     <div class="card bg-light">
         <div class="card-body mx-auto ">
             <p class="card-title text-center mt-3">Registrar Usuario</p>
@@ -125,7 +93,7 @@
                     <hr>
                     <div class="d-flex justify-content-center">
                       <button type="submit" class="bg-primary text-white mb-3" mat-raised-button>Aceptar</button>
-                      <button type="submit" class="bg-danger  text-white mb-3" (click)="clear()" mat-raised-button>Cancelar</button>
+                      <button type="submit" class="bg-danger  text-white mb-3" id="button_cancel" (click)="clear()" mat-raised-button>Cancelar</button>
                     </div>
                 </div>
             </form>

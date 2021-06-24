@@ -2,11 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import Swal from 'sweetalert2';
 
 @Component({
-  selector: 'app-header-client',
-  templateUrl: './header-client.component.html',
-  styleUrls: ['./header-client.component.css']
+  selector: 'app-header-user',
+  templateUrl: './header-user.component.html',
+  styleUrls: ['./header-user.component.css']
 })
-export class HeaderClientComponent implements OnInit {
+export class HeaderUserComponent implements OnInit {
 
   constructor() { }
 

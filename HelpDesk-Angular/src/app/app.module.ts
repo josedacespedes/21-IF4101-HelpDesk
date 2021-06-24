@@ -12,6 +12,8 @@ import { HeaderRegisterComponent } from './header-register/header-register.compo
 import { UserAddComponent } from './user-add/user-add.component';
 import { ClientRequestAddComponent } from './client-request-add/client-request-add.component';
 import { HeaderClientComponent } from './header-client/header-client.component';
+import { HeaderUserComponent } from './header-user/header-user.component';
+import { MainClientComponent } from './main-client/main-client.component';
 
 
 
@@ -24,7 +26,9 @@ import { HeaderClientComponent } from './header-client/header-client.component';
     HeaderRegisterComponent,
     UserAddComponent,
     ClientRequestAddComponent,
-    HeaderClientComponent
+    HeaderClientComponent,
+    HeaderUserComponent,
+    MainClientComponent
   ],
   imports: [
     BrowserModule,
