@@ -14,6 +14,7 @@ import { ClientRequestAddComponent } from './client-request-add/client-request-a
 import { HeaderClientComponent } from './header-client/header-client.component';
 import { HeaderUserComponent } from './header-user/header-user.component';
 import { MainClientComponent } from './main-client/main-client.component';
+import { MainUserComponent } from './main-user/main-user.component';
 
 
 
@@ -28,7 +29,8 @@ import { MainClientComponent } from './main-client/main-client.component';
     ClientRequestAddComponent,
     HeaderClientComponent,
     HeaderUserComponent,
-    MainClientComponent
+    MainClientComponent,
+    MainUserComponent
   ],
   imports: [
     BrowserModule,
