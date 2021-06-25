@@ -1,0 +1,35 @@
+<app-header-user></app-header-user>
+
+<div id="content" class="container mt-5">
+    <div class="card bg-light">
+        <div class="card-body mx-auto ">
+            <p class="card-title text-center mt-3">Asignar Solicitud Soporte</p>
+            <hr>
+            <form class="example-form" [formGroup]="assignSupportForm" #formDir="ngForm" (ngSubmit)="register()" autocomplete="off">
+                <div class="form-group mx-auto mb-2" id="">
+                  <div class="divToChargeInfo">
+                    <mat-label>Número de Solicitud: #</mat-label><br><br>
+                    <mat-label>Cliente: #</mat-label><br><br>
+                    <mat-label>Email: #</mat-label><br><br>
+                    <mat-label>Teléfono: #</mat-label><br><br>
+                    <mat-label>Teléfono Alternativo: #</mat-label><br><br>
+                    <mat-label>Dirección: #</mat-label><br><br>
+                    <mat-label>Teléfono Alternativo: #</mat-label><br><br>
+                    <mat-label>Estado: #</mat-label><br><br>
+                  </div>
+                  <div class="d-flex justify-content-center">
+                    <button mat-raised-button color="primary">Escoger usuario soporte</button>
+                  </div>
+
+                  
+
+                  <hr>
+                  <div class="d-flex justify-content-center">
+                    <button type="submit" class="bg-primary text-white mb-3" (click)="register()" mat-raised-button>Aceptar</button>
+                    <button type="submit" class="bg-danger  text-white mb-3" id="button_cancel" (click)="clear()" routerLink="/main-user" mat-raised-button>Cancelar</button>
+                  </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
