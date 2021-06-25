@@ -22,17 +22,31 @@
                     </mat-form-field>
 
                     <mat-form-field class="example-full-width ">
-                        <mat-label>Apellidos</mat-label>
-                        <input maxlength="50" minlength="3" type="text" formControlName="lastName" placeholder="Apellidos" matInput>
-                        <mat-hint class="text-danger" *ngIf="addUserForm.hasError('required', 'lastName') && formDir.submitted">
+                        <mat-label>Primer Apellido</mat-label>
+                        <input maxlength="50" minlength="3" type="text" formControlName="firstName" placeholder="Primer Apellido" matInput>
+                        <mat-hint class="text-danger" *ngIf="addUserForm.hasError('required', 'firstName') && formDir.submitted">
                             *Campo requerido
                         </mat-hint>
-                        <mat-hint class="text-danger" *ngIf="addUserForm.hasError('pattern', 'lastName') 
-                            || addUserForm.hasError('minlength', 'lastName')
-                            || addUserForm.hasError('maxlength', 'lastName')
+                        <mat-hint class="text-danger" *ngIf="addUserForm.hasError('pattern', 'firstName') 
+                            || addUserForm.hasError('minlength', 'firstName')
+                            || addUserForm.hasError('maxlength', 'firstName')
                             && formDir.submitted">
                             *Campo inválido
                         </mat-hint>
+                    </mat-form-field>
+
+                    <mat-form-field class="example-full-width ">
+                      <mat-label>Segundo Apellido</mat-label>
+                      <input maxlength="50" minlength="3" type="text" formControlName="secondName" placeholder="Segundo Apellido" matInput>
+                      <mat-hint class="text-danger" *ngIf="addUserForm.hasError('required', 'secondName') && formDir.submitted">
+                          *Campo requerido
+                      </mat-hint>
+                      <mat-hint class="text-danger" *ngIf="addUserForm.hasError('pattern', 'secondName') 
+                          || addUserForm.hasError('minlength', 'secondName')
+                          || addUserForm.hasError('maxlength', 'secondName')
+                          && formDir.submitted">
+                          *Campo inválido
+                      </mat-hint>
                     </mat-form-field>
 
                     <mat-form-field class="example-full-width">

@@ -3,7 +3,7 @@ import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms'
 import { ActivatedRoute, Router } from '@angular/router';
 import { UserAddService } from '../services/user-add.service';
 import Swal from 'sweetalert2';
-import { Client } from '../models/client.model';
+import { User } from '../models/user.model';
 import { Regex } from '../regex/regex.validation';
 import { requireCheckboxesToBeCheckedValidator } from '../regex/checkbox.validation';
 
@@ -18,7 +18,7 @@ export class UserAddComponent implements OnInit {
   }
 
   addUserForm: FormGroup;
-  client: Client = new Client();
+  user: User = new User();
   regex: Regex = new Regex();
 
   constructor(private fb: FormBuilder, private route: ActivatedRoute,
@@ -31,11 +31,17 @@ export class UserAddComponent implements OnInit {
         Validators.minLength(3),
         Validators.maxLength(50),
       ]),
-      lastName: new FormControl('', [
+      firstName: new FormControl('', [
         Validators.required,
-        Validators.pattern(this.regex.surname),
         Validators.minLength(3),
         Validators.maxLength(50),
+        Validators.pattern(this.regex.surname)
+      ]),
+      secondName: new FormControl('', [
+        Validators.required,
+        Validators.minLength(3),
+        Validators.maxLength(50),
+        Validators.pattern(this.regex.surname)
       ]),
       email: new FormControl('', [
         Validators.required,

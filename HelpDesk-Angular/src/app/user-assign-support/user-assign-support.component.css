@@ -32,10 +32,15 @@
   .card {
     box-shadow: 0 0 6px 0 rgb(0 0 0 / 15%);
   }
+  #button_cancel{
+    margin-left: 1rem;
+  }
+
+  mat-icon {
+    transform: scale(1.5);
+  }
+  
   #content {
     /*Space for footer*/
     padding-bottom: 7em;
-  }
-  #button_cancel{
-    margin-left: 1rem;
   }

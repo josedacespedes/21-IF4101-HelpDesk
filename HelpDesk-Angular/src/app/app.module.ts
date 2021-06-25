@@ -15,6 +15,7 @@ import { HeaderClientComponent } from './header-client/header-client.component';
 import { HeaderUserComponent } from './header-user/header-user.component';
 import { MainClientComponent } from './main-client/main-client.component';
 import { MainUserComponent } from './main-user/main-user.component';
+import { UserAssignSupportComponent } from './user-assign-support/user-assign-support.component';
 
 
 
@@ -30,7 +31,8 @@ import { MainUserComponent } from './main-user/main-user.component';
     HeaderClientComponent,
     HeaderUserComponent,
     MainClientComponent,
-    MainUserComponent
+    MainUserComponent,
+    UserAssignSupportComponent
   ],
   imports: [
     BrowserModule,
