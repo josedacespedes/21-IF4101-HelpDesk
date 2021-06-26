@@ -55,3 +55,19 @@
     height: 2.1em;
     /* background-color: #1dc22b !important; */
   }
+
+  button {
+    background-color: #0069D9;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    cursor: hand;
+    font-family: Arial;
+    margin-right: 0.2em;
+  }
+  
+  button:hover {
+    background-color: #cfd8dc;
+  }

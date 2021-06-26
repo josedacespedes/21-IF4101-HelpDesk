@@ -1,65 +1,141 @@
 <app-header-user></app-header-user>
 
 <div class="container mt-5">
+  <div class="table-responsive">
+    <table class="table table-hover text-center">
+      <thead>
+        <tr>
+          <th scope="col"># Solicitud</th>
+          <th scope="col">Clasificación Solicitud</th>
+          <th scope="col">Estado</th>
+          <th scope="col">Fecha/Hora</th>
+          <th scope="col">Detalle</th>
+          <th scope="col">Asignar Soporte</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <th scope="row">1</th>
+          <td>(Telefonía móvil, Cable, Internet, Telefonía fija)</td>
+          <td>(Ingresado, Asignado, En Progreso, Resuelto)</td>
+          <td>25-06-2021 08:46:38 PM</td>
+          <td>
+            <button type="button" class="details" title="details">
+              <span>
+                <i class="fas fa-info"></i>
+              </span>
+            </button>
+          </td>
+          <td>
+            <button
+              type="button"
+              class="assign"
+              title="assign"
+              (click)="openAssignSupport(assignSupport)"
+            >
+              <span>
+                <i class="fas fa-user-plus"></i>
+              </span>
+            </button>
+          </td>
+        </tr>
+        <tr>
+          <th scope="row">2</th>
+          <td>(Telefonía móvil, Cable, Internet, Telefonía fija)</td>
+          <td>(Ingresado, Asignado, En Progreso, Resuelto)</td>
+          <td>25-06-2021 08:46:38 PM</td>
+          <td>
+            <button type="button" class="details" title="details">
+              <span>
+                <i class="fas fa-info"></i>
+              </span>
+            </button>
+          </td>
+          <td>
+            <button
+              type="button"
+              class="assign"
+              title="assign"
+              (click)="openAssignSupport(assignSupport)"
+            >
+              <span>
+                <i class="fas fa-user-plus"></i>
+              </span>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 
-  <table class="table table-hover text-center">
-    <thead>
-    <tr>
-      <th scope="col"># Solicitud</th>
-      <th scope="col"> Clasificación Solicitud</th>
-      <th scope="col">Estado</th>
-      <th scope="col">Fecha/Hora</th>
-      <th scope="col">Detalle</th>
-      <th scope="col">Asignar Soporte</th>
+  <ng-template #assignSupport let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">
+        Asignar Solicitud Soporte
+      </h4>
+      <button
+        type="button"
+        class="close"
+        aria-label="Close"
+        (click)="modal.dismiss('Cross click')"
+      >
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body">
+      <div id="content" class="container mt-1">
+        <div class="card bg-light">
+          <div class="card-body mx-auto">
+            <hr />
+            <form
+              class="example-form"
+              [formGroup]="assignSupportForm"
+              #formDir="ngForm"
+              (ngSubmit)="register()"
+              autocomplete="off"
+            >
+              <div class="form-group mx-auto mb-2" id="">
+                <div class="divToChargeInfo">
+                  <mat-label>Número de Solicitud: #</mat-label><br /><br />
+                  <mat-label>Cliente: #</mat-label><br /><br />
+                  <mat-label>Email: #</mat-label><br /><br />
+                  <mat-label>Teléfono: #</mat-label><br /><br />
+                  <mat-label>Teléfono Alternativo: #</mat-label><br /><br />
+                  <mat-label>Dirección: #</mat-label><br /><br />
+                  <mat-label>Teléfono Alternativo: #</mat-label><br /><br />
+                  <mat-label>Estado: #</mat-label><br /><br />
+                </div>
+                <div class="d-flex justify-content-center">
+                  <button mat-raised-button color="primary">
+                    Escoger usuario soporte
+                  </button>
+                </div>
 
-    </tr>
-    </thead>
-    <tbody>
-    <tr >
-      <th scope="row">1</th>
-      <td>
-        (Telefonía móvil, Cable, Internet, Telefonía fija)
-      </td>
-      <td>(Ingresado, Asignado, En Progreso, Resuelto)</td>
-      <td> 25-06-2021 08:46:38 PM</td>
-      <td> 
-        <button type="button" class="details" title="details">
-          <span>
-            <i class="fas fa-info"></i>
-          </span>
-        </button>
-      </td>
-      <td> 
-        <button type="button" class="assign" title="assign">
-          <span>
-            <i class="fas fa-user-plus"></i>
-          </span>
-        </button>
-      </td>
-    </tr>
-    <tr >
-      <th scope="row">2</th>
-      <td>
-        (Telefonía móvil, Cable, Internet, Telefonía fija)
-      </td>
-      <td>(Ingresado, Asignado, En Progreso, Resuelto)</td>
-      <td> 25-06-2021 08:46:38 PM</td>
-      <td> 
-        <button type="button" class="details" title="details">
-          <span>
-            <i class="fas fa-info"></i>
-          </span>
-        </button>
-      </td>
-      <td> 
-        <button type="button" class="assign" title="assign">
-          <span>
-            <i class="fas fa-user-plus"></i>
-          </span>
-        </button>
-      </td>
-    </tr>
-    </tbody>
-  </table>
-
+                <hr />
+                <div class="d-flex justify-content-center">
+                  <button
+                    type="submit"
+                    class="bg-primary text-white mb-3"
+                    (click)="register()"
+                    mat-raised-button
+                  >
+                    Aceptar
+                  </button>
+                  <button
+                    type="submit"
+                    class="bg-danger text-white mb-3"
+                    id="button_cancel"
+                    routerLink="/main-user"
+                    mat-raised-button
+                  >
+                    Cancelar
+                  </button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
 </div>

@@ -11,7 +11,7 @@ import { MatIconModule  } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
 import {MatCheckboxModule} from '@angular/material/checkbox';
 import { MatTableModule } from '@angular/material/table';
-
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 const MaterialComponents = [
@@ -27,7 +27,8 @@ const MaterialComponents = [
   MatIconModule,
   MatTabsModule,
   MatCheckboxModule,
-  MatTableModule
+  MatTableModule,
+  NgbModule
 
 ];
 @NgModule({
