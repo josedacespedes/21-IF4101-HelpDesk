@@ -7,6 +7,7 @@ import { ClientRequestAddComponent } from './client-request-add/client-request-a
 import { MainClientComponent } from './main-client/main-client.component';
 import { MainUserComponent } from './main-user/main-user.component';
 import { UserAssignSupportComponent } from './user-assign-support/user-assign-support.component';
+import { UserListRequestComponent } from './user-list-request/user-list-request.component';
 
 const routes: Routes = [
   { path: '',redirectTo:'login', pathMatch:'full' },
@@ -16,7 +17,8 @@ const routes: Routes = [
   { path: 'client-request-add', component: ClientRequestAddComponent},
   { path: 'main-user', component: MainUserComponent},
   { path: 'user-add', component: UserAddComponent},
-  { path: 'user-assign-support', component: UserAssignSupportComponent}
+  { path: 'user-assign-support', component: UserAssignSupportComponent},
+  { path: 'user-list-request', component: UserListRequestComponent}
 ];
 
 @NgModule({

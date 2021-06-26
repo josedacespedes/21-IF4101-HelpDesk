@@ -16,8 +16,8 @@ import { HeaderUserComponent } from './header-user/header-user.component';
 import { MainClientComponent } from './main-client/main-client.component';
 import { MainUserComponent } from './main-user/main-user.component';
 import { UserAssignSupportComponent } from './user-assign-support/user-assign-support.component';
+import { UserListRequestComponent } from './user-list-request/user-list-request.component';
 import { HttpClientModule } from '@angular/common/http';
-
 
 
 @NgModule({
@@ -33,7 +33,8 @@ import { HttpClientModule } from '@angular/common/http';
     HeaderUserComponent,
     MainClientComponent,
     MainUserComponent,
-    UserAssignSupportComponent
+    UserAssignSupportComponent,
+    UserListRequestComponent
   ],
   imports: [
     BrowserModule,
