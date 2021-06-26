@@ -23,7 +23,6 @@ export class LoginComponent implements OnInit {
   constructor(private fb: FormBuilder, private route: ActivatedRoute,
     private loginService: LoginService, private router: Router) {
     this.loginForm = this.fb.group({
-      id: 0,
       email: new FormControl('', [
         Validators.required,
         Validators.email,
@@ -43,39 +42,60 @@ export class LoginComponent implements OnInit {
     if (!this.loginForm.valid) {
       return;
     }
+    this.loading();
 
-    Swal.fire({ title: "Correcto", timer: 1000 });
-    console.log(this.loginForm.value);
-
-    // this.loginService.login(this.loginForm.value).subscribe((result) => {
-    //   if (result) {
-    //     this.client = result;
-    //     this.modal('/home', 'Bienvenido:'+ this.client.name );
-    //   } else {
-    //     this.modal('/login', 'Credentials incorrect')
-    //   }
-    // });
+    this.loginService.authentication(this.loginForm.value).subscribe((result) => {
+      if (result != null) {
+        this.modal('/main-client', 'Bienvenido al sistema');
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Datos incorrectos'
+        })
+      }
+    });
   }
 
-  // modal(url: string | '', message: String) {
-  //   let timerInterval: any
-  //   Swal.fire({
-  //     title: message,
-  //     html: '',
-  //     timer: 1000,
-  //     didOpen: () => {
-  //       Swal.showLoading()
-  //       timerInterval = setInterval(() => {
-  //       }, 50)
-  //     },
-  //     willClose: () => {
-  //       clearInterval(timerInterval)
-  //     }
-  //   }).then((result) => {
-  //     if (result.dismiss === Swal.DismissReason.timer) {
-  //       this.router.navigateByUrl(url);
-  //     }
-  //   })
-  // }
+  modal(url: string | '', message: String) {
+    let timerInterval: any
+    Swal.fire({
+      title: message,
+      html: 'Usted será redireccionado en <b></b> milisegundos.',
+      timer: 2000,
+      timerProgressBar: true,
+      didOpen: () => {
+        Swal.showLoading()
+        timerInterval = setInterval(() => {
+          const content = Swal.getHtmlContainer()
+          if (content) {
+            const b = content.querySelector('b')
+            if (b) {
+              b.textContent = Swal.getTimerLeft() + ""
+            }
+          }
+        }, 100)
+      },
+      willClose: () => {
+        clearInterval(timerInterval)
+      }
+    }).then((result) => {
+      if (result.dismiss === Swal.DismissReason.timer) {
+        this.router.navigateByUrl(url);
+      }
+    })
+  }
 
+  loading() {
+    let timerInterval: any
+    Swal.fire({
+      title: 'Autenticando...',
+      timer: 100000,
+      didOpen: () => {
+        Swal.showLoading();
+      },
+      willClose: () => {
+        clearInterval(timerInterval)
+      }
+    })
+  }
 }
