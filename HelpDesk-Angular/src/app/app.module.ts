@@ -16,6 +16,7 @@ import { HeaderUserComponent } from './header-user/header-user.component';
 import { MainClientComponent } from './main-client/main-client.component';
 import { MainUserComponent } from './main-user/main-user.component';
 import { UserAssignSupportComponent } from './user-assign-support/user-assign-support.component';
+import { HttpClientModule } from '@angular/common/http';
 
 
 
@@ -40,7 +41,8 @@ import { UserAssignSupportComponent } from './user-assign-support/user-assign-su
     BrowserAnimationsModule,
     MaterialModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
