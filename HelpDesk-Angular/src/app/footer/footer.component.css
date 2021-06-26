@@ -1,6 +1,13 @@
-.footer {
+/* .footer {
   padding: 0;
   width: 100%;
   position: absolute;
+  bottom: 0;
+} */
+
+.footer {
+  width: 100%;
+  position: fixed;
+  opacity: 0.5;
   bottom: 0;
 }
