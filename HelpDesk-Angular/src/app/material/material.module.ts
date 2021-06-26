@@ -10,6 +10,8 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { MatIconModule  } from '@angular/material/icon';
 import { MatTabsModule } from '@angular/material/tabs';
 import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatTableModule } from '@angular/material/table';
+
 
 
 const MaterialComponents = [
@@ -24,7 +26,8 @@ const MaterialComponents = [
   MatNativeDateModule,
   MatIconModule,
   MatTabsModule,
-  MatCheckboxModule
+  MatCheckboxModule,
+  MatTableModule
 
 ];
 @NgModule({
