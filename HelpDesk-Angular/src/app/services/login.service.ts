@@ -3,7 +3,8 @@ import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { map } from 'rxjs/operators';
 
 
-const endpointClient = 'https://localhost:44316/api/'; //url api
+const baseUrlLogin = 'https://localhost:44316/api/Login/'; //url api
+
 const httpOptions = {
   headers: new HttpHeaders({
     'Content-Type':  'application/json'
@@ -30,7 +31,7 @@ export class LoginService {
   }
 
   authentication(login) {
-    return this.http.post<any>(endpointClient + 'Login/', JSON.stringify(login), httpOptions)
+    return this.http.post<any>(baseUrlLogin, JSON.stringify(login), httpOptions)
       .pipe(map((res) => {
         if(res!=null){
           this.registerSuccessfulLogin(res);
