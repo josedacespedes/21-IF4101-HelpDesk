@@ -13,7 +13,7 @@ namespace API_Support_NET.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class IssueController : ControllerBase
+    public class IssueController : Controller
     {
         private readonly _21IF4101HelpDeskSupportContext _context;
 
@@ -23,10 +23,48 @@ namespace API_Support_NET.Controllers
         }
 
         // GET: api/Issue
+        [EnableCors("GetAllPolicy")]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Issue>>> GetIssue()
+        public async Task<ActionResult<IEnumerable<Issue>>> GetAll()
         {
-            return await _context.Issue.ToListAsync();
+            IList<Issue> issues = null;
+            issues = await _context.Issue.Select(issueItem => new Issue()
+            {
+                ReportNumber = issueItem.ReportNumber,
+                IdSupport = issueItem.IdSupport,
+                Classification = issueItem.Classification,
+                Status = issueItem.Status,
+                ReportTime = issueItem.ReportTime,
+                ResolutionComment = issueItem.ResolutionComment
+            }).OrderByDescending(x => x.ReportTime).ToListAsync<Issue>();
+
+            if (issues.Count == 0)
+            {
+                return null;
+            }
+            return Json(issues);
+        }
+
+        [EnableCors("GetAllPolicy")]
+        [HttpGet("GetAllBySupportId/{id}")]
+        public async Task<ActionResult<IEnumerable<Issue>>> GetAllBySupportId(int id)
+        {
+            IList<Issue> issues = null;
+            issues = await _context.Issue.Where(issueItem => issueItem.IdSupport == id).Select(issueItem => new Issue()
+            {
+                ReportNumber = issueItem.ReportNumber,
+                IdSupport = issueItem.IdSupport,
+                Classification = issueItem.Classification,
+                Status = issueItem.Status,
+                ReportTime = issueItem.ReportTime,
+                ResolutionComment = issueItem.ResolutionComment
+            }).OrderByDescending(x => x.ReportNumber).ToListAsync<Issue>();
+
+            if (issues.Count == 0)
+            {
+                return null;
+            }
+            return Json(issues);
         }
 
         // GET: api/Issue/5

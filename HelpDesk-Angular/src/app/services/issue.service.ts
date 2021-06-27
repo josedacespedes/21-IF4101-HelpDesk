@@ -15,8 +15,16 @@ const httpOptions = {
 export class IssueService {
   constructor(private http: HttpClient) { }
 
-  setSupportUser(reportNumber: any, idSupport: any): Observable<any> {
+  setSupportUser(reportNumber: number, idSupport: number): Observable<any> {
     return this.http.put(baseUrlIssue + 'PutUpdateSupportAssigned', { reportNumber, idSupport });
+  }
+
+  getIssueList(): Observable<any> {
+    return this.http.get(`${baseUrlIssue}`);
+  }
+
+  getIssueListBySupportId(id: number): Observable<any> {
+    return this.http.get(`${baseUrlIssue + 'GetAllBySupportId/' + id}`);
   }
 
 
