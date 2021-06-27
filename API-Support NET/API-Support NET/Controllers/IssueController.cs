@@ -135,6 +135,32 @@ namespace API_Support_NET.Controllers
             return CreatedAtAction("GetIssue", new { id = issue.ReportNumber }, issue);
         }
 
+        [HttpPost]
+        public async Task<ActionResult<Issue>> Post(Issue issue)
+        {
+            _context.Issue.Add(new Issue()
+            {
+                ReportNumber = issue.ReportNumber,
+                IdSupport = null,
+                Classification = "Media",
+                Status = "Ingresado",
+                ReportTime = DateTime.Now,
+                ResolutionComment = null
+            });
+            try
+            {
+                await _context.SaveChangesAsync();
+            }
+            catch (DbUpdateException)
+            {
+                if (IssueExists(issue.ReportNumber))
+                {
+                    return null;
+                }
+            }
+            return Ok();
+        }
+
         private bool IssueExists(int id)
         {
             return _context.Issue.Any(e => e.ReportNumber == id);
