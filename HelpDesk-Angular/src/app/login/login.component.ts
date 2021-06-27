@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { LoginService } from '../services/login.service';
+import { IssueService } from '../services/issue.service';
 import Swal from 'sweetalert2';
 import { Client } from '../models/client.model';
 import { Regex } from '../regex/regex.validation';
@@ -21,7 +22,7 @@ export class LoginComponent implements OnInit {
   regex: Regex = new Regex();
 
   constructor(private fb: FormBuilder, private route: ActivatedRoute,
-    private loginService: LoginService, private router: Router) {
+    private IssueService: IssueService, private router: Router) {
     this.loginForm = this.fb.group({
       email: new FormControl('', [
         Validators.required,
@@ -44,7 +45,7 @@ export class LoginComponent implements OnInit {
     }
     this.loading();
 
-    this.loginService.authentication(this.loginForm.value).subscribe((result) => {
+    this.IssueService.getIssueList().subscribe((result) => {
       if (result != null) {
         this.modal('/main-client', 'Bienvenido al sistema');
       } else {
