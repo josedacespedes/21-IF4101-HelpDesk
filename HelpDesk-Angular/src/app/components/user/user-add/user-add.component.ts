@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UserAddService } from '../services/user-add.service';
+import { IssueService } from '../../../services/issue.service';
 import Swal from 'sweetalert2';
-import { User } from '../models/user.model';
-import { Regex } from '../regex/regex.validation';
-import { requireCheckboxesToBeCheckedValidator } from '../regex/checkbox.validation';
+import { User } from '../../../models/user.model';
+import { Regex } from '../../../regex/regex.validation';
+import { requireCheckboxesToBeCheckedValidator } from '../../../regex/checkbox.validation';
 
 
 @Component({
@@ -22,7 +22,7 @@ export class UserAddComponent implements OnInit {
   regex: Regex = new Regex();
 
   constructor(private fb: FormBuilder, private route: ActivatedRoute,
-    private loginService: UserAddService, private router: Router) {
+    private issueService: IssueService, private router: Router) {
     this.addUserForm = this.fb.group({
       id: 0,
       name: new FormControl('', [
@@ -55,9 +55,7 @@ export class UserAddComponent implements OnInit {
         Validators.minLength(8),
         Validators.maxLength(8)
       ]),
-      control:new FormControl('',
-        Validators.required
-      ),
+      control: ['1'],
       servicesCheckboxGroup: new FormGroup({
         mobilePhone: new FormControl(false),
         channel: new FormControl(false),

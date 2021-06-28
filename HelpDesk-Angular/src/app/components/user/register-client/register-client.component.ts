@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { LoginService } from '../services/login.service';
+import { LoginService } from '../../../services/login.service';
 import Swal from 'sweetalert2';
-import { Client } from '../models/client.model';
-import { Regex } from '../regex/regex.validation';
-import { requireCheckboxesToBeCheckedValidator } from '../regex/checkbox.validation';
+import { Client } from '../../../models/client.model';
+import { Regex } from '../../../regex/regex.validation';
+import { requireCheckboxesToBeCheckedValidator } from '../../../regex/checkbox.validation';
 
 @Component({
   selector: 'app-register-client',
