@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UserAssignSupportService } from '../services/user-assign-support';
+import { IssueService } from '../../../services/issue.service';
 import Swal from 'sweetalert2';
-import { User } from '../models/user.model';
-import { Regex } from '../regex/regex.validation';
-import { requireCheckboxesToBeCheckedValidator } from '../regex/checkbox.validation';
+import { User } from '../../../models/user.model';
+import { Regex } from '../../../regex/regex.validation';
+import { requireCheckboxesToBeCheckedValidator } from '../../../regex/checkbox.validation';
 
 @Component({
   selector: 'app-user-assign-support',
@@ -23,7 +23,7 @@ export class UserAssignSupportComponent implements OnInit {
   regex: Regex = new Regex();
 
   constructor(private fb: FormBuilder, private route: ActivatedRoute,
-    private loginService: UserAssignSupportService, private router: Router) {
+    private issueService: IssueService, private router: Router) {
     this.assignSupportForm = this.fb.group({
       id: 0,
       control:new FormControl('',

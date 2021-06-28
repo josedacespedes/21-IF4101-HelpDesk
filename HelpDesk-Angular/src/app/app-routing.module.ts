@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LoginComponent } from './login/login.component';
-import { RegisterClientComponent } from './register-client/register-client.component';
-import { UserAddComponent } from './user-add/user-add.component';
-import { ClientRequestAddComponent } from './client-request-add/client-request-add.component';
-import { MainClientComponent } from './main-client/main-client.component';
-import { MainUserComponent } from './main-user/main-user.component';
-import { UserAssignSupportComponent } from './user-assign-support/user-assign-support.component';
-import { UserListRequestComponent } from './user-list-request/user-list-request.component';
+import { LoginComponent } from './components/user/login/login.component';
+import { RegisterClientComponent } from './components/user/register-client/register-client.component';
+import { UserAddComponent } from './components/user/user-add/user-add.component';
+import { ClientRequestAddComponent } from './components/issue/client-request-add/client-request-add.component';
+import { MainClientComponent } from './components/issue/main-client/main-client.component';
+import { MainUserComponent } from './components/issue/main-user/main-user.component';
+import { UserAssignSupportComponent } from './components/issue/user-assign-support/user-assign-support.component';
+import { UserListRequestComponent } from './components/issue/user-list-request/user-list-request.component';
 
 const routes: Routes = [
   { path: '',redirectTo:'login', pathMatch:'full' },

@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { UserAddService } from '../services/user-add.service';
+import { IssueService } from '../../../services/issue.service';
 import Swal from 'sweetalert2';
-import { Client } from '../models/client.model';
-import { Regex } from '../regex/regex.validation';
-import { requireCheckboxesToBeCheckedValidator } from '../regex/checkbox.validation';
+import { Client } from '../../../models/client.model';
+import { Regex } from '../../../regex/regex.validation';
+import { requireCheckboxesToBeCheckedValidator } from '../../../regex/checkbox.validation';
 import {formatDate } from '@angular/common';
 
 @Component({
@@ -26,7 +26,7 @@ export class ClientRequestAddComponent implements OnInit {
   jstoday = '';
 
   constructor(private fb: FormBuilder, private route: ActivatedRoute,
-    private loginService: UserAddService, private router: Router) {
+    private issueService: IssueService, private router: Router) {
     
     this.jstoday = formatDate(this.today, 'dd-MM-yyyy hh:mm:ss a', 'en-US', 'GMT-6');
 
