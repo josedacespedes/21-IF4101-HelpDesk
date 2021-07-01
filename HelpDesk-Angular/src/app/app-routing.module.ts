@@ -4,6 +4,7 @@ import { LoginComponent } from './components/user/login/login.component';
 import { RegisterClientComponent } from './components/user/register-client/register-client.component';
 import { UserAddComponent } from './components/user/user-add/user-add.component';
 import { ClientRequestAddComponent } from './components/issue/client-request-add/client-request-add.component';
+import { ClientRequestListComponent } from './components/issue/client-request-list/client-request-list.component';
 import { MainClientComponent } from './components/issue/main-client/main-client.component';
 import { MainUserComponent } from './components/issue/main-user/main-user.component';
 import { UserAssignSupportComponent } from './components/issue/user-assign-support/user-assign-support.component';
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'register-client', component: RegisterClientComponent },
   { path: 'main-client', component: MainClientComponent},
   { path: 'client-request-add', component: ClientRequestAddComponent},
+  { path: 'client-request-list', component: ClientRequestListComponent },
   { path: 'main-user', component: MainUserComponent},
   { path: 'user-add', component: UserAddComponent},
   { path: 'user-assign-support', component: UserAssignSupportComponent},

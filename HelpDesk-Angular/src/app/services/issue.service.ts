@@ -34,5 +34,6 @@ export class IssueService {
   public createIssue(issue) {
     return this.http.post<any>(baseUrlIssueClient, issue);
   }
+  
 
 }

@@ -1,15 +1,14 @@
-import { Component, OnInit,Input } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
 import Swal, { SweetAlertOptions } from 'sweetalert2'
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormControl, FormBuilder, Validators } from '@angular/forms';
 
 @Component({
-  selector: 'app-user-list-request',
-  templateUrl: './user-list-request.component.html',
-  styleUrls: ['./user-list-request.component.css']
+  selector: 'app-client-request-list',
+  templateUrl: './client-request-list.component.html',
+  styleUrls: ['./client-request-list.component.css']
 })
-export class UserListRequestComponent implements OnInit {
+export class ClientRequestListComponent implements OnInit {
 
   constructor(private modalService: NgbModal) { }
 
@@ -17,23 +16,12 @@ export class UserListRequestComponent implements OnInit {
 
   ngOnInit() {
   }
-
-  openAssignSupport(content) {
-    this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
-      this.closeResult = `Closed with: ${result}`;
-    }, (reason) => {
-      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-    });
-    // this.getStudent(id,this.studentDataDetails);
-  }
-
   openRequestDetails(content) {
     this.modalService.open(content, {ariaLabelledBy: 'modal-basic-title', size: 'lg'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
-    // this.getStudent(id,this.studentDataDetails);
   }
 
   private getDismissReason(reason: any): string {
@@ -45,4 +33,5 @@ export class UserListRequestComponent implements OnInit {
       return `with: ${reason}`;
     }
   }
+
 }
