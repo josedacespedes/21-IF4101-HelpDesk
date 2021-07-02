@@ -1,54 +1,88 @@
 package com.teleatlantico.www.controller;
 
+import com.teleatlantico.www.converter.IssueConverter;
 import com.teleatlantico.www.domain.Issue;
-import com.teleatlantico.www.domain.User;
+import com.teleatlantico.www.dto.IssueDTO;
+import com.teleatlantico.www.dto.apiSupportApp.IssueSupportDTO;
+import com.teleatlantico.www.dto.apiSupportApp.UpdateIntStringDTO;
+import com.teleatlantico.www.exceptions.UnidentifiedException;
 import com.teleatlantico.www.service.IssueService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
+import org.springframework.web.client.RestTemplate;
+import java.util.Date;
 import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
+@CrossOrigin
 @RestController
-@RequestMapping("/api/issue")
+@RequestMapping(path = "/api/issue")
 public class IssueController {
-
     @Autowired
-    private IssueService issueService;
+    private IssueService service;
+    @Autowired
+    private IssueConverter converter;
+    @Autowired
+    private RestTemplate template;
+    private String _url = "http://localhost:50044/api/Issue/";
 
-    @GetMapping("/issues")
-    public List<Issue> list() { return issueService.listAll(); }
-
-    @GetMapping("/issue/{id}")
-    public ResponseEntity<Issue> get(@PathVariable Integer id){
+    @RequestMapping(path = "/", method = RequestMethod.POST)
+    public IssueDTO save(@RequestBody IssueDTO dto) {
+        dto.setSupportUserAssigned("No asignado");
+        IssueDTO newIssue = null;
         try{
-            Issue issue = issueService.get(id);
-            return new ResponseEntity<Issue>(issue, HttpStatus.OK);
-        }catch (NoSuchElementException e){
-            return new ResponseEntity<Issue>(HttpStatus.NOT_FOUND);
+            dto.setStatus("Ingresado");
+            dto.setRegisterTime(new Date());
+            newIssue = converter.toDTO(service.save(converter.toEntity(dto)));
+            IssueSupportDTO issueSupportDTO = new IssueSupportDTO();
+            issueSupportDTO.setReport_Number(newIssue.getReportNumber());
+            ResponseEntity<IssueSupportDTO> response =
+                    template.postForEntity(this._url, issueSupportDTO, IssueSupportDTO.class);
+        } catch (Exception ex) {
+            if(newIssue != null) this.service.delete(newIssue.getReportNumber());
+            throw new UnidentifiedException();
         }
+        return newIssue;
     }
 
-    @PostMapping("/add")
-    public void add(@RequestBody Issue issue){
-        //reglas
-
-        issueService.save(issue);
+    @RequestMapping(path = "/", method = RequestMethod.GET)
+    public List<IssueDTO> findAll() {
+        return service.findAll().stream().map(it -> converter.toDTO(it))
+                .collect(Collectors.toList());
     }
 
-    @PutMapping("/update/{id}")
-    public ResponseEntity<Issue> update(@RequestBody Issue issue, @PathVariable Integer id){
-        try{
-            issueService.save(issue);
-            return new ResponseEntity<Issue>(issue, HttpStatus.OK);
-        }catch (NoSuchElementException e){
-            return new ResponseEntity<Issue>(HttpStatus.NOT_FOUND);
-        }
+    @RequestMapping(path = "/findAllByUserId/{id}", method = RequestMethod.GET)
+    public List<IssueDTO> findAllByUserId(@PathVariable("id") int userId) {
+        return service.findAllByUserId(userId).stream().map(it -> converter.toDTO(it))
+                .collect(Collectors.toList());
     }
 
-    @DeleteMapping("/delete/{id}")
-    public void delete(@PathVariable Integer id) { issueService.delete(id); }
+    @RequestMapping(path = "/{id}", method = RequestMethod.GET)
+    public IssueDTO findById(@PathVariable("id") int id) {
+        return converter.toDTO(service.findById(id));
+    }
 
+    @RequestMapping(path = "/{reportNumber}", method = RequestMethod.PUT)
+    public IssueDTO update(@PathVariable("reportNumber") int reportNumber,
+                           @RequestBody IssueDTO dto) {
+        Issue entity = converter.toEntity(dto);
+        entity.setReportNumber(reportNumber);
+        return converter.toDTO(service.update(entity));
+    }
+
+    @RequestMapping(path = "/updateStatus", method = RequestMethod.PUT)
+    public void updateStatus(@RequestBody UpdateIntStringDTO dto) {
+        this.service.updateStatus(dto.getReportNumber(), dto.getVal());
+    }
+
+    @RequestMapping(path = "/updateSupporterAssigned", method = RequestMethod.PUT)
+    public void updateSupporterAssigned(@RequestBody UpdateIntStringDTO dto) {
+        this.service.updateSupporterAssigned(dto.getReportNumber(), dto.getVal());
+    }
+
+    @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
+    public void delete(@PathVariable("id") int id) {
+        service.delete(id);
+    }
 }

@@ -15,11 +15,11 @@ public class Comment {
     @Column(name = "Description")
     @NotNull
     private String description;
-    @Column(name = "CommentTime")
+    @Column(name = "Comment_Time")
     private Date commentTime;
 
     @ManyToOne
-    @JoinColumn(name = "ReportNumber")
+    @JoinColumn(name = "Report_Number")
     private Issue issue;
 
     public int getId() {
@@ -53,5 +53,4 @@ public class Comment {
     public void setIssue(Issue issue) {
         this.issue = issue;
     }
-
 }

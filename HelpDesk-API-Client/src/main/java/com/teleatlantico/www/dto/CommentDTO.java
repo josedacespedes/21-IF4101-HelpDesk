@@ -39,5 +39,4 @@ public class CommentDTO {
     public void setIssueByReportNumber(int issueByReportNumber) {
         this.issueByReportNumber = issueByReportNumber;
     }
-
 }

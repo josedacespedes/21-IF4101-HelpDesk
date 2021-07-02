@@ -1,6 +1,7 @@
 package com.teleatlantico.www.domain;
 
-import com.sun.istack.NotNull;
+import com.sun.istack.internal.NotNull;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -10,16 +11,19 @@ import java.util.List;
 @Entity
 public class User {
     @Id
-    @Column(name = "UserId")
+    @Column(name = "Id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int userId;
+    private int id;
+    @Column(name = "Pass")
+    @NotNull
+    private String pass;
     @Column(name = "Name")
     @NotNull
     private String name;
-    @Column(name = "FirstSurname")
+    @Column(name = "First_Surname")
     @NotNull
     private String firstSurname;
-    @Column(name = "SecondSurname")
+    @Column(name = "Second_Surname")
     @NotNull
     private String secondSurname;
     @Column(name = "Address")
@@ -28,7 +32,7 @@ public class User {
     @Column(name = "Phone")
     @NotNull
     private String phone;
-    @Column(name = "SecondContact")
+    @Column(name = "Second_Contact")
     @NotNull
     private String secondContact;
     @Column(name = "Email")
@@ -47,21 +51,46 @@ public class User {
         this.services.add(service);
         service.getUsers().add(this);
     }
+
     public void removeService(Service service) {
         this.services.remove(service);
         service.getUsers().remove(this);
     }
+
+    public void removeServices() {
+        for (Service service:this.services)
+            removeService(service);
+    }
+
+    public void addIssue(Issue issue) {
+        this.issues.add(issue);
+        issue.setUser(this);
+    }
+
     public void removeIssue(Issue issue) {
         this.issues.remove(issue);
         issue.setUser(null);
     }
 
+    public void removeIssues() {
+        for (Issue issue:this.issues)
+            removeIssue(issue);
+    }
+
     public int getId() {
-        return userId;
+        return id;
     }
 
     public void setId(int id) {
-        this.userId = id;
+        this.id = id;
+    }
+
+    public String getPass() {
+        return pass;
+    }
+
+    public void setPass(String pass) {
+        this.pass = pass;
     }
 
     public String getName() {
@@ -135,5 +164,4 @@ public class User {
     public void setIssues(List<Issue> issues) {
         this.issues = issues;
     }
-
 }

@@ -1,6 +1,6 @@
 package com.teleatlantico.www.domain;
 
-import com.sun.istack.NotNull;
+import com.sun.istack.internal.NotNull;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -11,49 +11,57 @@ import java.util.List;
 @Table(name = "[Issue]")
 public class Issue {
     @Id
-    @Column(name = "ReportNumber")
+    @Column(name = "Report_Number")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int reportNumber;
     @Column(name = "Description")
     @NotNull
     private String description;
-    @Column(name = "RegisterTime")
+    @Column(name = "Register_Time")
     @NotNull
     private Date registerTime;
     @Column(name = "Address")
     @NotNull
     private String address;
-    @Column(name = "ContactPhone")
+    @Column(name = "Contact_Phone")
     @NotNull
-    private String contactPhone;
-    @Column(name = "SecondPhone")
-    @NotNull
-    private String secondPhone;
-    @Column(name = "ContactEmail")
+    private String ContactPhone;
+    @Column(name = "Contact_Email")
     @NotNull
     private String contactEmail;
     @Column(name = "Status")
     @NotNull
     private String status;
-    @Column(name = "SupportUserAssigned")
+    @Column(name = "Support_User_Assigned")
     private String supportUserAssigned;
 
     @ManyToOne
-    @JoinColumn(name = "IdUser")
+    @JoinColumn(name = "Id_User")
     private User user;
 
     @ManyToOne
-    @JoinColumn(name = "IdService")
+    @JoinColumn(name = "Id_Service")
     private Service service;
 
-    @OneToMany(mappedBy = "issue",
+    @OneToMany(mappedBy="issue",
             cascade = CascadeType.ALL)
     private List<Comment> comments = new ArrayList<>();
+
+    public void addComment(Comment comment) {
+        this.comments.add(comment);
+        comment.setIssue(this);
+    }
 
     public void removeComment(Comment comment) {
         this.comments.remove(comment);
         comment.setIssue(null);
     }
+
+    public void removeComments() {
+        for (Comment comment:this.comments)
+            removeComment(comment);
+    }
+
     public int getReportNumber() {
         return reportNumber;
     }
@@ -87,22 +95,17 @@ public class Issue {
     }
 
     public String getContactPhone() {
-        return contactPhone;
+        return ContactPhone;
     }
 
     public void setContactPhone(String contactPhone) {
-        contactPhone = contactPhone;
-    }
-
-    public String getSecondPhone() {return secondPhone; }
-
-    public void setSecondPhone(String secondPhone) {
-        secondPhone = contactPhone;
+        ContactPhone = contactPhone;
     }
 
     public String getContactEmail() {
         return contactEmail;
     }
+
     public void setContactEmail(String contactEmail) {
         this.contactEmail = contactEmail;
     }
