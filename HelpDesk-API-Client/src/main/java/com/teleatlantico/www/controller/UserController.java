@@ -1,52 +1,58 @@
 package com.teleatlantico.www.controller;
 
+
+import com.teleatlantico.www.converter.UserConverter;
 import com.teleatlantico.www.domain.User;
+import com.teleatlantico.www.dto.UserDTO;
 import com.teleatlantico.www.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.NoSuchElementException;
+import java.util.stream.Collectors;
 
+@CrossOrigin
 @RestController
 @RequestMapping(path = "/api/user")
 public class UserController {
-
     @Autowired
-    private UserService userService;
+    private UserService service;
+    @Autowired
+    private UserConverter converter;
 
-    @GetMapping("/users")
-    public List<User> list() { return userService.listAll(); }
-
-    @GetMapping("user/{id}")
-    public ResponseEntity<User> get(@PathVariable Integer id){
-        try{
-            User user = userService.get(id);
-            return new ResponseEntity<User>(user, HttpStatus.OK);
-        }catch (NoSuchElementException e){
-            return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
-        }
+    @RequestMapping(path = "/", method = RequestMethod.POST)
+    public UserDTO save(@RequestBody UserDTO dto) {
+        User entity = converter.toEntity(dto);
+        return converter.toDTO(service.save(entity));
     }
 
-    @PostMapping("/add")
-    public void add(@RequestBody User user){
-        //reglas de negocio
-        userService.save(user);
+    @RequestMapping(path = "/", method = RequestMethod.GET)
+    public List<UserDTO> findAll() {
+        return service.findAll().stream().map(it -> converter.toDTO(it))
+                .collect(Collectors.toList());
     }
 
-    @PutMapping("/update/{id}")
-    public ResponseEntity<User> update(@RequestBody User user, @PathVariable Integer id){
-        try{
-            userService.save(user);
-            return new ResponseEntity<User>(user, HttpStatus.OK);
-        }catch (NoSuchElementException e){
-            return new ResponseEntity<User>(HttpStatus.NOT_FOUND);
-        }
+    @RequestMapping(path = "/findAllById", method = RequestMethod.POST)
+    public List<UserDTO> findAllById(@RequestBody List<Integer> list) {
+        return service.findAllById(list).stream().map(it -> converter.toDTO(it))
+                .collect(Collectors.toList());
     }
 
-    @DeleteMapping("/delete/{id}")
-    public void delete(@PathVariable Integer id) { userService.delete(id); }
+    @RequestMapping(path = "/{id}", method = RequestMethod.GET)
+    public UserDTO findById(@PathVariable("id") int id) {
+        return converter.toDTO(service.findById(id));
+    }
 
+    @RequestMapping(path = "/{id}", method = RequestMethod.PUT)
+    public UserDTO update(@PathVariable("id") int id,
+                          @RequestBody UserDTO dto) {
+        User entity = converter.toEntity(dto);
+        entity.setId(id);
+        return converter.toDTO(service.update(converter.toEntity(dto)));
+    }
+
+    @RequestMapping(path = "/{id}", method = RequestMethod.DELETE)
+    public void delete(@PathVariable("id") int id) {
+        service.delete(id);
+    }
 }

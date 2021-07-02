@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UserDTO {
-    private Integer userId;
+    private Integer id;
     private String name;
     private String firstSurname;
     private String secondSurname;
@@ -12,15 +12,16 @@ public class UserDTO {
     private String phone;
     private String secondContact;
     private String email;
+    private String pass;
     private List<Integer> issuesById = new ArrayList<>();
     private List<Integer> servicesById = new ArrayList<>();
 
     public Integer getId() {
-        return userId;
+        return id;
     }
 
     public void setId(Integer id) {
-        this.userId = id;
+        this.id = id;
     }
 
     public String getName() {
@@ -93,5 +94,13 @@ public class UserDTO {
 
     public void setServicesById(List<Integer> servicesById) {
         this.servicesById = servicesById;
+    }
+
+    public String getPass() {
+        return pass;
+    }
+
+    public void setPass(String pass) {
+        this.pass = pass;
     }
 }
