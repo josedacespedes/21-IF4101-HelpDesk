@@ -1,43 +1,65 @@
 package com.teleatlantico.www.domain;
 
+import com.sun.istack.NotNull;
+
+import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+@Entity
+@Table(name = "[Issue]")
 public class Issue {
-    private int issueId;
+    @Id
+    @Column(name = "ReportNumber")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private int reportNumber;
+    @Column(name = "Description")
+    @NotNull
     private String description;
-    private int report;
-    private Date register;
+    @Column(name = "RegisterTime")
+    @NotNull
+    private Date registerTime;
+    @Column(name = "Address")
+    @NotNull
     private String address;
-    private int contactPhone;
-    private int secondPhone;
+    @Column(name = "ContactPhone")
+    @NotNull
+    private String contactPhone;
+    @Column(name = "SecondPhone")
+    @NotNull
+    private String secondPhone;
+    @Column(name = "ContactEmail")
+    @NotNull
     private String contactEmail;
+    @Column(name = "Status")
+    @NotNull
     private String status;
-    private int supportUserAsigned;
+    @Column(name = "SupportUserAssigned")
+    private String supportUserAssigned;
 
-    public Issue(){
+    @ManyToOne
+    @JoinColumn(name = "IdUser")
+    private User user;
 
+    @ManyToOne
+    @JoinColumn(name = "IdService")
+    private Service service;
+
+    @OneToMany(mappedBy = "issue",
+            cascade = CascadeType.ALL)
+    private List<Comment> comments = new ArrayList<>();
+
+    public void removeComment(Comment comment) {
+        this.comments.remove(comment);
+        comment.setIssue(null);
+    }
+    public int getReportNumber() {
+        return reportNumber;
     }
 
-    public Issue(int issueId, String description, int report, Date register, String address, int contactPhone, int secondPhone, String contactEmail, String status, int supportUserAsigned) {
-        this.setIssueId(issueId);
-        this.setDescription(description);
-        this.setReport(report);
-        this.setRegister(register);
-        this.setAddress(address);
-        this.setContactPhone(contactPhone);
-        this.setSecondPhone(secondPhone);
-        this.setContactEmail(contactEmail);
-        this.setStatus(status);
-        this.setSupportUserAsigned(supportUserAsigned);
-    }
-
-
-    public int getIssueId() {
-        return issueId;
-    }
-
-    public void setIssueId(int issueId) {
-        this.issueId = issueId;
+    public void setReportNumber(int reportNumber) {
+        this.reportNumber = reportNumber;
     }
 
     public String getDescription() {
@@ -48,20 +70,12 @@ public class Issue {
         this.description = description;
     }
 
-    public int getReport() {
-        return report;
+    public Date getRegisterTime() {
+        return registerTime;
     }
 
-    public void setReport(int report) {
-        this.report = report;
-    }
-
-    public Date getRegister() {
-        return register;
-    }
-
-    public void setRegister(Date register) {
-        this.register = register;
+    public void setRegisterTime(Date registerTime) {
+        this.registerTime = registerTime;
     }
 
     public String getAddress() {
@@ -72,26 +86,23 @@ public class Issue {
         this.address = address;
     }
 
-    public int getContactPhone() {
+    public String getContactPhone() {
         return contactPhone;
     }
 
-    public void setContactPhone(int contactPhone) {
-        this.contactPhone = contactPhone;
+    public void setContactPhone(String contactPhone) {
+        contactPhone = contactPhone;
     }
 
-    public int getSecondPhone() {
-        return secondPhone;
-    }
+    public String getSecondPhone() {return secondPhone; }
 
-    public void setSecondPhone(int secondPhone) {
-        this.secondPhone = secondPhone;
+    public void setSecondPhone(String secondPhone) {
+        secondPhone = contactPhone;
     }
 
     public String getContactEmail() {
         return contactEmail;
     }
-
     public void setContactEmail(String contactEmail) {
         this.contactEmail = contactEmail;
     }
@@ -104,11 +115,35 @@ public class Issue {
         this.status = status;
     }
 
-    public int getSupportUserAsigned() {
-        return supportUserAsigned;
+    public String getSupportUserAssigned() {
+        return supportUserAssigned;
     }
 
-    public void setSupportUserAsigned(int supportUserAsigned) {
-        this.supportUserAsigned = supportUserAsigned;
+    public void setSupportUserAssigned(String supportUserAssigned) {
+        this.supportUserAssigned = supportUserAssigned;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public List<Comment> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
+    }
+
+    public Service getService() {
+        return service;
+    }
+
+    public void setService(Service service) {
+        this.service = service;
     }
 }

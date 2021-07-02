@@ -1,36 +1,67 @@
 package com.teleatlantico.www.domain;
 
+import com.sun.istack.NotNull;
+
+import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
+
+@Table(name = "[User]")
+@Entity
 public class User {
+    @Id
+    @Column(name = "UserId")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int userId;
+    @Column(name = "Name")
+    @NotNull
     private String name;
+    @Column(name = "FirstSurname")
+    @NotNull
     private String firstSurname;
+    @Column(name = "SecondSurname")
+    @NotNull
     private String secondSurname;
+    @Column(name = "Address")
+    @NotNull
     private String address;
-    private int phone;
-    private int secondContact;
+    @Column(name = "Phone")
+    @NotNull
+    private String phone;
+    @Column(name = "SecondContact")
+    @NotNull
+    private String secondContact;
+    @Column(name = "Email")
+    @NotNull
     private String email;
-    private int service;
 
-    public User(int userId, String name, String firstSurname, String secondSurname, String address, int phone, int secondContact, String email, int service){
+    @ManyToMany(mappedBy = "users",
+            cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private List<Service> services = new ArrayList<>();
 
-        this.setUserId(userId);
-        this.setName(name);
-        this.setFirstSurname(firstSurname);
-        this.setSecondSurname(secondSurname);
-        this.setAddress(address);
-        this.setPhone(phone);
-        this.setSecondContact(secondContact);
-        this.setEmail(email);
-        this.setService(service);
+    @OneToMany(mappedBy="user",
+            cascade = CascadeType.ALL)
+    private List<Issue> issues = new ArrayList<>();
+
+    public void addService(Service service) {
+        this.services.add(service);
+        service.getUsers().add(this);
+    }
+    public void removeService(Service service) {
+        this.services.remove(service);
+        service.getUsers().remove(this);
+    }
+    public void removeIssue(Issue issue) {
+        this.issues.remove(issue);
+        issue.setUser(null);
     }
 
-
-    public int getUserId() {
+    public int getId() {
         return userId;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setId(int id) {
+        this.userId = id;
     }
 
     public String getName() {
@@ -65,19 +96,19 @@ public class User {
         this.address = address;
     }
 
-    public int getPhone() {
+    public String getPhone() {
         return phone;
     }
 
-    public void setPhone(int phone) {
+    public void setPhone(String phone) {
         this.phone = phone;
     }
 
-    public int getSecondContact() {
+    public String getSecondContact() {
         return secondContact;
     }
 
-    public void setSecondContact(int secondContact) {
+    public void setSecondContact(String secondContact) {
         this.secondContact = secondContact;
     }
 
@@ -89,11 +120,20 @@ public class User {
         this.email = email;
     }
 
-    public int getService() {
-        return service;
+    public List<Service> getServices() {
+        return services;
     }
 
-    public void setService(int service) {
-        this.service = service;
+    public void setServices(List<Service> services) {
+        this.services = services;
     }
+
+    public List<Issue> getIssues() {
+        return issues;
+    }
+
+    public void setIssues(List<Issue> issues) {
+        this.issues = issues;
+    }
+
 }
