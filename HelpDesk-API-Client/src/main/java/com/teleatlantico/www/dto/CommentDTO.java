@@ -1,26 +1,12 @@
-package com.teleatlantico.www.domain;
+package com.teleatlantico.www.dto;
 
-import com.sun.istack.NotNull;
-
-import javax.persistence.*;
 import java.util.Date;
 
-@Entity
-@Table(name = "[Comment]")
-public class Comment {
-    @Id
-    @Column(name = "Id")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class CommentDTO {
     private int id;
-    @Column(name = "Description")
-    @NotNull
     private String description;
-    @Column(name = "CommentTime")
     private Date commentTime;
-
-    @ManyToOne
-    @JoinColumn(name = "ReportNumber")
-    private Issue issue;
+    private int issueByReportNumber;
 
     public int getId() {
         return id;
@@ -46,12 +32,12 @@ public class Comment {
         this.commentTime = commentTime;
     }
 
-    public Issue getIssue() {
-        return issue;
+    public int getIssueByReportNumber() {
+        return issueByReportNumber;
     }
 
-    public void setIssue(Issue issue) {
-        this.issue = issue;
+    public void setIssueByReportNumber(int issueByReportNumber) {
+        this.issueByReportNumber = issueByReportNumber;
     }
 
 }
