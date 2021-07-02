@@ -1,13 +1,13 @@
-﻿using System;
+﻿using API_Support_NET.Models;
+using API_Support_NET.Models.EntitiesModels;
+using API_Support_NET.ModelsClient;
+using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using API_Support_NET.Models;
-using Microsoft.AspNetCore.Cors;
-using API_Support_NET.ModelsClient;
 
 namespace API_Support_NET.Controllers
 {
@@ -27,17 +27,19 @@ namespace API_Support_NET.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Issue>>> GetAll()
         {
-            IList<Issue> issues = null;
-            issues = await _context.Issue.Select(issueItem => new Issue()
+            IList<IssueModel> issues = null;
+            using (var context = new _21IF4101HelpDeskSupportContext())
             {
-                ReportNumber = issueItem.ReportNumber,
-                IdSupport = issueItem.IdSupport,
-                Classification = issueItem.Classification,
-                Status = issueItem.Status,
-                ReportTime = issueItem.ReportTime,
-                ResolutionComment = issueItem.ResolutionComment
-            }).OrderByDescending(x => x.ReportTime).ToListAsync<Issue>();
-
+                issues = context.Issue
+                    .Select(issueItem => new IssueModel()
+                    {
+                        Report_Number = issueItem.ReportNumber,
+                        Classification = issueItem.Classification,
+                        Status = issueItem.Status,
+                        Report_Time = issueItem.ReportTime,
+                        Resolution_Comment = issueItem.ResolutionComment,
+                    }).OrderByDescending(x => x.Report_Time).ToList<IssueModel>();
+            }
             if (issues.Count == 0)
             {
                 return null;
@@ -46,25 +48,29 @@ namespace API_Support_NET.Controllers
         }
 
         [EnableCors("GetAllPolicy")]
-        [HttpGet("GetAllBySupportId/{id}")]
-        public async Task<ActionResult<IEnumerable<Issue>>> GetAllBySupportId(int id)
+        [HttpGet("GetById/{id}")]
+        public async Task<ActionResult<IEnumerable<Issue>>> GetById(int id)
         {
-            IList<Issue> issues = null;
-            issues = await _context.Issue.Where(issueItem => issueItem.IdSupport == id).Select(issueItem => new Issue()
+            IssueModel issue = null;
+            using (var context = new _21IF4101HelpDeskSupportContext())
             {
-                ReportNumber = issueItem.ReportNumber,
-                IdSupport = issueItem.IdSupport,
-                Classification = issueItem.Classification,
-                Status = issueItem.Status,
-                ReportTime = issueItem.ReportTime,
-                ResolutionComment = issueItem.ResolutionComment
-            }).OrderByDescending(x => x.ReportNumber).ToListAsync<Issue>();
 
-            if (issues.Count == 0)
+                issue = context.Issue.Where(issueItem => issueItem.ReportNumber == id).
+                    Select(issueItem => new IssueModel()
+                    {
+                        Report_Number = issueItem.ReportNumber,
+                        Classification = issueItem.Classification,
+                        Status = issueItem.Status,
+                        Report_Time = issueItem.ReportTime,
+                        Resolution_Comment = issueItem.ResolutionComment
+
+                    }).FirstOrDefault<IssueModel>();
+            }
+            if (issue == null)
             {
                 return null;
             }
-            return Json(issues);
+            return Json(issue);
         }
 
         // GET: api/Issue/5
@@ -111,41 +117,17 @@ namespace API_Support_NET.Controllers
             return NoContent();
         }
 
-        // POST: api/Issue
         [HttpPost]
-        public async Task<ActionResult<Issue>> PostIssue(Issue issue)
-        {
-            _context.Issue.Add(issue);
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (IssueExists(issue.ReportNumber))
-                {
-                    return Conflict();
-                }
-                else
-                {
-                    throw;
-                }
-            }
-
-            return CreatedAtAction("GetIssue", new { id = issue.ReportNumber }, issue);
-        }
-
-        [HttpPost]
-        public async Task<ActionResult<Issue>> Post(Issue issue)
+        public async Task<ActionResult<Issue>> Post(IssueModel issue)
         {
             _context.Issue.Add(new Issue()
             {
-                ReportNumber = issue.ReportNumber,
-                IdSupport = null,
+                ReportNumber = issue.Report_Number,
+                IdSupporter = null,
                 Classification = "Media",
                 Status = "Ingresado",
                 ReportTime = DateTime.Now,
-                ResolutionComment = null
+                ResolutionComment = "Nuevo caso"
             });
             try
             {
@@ -153,7 +135,7 @@ namespace API_Support_NET.Controllers
             }
             catch (DbUpdateException)
             {
-                if (IssueExists(issue.ReportNumber))
+                if (IssueExists(issue.Report_Number))
                 {
                     return null;
                 }
@@ -169,17 +151,19 @@ namespace API_Support_NET.Controllers
         [EnableCors("GetAllPolicy")]
         [HttpPut]
         [Route("[action]")]
-        public async Task<ActionResult> PutUpdateSupportAssigned(UpdateSupportAssignedModel model)
+        public async Task<ActionResult> PutSupportAssignedsAsync(UpdateSupportAssignedModel model)
         {
             using (var context = new _21IF4101HelpDeskSupportContext())
             {
-                var existingIssue = context.Issue.Where(s => s.ReportNumber == model.reportNumber)
+                var existingIssue = context.Issue.Where(s => s.ReportNumber == model.Report_Number)
                                                         .FirstOrDefault<Issue>();
                 if (existingIssue != null)
                 {
-                    var support = context.Support.Where(s => s.Id == model.idSupport)
-                                                            .FirstOrDefault<Support>();
-                    if (support != null)
+                    UpdateIntStringClientModel data = new UpdateIntStringClientModel();
+
+                    var supporter = context.Supporter.Where(s => s.Id == model.Id_Supporter)
+                    .FirstOrDefault<Supporter>();
+                    if (supporter != null)
                     {
                         /*TODO PutUpdateSupportAssigned SpringBoot*/
 
@@ -192,7 +176,7 @@ namespace API_Support_NET.Controllers
                     }
                     else return null;
 
-                    existingIssue.IdSupport = model.idSupport;
+                    existingIssue.IdSupporter = model.Id_Supporter;
                     await context.SaveChangesAsync();
                 }
                 else

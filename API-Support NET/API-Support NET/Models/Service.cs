@@ -6,20 +6,18 @@ using System.Collections.Generic;
 
 namespace API_Support_NET.Models
 {
-    public partial class Supervisor
+    public partial class Service
     {
-        public Supervisor()
+        public Service()
         {
             Supporter = new HashSet<Supporter>();
         }
 
+
         public int Id { get; set; }
-        public string Pass { get; set; }
         public string Name { get; set; }
-        public string FirstSurname { get; set; }
-        public string SecondSurname { get; set; }
-        public string Email { get; set; }
 
         public virtual ICollection<Supporter> Supporter { get; set; }
+        public virtual ICollection<SupporterService> SupporterService { get; set; }
     }
 }
