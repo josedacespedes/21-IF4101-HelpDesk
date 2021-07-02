@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using API_Support_NET.Models;
+using API_Support_NET.Models.EntitiesModels;
+using Microsoft.AspNetCore.Cors;
+using Microsoft.AspNetCore.Mvc;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using API_Support_NET.Models;
-using System.Text;
-using System.Security.Cryptography;
-using Microsoft.AspNetCore.Cors;
 
 namespace API_Support_NET.Controllers
 {
@@ -26,33 +21,28 @@ namespace API_Support_NET.Controllers
         [EnableCors("GetAllPolicy")]
         // POST: api/Login
         [HttpPost]
-        public async Task<ActionResult<SessionData>> PostLogin(Login login)
+        public async Task<ActionResult<SessionData>> PostLogin(LoginData loginData)
         {
-            Supervisor supervisor = null;
-            Support support = null;
+            SupervisorModel supervisor = null;
+            SupporterModel support = null;
             SessionData sessionData = null;
-            Login loginBD = null;
 
             //SESSION SUPERVISOR
             using (var context = new _21IF4101HelpDeskSupportContext())
             {
-                supervisor = context.Supervisor.Where(superItem => superItem.Email == login.Email).
-                    Select(superItem => new Supervisor()
+                supervisor = context.Supervisor.Where(superItem => superItem.Email == loginData.Email).
+                    Select(superItem => new SupervisorModel()
                     {
-                        Id = superItem.Id
-                    }).FirstOrDefault<Supervisor>();
+                        Id_Supervisor = superItem.Id,
+                        Pass = superItem.Pass
+                    }).FirstOrDefault<SupervisorModel>();
 
-                loginBD = context.Login.Where(logItem => logItem.Email == login.Email).
-                    Select(logItem => new Login()
-                    {
-                        Password = logItem.Password
-                    }).FirstOrDefault<Login>();
             }
 
-            if (supervisor != null && loginBD.Password == login.Password)
+            if (supervisor != null && supervisor.Pass == loginData.Pass)
             {
                 sessionData = new SessionData();
-                sessionData.IdUser = supervisor.Id;
+                sessionData.IdUser = supervisor.Id_Supervisor;
                 sessionData.Role = "USU";
                 sessionData.Token = "";
                 return Json(sessionData);
@@ -61,33 +51,31 @@ namespace API_Support_NET.Controllers
             //SESSION SUPPORT
             using (var context = new _21IF4101HelpDeskSupportContext())
             {
-                support = context.Support.Where(suppItem => suppItem.Email == login.Email).
-                    Select(suppItem => new Support()
+                support = context.Supporter.Where(suppItem => suppItem.Email == loginData.Email).
+                    Select(suppItem => new SupporterModel()
                     {
-                        Id = suppItem.Id
-                    }).FirstOrDefault<Support>();
-
-                loginBD = context.Login.Where(logItem => logItem.Email == login.Email).
-                    Select(logItem => new Login()
-                    {
-                        Password = logItem.Password
-                    }).FirstOrDefault<Login>();
+                        Id_Supporter = suppItem.Id,
+                        Pass = suppItem.Pass
+                    }).FirstOrDefault<SupporterModel>();
             }
 
-            if (support != null && loginBD.Password == login.Password)
+            if (support != null && support.Pass == loginData.Pass)
             {
                 sessionData = new SessionData();
-                sessionData.IdUser = support.Id;
+                sessionData.IdUser = support.Id_Supporter;
                 sessionData.Role = "USO";
                 sessionData.Token = "";
                 return Json(sessionData);
             }
 
-            /*TODO PostLogin SpringBoot*/
-
             //No esta registrado
             return sessionData;
         }
+    }
+    public class LoginData
+    {
+        public string Email { set; get; }
+        public string Pass { set; get; }
     }
 
     public class SessionData

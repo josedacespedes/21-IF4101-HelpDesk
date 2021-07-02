@@ -1,6 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore;
 
 // Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
 // If you have enabled NRTs for your project, then un-comment the following line:
@@ -20,9 +18,11 @@ namespace API_Support_NET.Models
         }
 
         public virtual DbSet<Issue> Issue { get; set; }
-        public virtual DbSet<Login> Login { get; set; }
+        public virtual DbSet<Note> Note { get; set; }
+        public virtual DbSet<Service> Service { get; set; }
         public virtual DbSet<Supervisor> Supervisor { get; set; }
-        public virtual DbSet<Support> Support { get; set; }
+        public virtual DbSet<Supporter> Supporter { get; set; }
+        public virtual DbSet<SupporterService> SupporterService { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -38,9 +38,11 @@ namespace API_Support_NET.Models
             modelBuilder.Entity<Issue>(entity =>
             {
                 entity.HasKey(e => e.ReportNumber)
-                    .HasName("PK__Issue__5A964EF959A9B7B5");
+                    .HasName("PK__Issue__715DB6640599C0BB");
 
-                entity.Property(e => e.ReportNumber).ValueGeneratedNever();
+                entity.Property(e => e.ReportNumber)
+                    .HasColumnName("Report_Number")
+                    .ValueGeneratedNever();
 
                 entity.Property(e => e.Classification)
                     .IsRequired()
@@ -48,9 +50,15 @@ namespace API_Support_NET.Models
                     .IsUnicode(false)
                     .HasDefaultValueSql("('Media')");
 
-                entity.Property(e => e.ReportTime).HasColumnType("datetime");
+                entity.Property(e => e.IdSupporter).HasColumnName("Id_Supporter");
+
+                entity.Property(e => e.ReportTime)
+                    .HasColumnName("Report_Time")
+                    .HasColumnType("datetime");
 
                 entity.Property(e => e.ResolutionComment)
+                    .IsRequired()
+                    .HasColumnName("Resolution_Comment")
                     .HasMaxLength(255)
                     .IsUnicode(false);
 
@@ -60,36 +68,50 @@ namespace API_Support_NET.Models
                     .IsUnicode(false)
                     .HasDefaultValueSql("('Ingresado')");
 
-                entity.HasOne(d => d.Support)
+                entity.HasOne(d => d.Supporter)
                     .WithMany(p => p.Issue)
-                    .HasForeignKey(d => d.IdSupport)
-                    .HasConstraintName("FK__Issue__IdSupport__5441852A");
+                    .HasForeignKey(d => d.IdSupporter)
+                    .HasConstraintName("FK__Issue__Id_Suppor__7A672E12");
             });
 
-            modelBuilder.Entity<Login>(entity =>
+            modelBuilder.Entity<Note>(entity =>
             {
-                entity.HasKey(e => e.Email)
-                    .HasName("PK_Login_1");
+                entity.HasKey(e => new { e.Id, e.ReportNumberIssue })
+                    .HasName("PK__Note__08F8DB24E2CD791D");
 
-                entity.Property(e => e.Email)
-                    .HasMaxLength(320)
+                entity.Property(e => e.Id).ValueGeneratedOnAdd();
+
+                entity.Property(e => e.ReportNumberIssue).HasColumnName("Report_Number_Issue");
+
+                entity.Property(e => e.Description)
+                    .IsRequired()
+                    .HasMaxLength(255)
                     .IsUnicode(false);
 
-                entity.Property(e => e.Password)
-                    .IsRequired()
-                    .HasMaxLength(8)
-                    .IsUnicode(false);
+                entity.Property(e => e.NoteTime)
+                    .HasColumnName("Note_Time")
+                    .HasColumnType("datetime")
+                    .HasDefaultValueSql("(getdate())");
 
-                entity.Property(e => e.Rol)
+                entity.HasOne(d => d.ReportNumber)
+                    .WithMany(p => p.Note)
+                    .HasForeignKey(d => d.ReportNumberIssue)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Note__Report_Num__7E37BEF6");
+            });
+
+            modelBuilder.Entity<Service>(entity =>
+            {
+                entity.Property(e => e.Name)
                     .IsRequired()
-                    .HasMaxLength(3)
+                    .HasMaxLength(50)
                     .IsUnicode(false);
             });
 
             modelBuilder.Entity<Supervisor>(entity =>
             {
                 entity.HasIndex(e => e.Email)
-                    .HasName("UQ__Supervis__A9D1053489F5A691")
+                    .HasName("UQ__Supervis__A9D10534486DDF91")
                     .IsUnique();
 
                 entity.Property(e => e.Email)
@@ -99,6 +121,7 @@ namespace API_Support_NET.Models
 
                 entity.Property(e => e.FirstSurname)
                     .IsRequired()
+                    .HasColumnName("First_Surname")
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
@@ -107,22 +130,22 @@ namespace API_Support_NET.Models
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.Property(e => e.SecondSurname)
+                entity.Property(e => e.Pass)
                     .IsRequired()
-                    .HasMaxLength(50)
+                    .HasMaxLength(8)
                     .IsUnicode(false);
 
-                entity.HasOne(d => d.Login)
-                    .WithOne(p => p.Supervisor)
-                    .HasForeignKey<Supervisor>(d => d.Email)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Supervisor_Login");
+                entity.Property(e => e.SecondSurname)
+                    .IsRequired()
+                    .HasColumnName("Second_Surname")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
             });
 
-            modelBuilder.Entity<Support>(entity =>
+            modelBuilder.Entity<Supporter>(entity =>
             {
                 entity.HasIndex(e => e.Email)
-                    .HasName("UQ__Supporte__A9D10534C67AF5C8")
+                    .HasName("UQ__Supporte__A9D105342D9A6160")
                     .IsUnique();
 
                 entity.Property(e => e.Email)
@@ -132,32 +155,57 @@ namespace API_Support_NET.Models
 
                 entity.Property(e => e.FirstSurname)
                     .IsRequired()
+                    .HasColumnName("First_Surname")
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.Property(e => e.IdSupervisor).HasColumnName("id_supervisor");
+                entity.Property(e => e.IdSupervisor).HasColumnName("Id_Supervisor");
 
                 entity.Property(e => e.Name)
                     .IsRequired()
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
+                entity.Property(e => e.Pass)
+                    .IsRequired()
+                    .HasMaxLength(8)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.SecondSurname)
                     .IsRequired()
+                    .HasColumnName("Second_Surname")
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.HasOne(d => d.Login)
-                    .WithOne(p => p.Support)
-                    .HasForeignKey<Support>(d => d.Email)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Support_Login");
-
                 entity.HasOne(d => d.Supervisor)
-                    .WithMany(p => p.Support)
+                    .WithMany(p => p.Supporter)
                     .HasForeignKey(d => d.IdSupervisor)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Support_Supervisor");
+                    .HasConstraintName("FK__Supporter__Id_Su__73BA3083");
+            });
+
+            modelBuilder.Entity<SupporterService>(entity =>
+            {
+                entity.HasKey(e => new { e.IdSupporter, e.IdService })
+                    .HasName("PK__Supporte__81A7B1143A655B9A");
+
+                entity.ToTable("Supporter_Service");
+
+                entity.Property(e => e.IdSupporter).HasColumnName("Id_Supporter");
+
+                entity.Property(e => e.IdService).HasColumnName("Id_Service");
+
+                entity.HasOne(d => d.Service)
+                    .WithMany(p => p.SupporterService)
+                    .HasForeignKey(d => d.IdService)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Supporter__Id_Se__03F0984C");
+
+                entity.HasOne(d => d.IdSupporterNavigation)
+                    .WithMany(p => p.SupporterService)
+                    .HasForeignKey(d => d.IdSupporter)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK__Supporter__Id_Su__02FC7413");
             });
 
             OnModelCreatingPartial(modelBuilder);

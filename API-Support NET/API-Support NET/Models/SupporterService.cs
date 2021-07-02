@@ -7,13 +7,12 @@ using System.Collections.Generic;
 
 namespace API_Support_NET.Models
 {
-    public partial class Login
+    public partial class SupporterService
     {
-        public string Email { get; set; }
-        public string Password { get; set; }
-        public string Rol { get; set; }
+        public int IdSupporter { get; set; }
+        public int IdService { get; set; }
 
-        public virtual Supervisor Supervisor { get; set; }
-        public virtual Support Support { get; set; }
+        public virtual Service Service { get; set; }
+        public virtual Supporter IdSupporterNavigation { get; set; }
     }
 }
