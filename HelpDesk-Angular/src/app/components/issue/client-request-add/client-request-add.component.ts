@@ -5,7 +5,6 @@ import { IssueService } from '../../../services/issue.service';
 import Swal from 'sweetalert2';
 import { Client } from '../../../models/client.model';
 import { Regex } from '../../../regex/regex.validation';
-import { requireCheckboxesToBeCheckedValidator } from '../../../regex/checkbox.validation';
 import {formatDate } from '@angular/common';
 
 @Component({
@@ -18,7 +17,6 @@ export class ClientRequestAddComponent implements OnInit {
   ngOnInit() {
   }
 
-  
   addUserRequestForm: FormGroup;
   client: Client = new Client();
   regex: Regex = new Regex();
@@ -51,12 +49,7 @@ export class ClientRequestAddComponent implements OnInit {
         Validators.minLength(20),
         Validators.maxLength(255)
       ]),
-      servicesCheckboxGroup: new FormGroup({
-        mobilePhone: new FormControl(false),
-        channel: new FormControl(false),
-        internet: new FormControl(false),
-        fixedTelephony: new FormControl(false),
-      }, requireCheckboxesToBeCheckedValidator())
+      control: ['2']
     })
   }
 
@@ -68,6 +61,22 @@ export class ClientRequestAddComponent implements OnInit {
 
     Swal.fire({ title: "Solicitud enviada", timer: 1500 });
     this.clear();
+
+    this.issueService.createIssue(this.addUserRequestForm.value).subscribe((result) => {
+      if (result != null) {
+        Swal.fire({
+          icon: 'success',
+          title: 'Enviado exitoso!',
+          timer: 1500
+        })
+      } else {
+        Swal.fire({
+          icon: 'error',
+          title: 'Problema con el envio',
+          timer: 1500
+        })
+      }
+    });
     
     
   }

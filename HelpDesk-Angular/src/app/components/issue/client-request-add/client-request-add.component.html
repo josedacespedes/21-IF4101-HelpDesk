@@ -3,15 +3,10 @@
 <div id="content" class="container mt-3">
     <div class="card bg-light">
         <div class="card-body mx-auto ">
-            <p class="card-title text-center mt-1">Ingresar Solicitud de Servicio</p>
+            <p class="card-title text-center mt-1">Ingresar problema con el servicio</p>
             <hr>
             <form class="example-form" [formGroup]="addUserRequestForm" #formDir="ngForm" (ngSubmit)="addRequestClient()" autocomplete="off">
                 <div class="form-group mx-auto mb-2">
-
-                    <!-- <mat-label>N° de Solicitud: </mat-label> -->
-                    <!-- <div class="d-block justify-content-center">
-                        <p>N° de Solicitud: #</p> 
-                    </div> -->
 
                     <mat-form-field class="example-full-width">
                         <mat-label>Descripción</mat-label>
@@ -52,34 +47,25 @@
                         </mat-hint>
                     </mat-form-field>
 
-
                     <mat-form-field class="example-full-width">
                         <mat-label>Dirección</mat-label>
                         <input maxlength="255" minlength="20" type="text" formControlName="address" matInput>
                         <mat-hint align="end">Opcional</mat-hint>
                     </mat-form-field>
-
                     <br>
-                    <br>
-
-                    <div class="form-group mb-2" formGroupName="servicesCheckboxGroup">
-                        <mat-label>Escoja los servicios: </mat-label>
-                        <section class="example-section">
-                            <mat-checkbox class="example-margin" color="primary" formControlName="mobilePhone">Telefonía movil</mat-checkbox>
-                            <mat-checkbox class="example-margin" color="primary" formControlName="channel">Cable</mat-checkbox>
-                            <mat-checkbox class="example-margin" color="primary" formControlName="internet">Internet</mat-checkbox>
-                            <mat-checkbox class="example-margin" color="primary" formControlName="fixedTelephony">Telefonía fija</mat-checkbox>
-                        </section>
-                        <mat-hint class="text-danger service-alert"
-                        *ngIf="addUserRequestForm.controls['servicesCheckboxGroup'].errors && addUserRequestForm.controls['servicesCheckboxGroup'].errors.requireCheckboxesToBeChecked">
-                        <small>*Elija al menos un servicio</small></mat-hint>
-                        
+                    
+                    <div class="form-group mb-2">
+                        <mat-label>Seleccione el servicio que presenta el problema: </mat-label>
+                        <br>
+                        <br>
+                        <mat-radio-group   formControlName="control">
+                          <mat-radio-button value="2" color="primary">Cable</mat-radio-button>
+                          <mat-radio-button value="3" color="primary">Internet</mat-radio-button>
+                          <mat-radio-button value="1" color="primary">Telefonía movil</mat-radio-button>
+                          <mat-radio-button value="4" color="primary">Telefonía fija</mat-radio-button>
+                        </mat-radio-group>
                     </div>
-                    <!-- <div class="d-block justify-content-center">
-                         <p>PIPE TODAY:: {{today | date:'dd-MM-yyyy hh:mm:ss a':'GMT-6'}}</p> 
-                        <p>Fecha Actual: {{jstoday}}</p>
-                        <p>Estado de Solicitud: #</p> 
-                    </div> -->
+
                     <hr>
                     <div class="d-flex justify-content-center">
                         <button type="submit" class="bg-primary text-white mb-3" mat-raised-button>Aceptar</button>
