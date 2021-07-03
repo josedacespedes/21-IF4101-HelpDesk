@@ -35,5 +35,8 @@ export class IssueService {
     return this.http.post<any>(baseUrlIssueClient, issue);
   }
   
+  public findAllByUserId(userId: number): Observable<any> {
+    return this.http.get<any>(baseUrlIssueClient + "findAllByUserId/" + userId);
+  }
 
 }
