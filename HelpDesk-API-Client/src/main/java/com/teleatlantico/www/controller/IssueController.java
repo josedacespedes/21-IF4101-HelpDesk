@@ -58,9 +58,9 @@ public class IssueController {
                 .collect(Collectors.toList());
     }
 
-    @RequestMapping(path = "/{id}", method = RequestMethod.GET)
-    public IssueDTO findById(@PathVariable("id") int id) {
-        return converter.toDTO(service.findById(id));
+    @RequestMapping(path = "/{reportNumber}", method = RequestMethod.GET)
+    public IssueDTO findById(@PathVariable("reportNumber") int reportNumber) {
+        return converter.toDTO(service.findById(reportNumber));
     }
 
     @RequestMapping(path = "/{reportNumber}", method = RequestMethod.PUT)

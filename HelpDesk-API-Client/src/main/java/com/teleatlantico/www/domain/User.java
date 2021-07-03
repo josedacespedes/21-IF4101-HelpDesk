@@ -1,6 +1,6 @@
 package com.teleatlantico.www.domain;
 
-import com.sun.istack.internal.NotNull;
+import com.sun.istack.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
