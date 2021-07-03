@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders} from '@angular/common/http';
 import { Observable } from 'rxjs';
 
 const baseUrlIssueSupport = 'https://localhost:44316/api/Issue/';
-const baseUrlIssueClient = 'https://localhost:44316/api/Issue/';
+const baseUrlIssueClient = 'https://localhost:8080/api/issue/';
 
 const httpOptions = {
   headers: new HttpHeaders({

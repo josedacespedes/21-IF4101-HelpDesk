@@ -22,7 +22,7 @@ export class LoginComponent implements OnInit {
   regex: Regex = new Regex();
 
   constructor(private fb: FormBuilder, private route: ActivatedRoute,
-    private IssueService: IssueService, private router: Router) {
+    private loginService: LoginService, private router: Router) {
     this.loginForm = this.fb.group({
       email: new FormControl('', [
         Validators.required,
@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit {
     }
     this.loading();
 
-    this.IssueService.getIssueList().subscribe((result) => {
+    this.loginService.authentication(this.loginForm.value).subscribe((result) => {
       if (result != null) {
         this.modal('/main-client', 'Bienvenido al sistema');
       } else {
