@@ -1,0 +1,103 @@
+<app-nav-menu></app-nav-menu>
+<br>
+<div class="container">
+  <h2>Registrarse</h2>
+  <p><a [routerLink]="['/login']">Iniciar sesión</a></p>
+  <hr>
+  <div class="card">
+    <div class="card-body">
+      <div class="form-group">
+        <form [formGroup]="form" (ngSubmit)="submit()">
+          <div class="form-group row">
+            <label for="email">Correo</label>
+            <input id="email" type="text" formControlName="email" class="form-control"
+                   [ngClass]="{ 'is-invalid': submitted && this.email.errors }" />
+            <div *ngIf="submitted && this.email.errors" class="invalid-feedback">
+              <div *ngIf="this.email.errors.required">Se requiere el correo</div>
+              <div *ngIf="this.email.errors.email">Debe ingresar un correo válido</div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="pass">Contraseña</label>
+            <input id="pass" type="password" formControlName="pass" class="form-control"
+                   [ngClass]="{ 'is-invalid': submitted && this.pass.errors }" />
+            <div *ngIf="submitted && this.pass.errors" class="invalid-feedback">
+              <div *ngIf="this.pass.errors.required">Se requiere la contraseña</div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="name">Nombre</label>
+            <input id="name" type="text" formControlName="name" class="form-control"
+                   [ngClass]="{ 'is-invalid': submitted && this.name.errors }" />
+            <div *ngIf="submitted && this.name.errors" class="invalid-feedback">
+              <div *ngIf="this.name.errors.required">Se requiere el nombre</div>
+              <div *ngIf="this.name.errors.pattern">Solo se permiten letras</div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="firstSurname">Primer Apellido</label>
+            <input id="firstSurname" type="text" formControlName="firstSurname" class="form-control"
+                   [ngClass]="{ 'is-invalid': submitted && this.firstSurname.errors }" />
+            <div *ngIf="submitted && this.firstSurname.errors" class="invalid-feedback">
+              <div *ngIf="this.firstSurname.errors.required">Se requiere el primer apellido</div>
+              <div *ngIf="this.firstSurname.errors.pattern">Solo se permiten letras</div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="secondSurname">Segundo Apellido</label>
+            <input id="secondSurname" type="text" formControlName="secondSurname" class="form-control"
+                   [ngClass]="{ 'is-invalid': submitted && this.secondSurname.errors }" />
+            <div *ngIf="submitted && this.secondSurname.errors" class="invalid-feedback">
+              <div *ngIf="this.secondSurname.errors.required">Se requiere el segundo apellido</div>
+              <div *ngIf="this.secondSurname.errors.pattern">Solo se permiten letras</div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="address">Dirección</label>
+            <textarea id="address" type="text" formControlName="address" class="form-control"
+                   [ngClass]="{ 'is-invalid': submitted && this.address.errors }"></textarea>
+            <div *ngIf="submitted && this.address.errors" class="invalid-feedback">
+              <div *ngIf="this.address.errors.required">Se requiere la dirección</div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="phone">Télefono</label>
+            <input id="phone" type="text" formControlName="phone" class="form-control"
+                   [ngClass]="{ 'is-invalid': submitted && this.phone.errors }" />
+            <div *ngIf="submitted && this.phone.errors" class="invalid-feedback">
+              <div *ngIf="this.phone.errors.required">Se requiere el télefono</div>
+              <div *ngIf="this.phone.errors.pattern">El valor ingresado no corresponde a un número de télefono</div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="secondContact">Segundo Contacto</label>
+            <input id="secondContact" type="text" formControlName="secondContact" class="form-control"
+                   [ngClass]="{ 'is-invalid': submitted && this.secondContact.errors }" />
+            <div *ngIf="submitted && this.secondContact.errors" class="invalid-feedback">
+              <div *ngIf="this.secondContact.errors.required">Se requiere un segundo contacto</div>
+              <div *ngIf="this.secondContact.errors.pattern">El valor ingresado no corresponde a un número de télefono</div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <div>
+              <label>Servicios:</label>
+              <div formArrayName="services"
+                   *ngFor="let service of servicesData; let i = index">
+                <input type="checkbox" [formControlName]="i" />
+                {{service.name}}
+              </div>
+            </div>
+          </div>
+          <div *ngIf="submitted && !this.isSelectedCheckboxes()" class="text-danger">
+            <p>Debe seleccionar al menos un servicio</p>
+          </div>
+          <div class="form-group row">
+            <button class="btn btn-primary">Registrarse</button>
+          </div>
+          <div *ngIf="loading" class="alert alert-info form-group row">Porfavor espere...</div>
+          <div *ngIf="error" class="alert alert-danger form-group row">{{error}}</div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

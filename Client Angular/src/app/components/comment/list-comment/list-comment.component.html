@@ -1,0 +1,85 @@
+<app-nav-menu></app-nav-menu>
+<br>
+<p *ngIf="!this.commentList && !this.commentList"><em>Loading...</em> </p>
+<div class="container" *ngIf="this.issue && this.commentList">
+  <h2>Solicitud</h2>
+  <p><a [routerLink]="['/issue/list']">Regresar</a></p>
+  <hr>
+  <div class="card">
+    <div class="card-body">
+
+      <div>
+        <h4>Número de solicitud:</h4>
+        <p>{{this.issue.reportNumber}}</p>
+        <h4>Descripción:</h4>
+        <p>{{this.issue.description}}</p>
+        <h4>Fecha y Hora:</h4>
+        <p>{{this.issue.registerTime.toString().split("T")[0]
+        + "/" + this.issue.registerTime.toString().split("T")[1].split(".")[0] }}</p>
+        <h4>Estado:</h4>
+        <p>{{this.issue.status}}</p>
+      </div>
+
+      <div>
+        <h4>Comentarios</h4>
+        <hr>
+        <div>
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addCommentModal">
+            Agregar Comentario
+          </button>
+        </div>
+        <br>
+        <div>
+          <ul class="list-group">
+            <li class="list-group-item" *ngFor="let comment of commentList | async">
+              <b>Descripción: </b>{{ comment.description }}
+              <br>
+              <b>Fecha: </b>{{ comment.commentTime.toString().split("T")[0]
+            + "/" + this.issue.registerTime.toString().split("T")[1].split(".")[0] }}
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Modal -->
+      <div class="modal" id="addCommentModal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h4 class="modal-title">Agregar un comentario a la solicitud</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+              <label for="description">Descripción</label>
+              <div class="card">
+                <div class="card-body">
+                  <div class="form-group">
+                    <form [formGroup]="form">
+                      <div class="form-group row">
+                        <textarea id="description" type="text" formControlName="description" class="form-control"
+                                  [ngClass]="{ 'is-invalid': submitted && this.description.errors }"></textarea>
+                        <div *ngIf="submitted && this.description.errors" class="invalid-feedback">
+                          <div *ngIf="this.description.errors.required">Se requiere la descripción</div>
+                        </div>
+                      </div>
+                      <div *ngIf="loading" class="alert alert-info form-group row">Porfavor espere...</div>
+                      <div *ngIf="error" class="alert alert-danger form-group row">{{error}}</div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+              <button (click)="addComment()" type="button" class="btn btn-primary">Agregar</button>
+              <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Modal -->
+    </div>
+  </div>
+</div>

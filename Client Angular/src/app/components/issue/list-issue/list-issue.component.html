@@ -1,0 +1,35 @@
+<app-nav-menu></app-nav-menu>
+<br>
+<p *ngIf="!issueList"><em>Loading...</em></p>
+<div class="container" *ngIf="issueList">
+  <h2>Solicitudes</h2>
+  <p><a [routerLink]="['/issue/register']">Agregar solicitud</a></p>
+  <hr>
+  <div class="card">
+    <div class="table-responsive">
+      <table class=' table'>
+        <thead >
+        <tr>
+          <th>Número</th>
+          <th>Servicio</th>
+          <th>Fecha/Hora</th>
+          <th>Estado</th>
+          <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let issue of issueList | async">
+          <td>{{ issue.reportNumber }}</td>
+          <td>{{ servicesData[issue.serviceById - 1].name }}</td>
+          <td>{{ issue.registerTime.toString().split("T")[0]
+          + "/" + this.issue.registerTime.toString().split("T")[1].split(".")[0] }}</td>
+          <td>{{ issue.status }}</td>
+          <td>
+            <button class="btn-primary btn" [routerLink]="['/comment/list', issue.reportNumber]"><i class="fas fa-info-circle"></i></button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
