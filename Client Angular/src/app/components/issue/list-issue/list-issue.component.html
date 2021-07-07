@@ -3,7 +3,7 @@
 <p *ngIf="!issueList"><em>Loading...</em></p>
 <div class="container" *ngIf="issueList">
   <h2>Solicitudes</h2>
-  <p><a [routerLink]="['/issue/register']">Agregar solicitud</a></p>
+  <button class="btn btn-info" [routerLink]="['/issue/register']"><i class="fas fa-plus-circle"></i> Agregar solicitud</button>
   <hr>
   <div class="card">
     <div class="table-responsive">
@@ -14,7 +14,7 @@
           <th>Servicio</th>
           <th>Fecha/Hora</th>
           <th>Estado</th>
-          <th></th>
+          <th>Acción</th>
         </tr>
         </thead>
         <tbody>
@@ -25,7 +25,7 @@
           + "/" + this.issue.registerTime.toString().split("T")[1].split(".")[0] }}</td>
           <td>{{ issue.status }}</td>
           <td>
-            <button class="btn-primary btn" [routerLink]="['/comment/list', issue.reportNumber]"><i class="fas fa-info-circle"></i></button>
+            <button class="btn-primary btn" [routerLink]="['/comment/list', issue.reportNumber]"><i class="fas fa-eye"></i></button>
           </td>
         </tr>
         </tbody>

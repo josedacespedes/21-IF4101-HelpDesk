@@ -1,9 +1,13 @@
 <app-nav-menu></app-nav-menu>
 <br>
-<p *ngIf="!this.commentList && !this.commentList"><em>Loading...</em> </p>
+
+<div  *ngIf="!this.commentList && !this.commentList" class="loading">
+  <div class="loader"></div>
+</div>
+
 <div class="container" *ngIf="this.issue && this.commentList">
   <h2>Solicitud</h2>
-  <p><a [routerLink]="['/issue/list']">Regresar</a></p>
+  <button class="btn btn-info" [routerLink]="['/issue/list']">Lista de solicitudes</button>
   <hr>
   <div class="card">
     <div class="card-body">
