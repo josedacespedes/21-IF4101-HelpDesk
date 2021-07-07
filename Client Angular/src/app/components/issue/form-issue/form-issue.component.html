@@ -1,0 +1,69 @@
+<app-nav-menu></app-nav-menu>
+<br>
+<div id="container" class="container">
+  <h2>Ingresar Solicitud</h2>
+  <p><a [routerLink]="['/issue/list']">Lista de solicitudes</a></p>
+  <hr>
+  <div class="card">
+    <div class="card-body">
+      <div class="form-group">
+        <form [formGroup]="form" (ngSubmit)="submit()">
+          <div class="form-group row">
+            <label for="description">Descripción</label>
+            <textarea id="description" type="text" formControlName="description" class="form-control"
+                   [ngClass]="{ 'is-invalid': submitted && this.description.errors }"></textarea>
+            <div *ngIf="submitted && this.description.errors" class="invalid-feedback">
+              <div *ngIf="this.description.errors.required">Se requiere descripción</div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="phone">Teléfono de Contacto</label>
+            <input id="phone" type="text" formControlName="phone" class="form-control"
+                   [ngClass]="{ 'is-invalid': submitted && this.phone.errors }" />
+            <div *ngIf="submitted && this.phone.errors" class="invalid-feedback">
+              <div *ngIf="this.phone.errors.required">Se requiere el télefono contacto</div>
+              <div *ngIf="this.phone.errors.pattern">El valor ingresado no corresponde a un número de télefono</div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="email">Correo de Referencia</label>
+            <input id="email" type="text" formControlName="email" class="form-control"
+                   [ngClass]="{ 'is-invalid': submitted && this.email.errors }" />
+            <div *ngIf="submitted && this.email.errors" class="invalid-feedback">
+              <div *ngIf="this.email.errors.required">Se requiere el correo de referencia</div>
+              <div *ngIf="this.email.errors.email">Debe ingresar un correo válido</div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="address">Dirección de Referencia</label>
+            <textarea id="address" type="text" formControlName="address" class="form-control"
+                   [ngClass]="{ 'is-invalid': submitted && this.address.errors }"></textarea>
+            <div *ngIf="submitted && this.address.errors" class="invalid-feedback">
+              <div *ngIf="this.address.errors.required">Se requiere la dirección de referencia</div>
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="service">Servicios:</label>
+          </div>
+          <div class="form-group row">
+            <select id="service" formControlName="service">
+              <option formArrayName="services"
+                      *ngFor="let service of servicesData; let i = index"
+                      [value]="service.id">{{ service.name }}</option>
+            </select>
+          </div>
+          <div class="form-group row">
+            <div *ngIf="submitted && this.services.errors" class="text-danger">
+              <p>Debe seleccionar un servicio</p>
+            </div>
+          </div>
+          <div class="form-group row">
+            <button class="btn btn-primary">Enviar solicitud</button>
+          </div>
+          <div *ngIf="loading" class="alert alert-info form-group row">Porfavor espere...</div>
+          <div *ngIf="error" class="alert alert-danger form-group row">{{error}}</div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
