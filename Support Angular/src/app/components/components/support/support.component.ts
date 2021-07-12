@@ -4,57 +4,46 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Support } from '../models/Support';
 import { SupportService } from '../services/Support.service';
 import swal from "sweetalert2";
-import {AuthenticationService} from '../services/authentication.service';
+import { AuthenticationService } from '../services/authentication.service';
 
 //JALAR EL SERVICIO
 
 @Component({
-    selector: 'app-support',
-    templateUrl: './support.component.html',
-    styleUrls: ['./support.component.css']
+  selector: 'app-support',
+  templateUrl: './support.component.html',
+  styleUrls: ['./support.component.css']
 })
 export class SupportComponent implements OnInit {
-
-/*
-    support: boolean;
-    supervisor: boolean;
-    supportForm: FormGroup;
-    Pass = new FormControl('', [Validators.required]);
-    Name = new FormControl('', [Validators.required]);
-    First_SurName = new FormControl('', [Validators.required]);
-    Second_Surname = new FormControl('', [Validators.required]);
-    Email = new FormControl('', [Validators.required]);
-    */
-
-   form: FormGroup;
-   submitted = false;
-   error = '';
-   loading: boolean = false;
+  form: FormGroup;
+  submitted = false;
+  error = '';
+  loading: boolean = false;
 
 
-        constructor(private formBuilder: FormBuilder,
-            private router: Router,
-            private supportService: SupportService, private auth: AuthenticationService) {
-          if (!this.auth.isUserLoggedIn()) { this.router.navigate(['login']); }
-  this.form = this.formBuilder.group({
-    email: ['', [Validators.required, Validators.email]],
-    pass: ['', [Validators.required]],
-    name: ['', [Validators.required, Validators.pattern('^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$')]],
-    First_L: ['', [Validators.required, Validators.pattern('^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$')]],
-    Second_L: ['', [Validators.required, Validators.pattern('^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$')]],
- });
-}
+  constructor(private formBuilder: FormBuilder,
+    private router: Router,
+    private supportService: SupportService, private auth: AuthenticationService) {
+    if (!this.auth.isUserLoggedIn()) { this.router.navigate(['login']); }
+    this.form = this.formBuilder.group({
+      email: ['', [Validators.required, Validators.email]],
+      pass: ['', [Validators.required]],
+      name: ['', [Validators.required, Validators.pattern('^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$')]],
+      First_L: ['', [Validators.required, Validators.pattern('^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$')]],
+      Second_L: ['', [Validators.required, Validators.pattern('^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$')]],
+      radioButton: ['radioButtonSupport']
+    });
+  }
 
 
-    ngOnInit(): void {
-
-    }
+  ngOnInit(): void {
+  }
 
 
   submit() {
     this.error = '';
     this.submitted = true;
-    if (this.form.invalid || this.loading) { return; }
+    if (this.form.invalid || this.loading) {return;}
+    
     this.blockForm();
     const user = new Support();
     user.Email = this.email.value;
@@ -63,17 +52,32 @@ export class SupportComponent implements OnInit {
     user.First_SurName = this.First_L.value;
     user.Second_Surname = this.Second_L.value;
     user.Id_Supervisor = this.auth.userId;
-    this.supportService.createSupport(user).subscribe(data => {
-      swal.fire({
-        icon: 'success',
-        text: 'El registro fue éxitoso'
-      }).finally(() => {
-        this.router.navigate(['/Issue']);
+
+    if(this.radioButton.value=="radioButtonSupport"){
+      this.supportService.createSupport(user).subscribe(data => {
+        swal.fire({
+          icon: 'success',
+          text: 'El registro fue éxitoso'
+        }).finally(() => {
+          this.router.navigate(['/Issue']);
+        });
+      }, res => {
+        this.error = res.error;
+        this.unBlockForm();
       });
-    }, res => {
-      this.error = res.error;
-      this.unBlockForm();
-    });
+    }else{
+      this.supportService.createSupervisor(user).subscribe(data => {
+        swal.fire({
+          icon: 'success',
+          text: 'El registro fue éxitoso'
+        }).finally(() => {
+          this.router.navigate(['/Issue']);
+        });
+      }, res => {
+        this.error = res.error;
+        this.unBlockForm();
+      });
+    }
   }
 
   blockForm() {
@@ -91,5 +95,6 @@ export class SupportComponent implements OnInit {
   get name() { return this.form.get('name'); }
   get First_L() { return this.form.get('First_L'); }
   get Second_L() { return this.form.get('Second_L'); }
+  get radioButton() { return this.form.get('radioButton'); }
 
 }
