@@ -1,0 +1,40 @@
+.post-it {
+  position:relative;
+  display: grid;
+  background:#fffba6;
+  overflow:hidden;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  padding:20px;
+  border-radius:0 0 30px 0px/45px;
+  font-family: 'Permanent Marker', cursive;
+  line-height:1.7em;
+  font-size:19px;
+  -webkit-mask-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAIAAACQd1PeAAAAGXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAA5JREFUeNpiYGBgAAgwAAAEAAGbA+oJAAAAAElFTkSuQmCC);
+}
+
+.post-it li {
+ 	cursor:pointer; 
+}
+
+.post-it:before {
+  content:"";
+  display:block;
+  position:absolute;
+  width:20px;
+  height:25px;
+  background:#fffba6;
+  box-shadow:
+    3px -2px 10px rgba(58, 45, 45, 0.1),
+    inset 15px -15px 15px rgba(0,0,0,0.1);
+  right:0;
+  bottom:0;
+  z-index:2;
+  transform: skewX(168deg);
+}
+
+h1 {
+  font-size:25px; 
+  position:relative;
+}
+
