@@ -80,8 +80,10 @@
     <div>
         <label><b>Notas:</b></label>
         <hr>
-        <ul class="list-group">
-            <li class="list-group-item" *ngFor="let note of notes | async">
+        <ul class="list-group list-group-horizontal-sm">
+            <li class="list-group-item post-it" *ngFor="let note of notes | async">
+                <b>Autor: </b> Tú/Supervisor
+                <br>
                 <b>Descripción: </b>{{note.Description}}
                 <br>
                 <b>Fecha: </b>{{note.Note_Time}}
