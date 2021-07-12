@@ -16,6 +16,17 @@ namespace support_Api.Controllers
 
             using (var ctx = new Entities())
             {
+                var existSupervisor = ctx.Supervisor.Where(s => s.Email == sup.Email).FirstOrDefault<Supervisor>();
+                if (existSupervisor != null)
+                {
+                    var resp = new HttpResponseMessage(HttpStatusCode.Conflict)
+                    {
+                        Content = new StringContent(string.Format("El correo ya existe")),
+                        ReasonPhrase = "El correo ya existe"
+                    };
+                    return ResponseMessage(resp);
+                }
+
                 ctx.Supervisor.Add(new Supervisor()
                 {
                     //Id = sup.Id_Supervisor,

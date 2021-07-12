@@ -27,13 +27,7 @@ export class SupportService {
         return this.http.post(`${this.urlSupervisor}`, supp);
     }
 
-
-
-
-
     getSupportList(): Observable<any> {
-
         return this.http.get(`${this.baseUrl}`);
-
     }
 }
