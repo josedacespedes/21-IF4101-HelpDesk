@@ -4,12 +4,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Support } from '../models/Support';
 import { SupportService } from '../services/Support.service';
 import swal from "sweetalert2";
-<<<<<<< HEAD
 import {AuthenticationService} from '../services/authentication.service';
 import { Regex } from '../../../regex/regex.validation';
-=======
-import { AuthenticationService } from '../services/authentication.service';
->>>>>>> 83d725c7d7f9b9414f3cdedd6839b7ab2fca11a5
+
 
 //JALAR EL SERVICIO
 
@@ -19,23 +16,6 @@ import { AuthenticationService } from '../services/authentication.service';
   styleUrls: ['./support.component.css']
 })
 export class SupportComponent implements OnInit {
-  form: FormGroup;
-  submitted = false;
-  error = '';
-  loading: boolean = false;
-
-<<<<<<< HEAD
-/*
-    support: boolean;
-    supervisor: boolean;
-    supportForm: FormGroup;
-    Pass = new FormControl('', [Validators.required]);
-    Name = new FormControl('', [Validators.required]);
-    First_SurName = new FormControl('', [Validators.required]);
-    Second_Surname = new FormControl('', [Validators.required]);
-    Email = new FormControl('', [Validators.required]);
-    */
-
   form: FormGroup;
   submitted = false;
   error = '';
@@ -55,22 +35,7 @@ export class SupportComponent implements OnInit {
     Second_L: ['', [Validators.required, Validators.pattern(this.regex.surname), Validators.minLength(4), Validators.maxLength(50)]],
   });
 }
-=======
->>>>>>> 83d725c7d7f9b9414f3cdedd6839b7ab2fca11a5
 
-  constructor(private formBuilder: FormBuilder,
-    private router: Router,
-    private supportService: SupportService, private auth: AuthenticationService) {
-    if (!this.auth.isUserLoggedIn()) { this.router.navigate(['login']); }
-    this.form = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
-      pass: ['', [Validators.required]],
-      name: ['', [Validators.required, Validators.pattern('^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$')]],
-      First_L: ['', [Validators.required, Validators.pattern('^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$')]],
-      Second_L: ['', [Validators.required, Validators.pattern('^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$')]],
-      radioButton: ['radioButtonSupport']
-    });
-  }
 
 
   ngOnInit(): void {
