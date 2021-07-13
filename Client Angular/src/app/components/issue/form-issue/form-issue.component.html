@@ -31,7 +31,7 @@
                    [ngClass]="{ 'is-invalid': submitted && this.email.errors }" />
             <div *ngIf="submitted && this.email.errors" class="invalid-feedback">
               <div *ngIf="this.email.errors.required">Se requiere el correo de referencia</div>
-              <div *ngIf="this.email.errors.email">Debe ingresar un correo válido</div>
+              <div *ngIf="this.email.errors.email">Debe ingresar un correo válido, con minimo 10 caracteres.</div>
             </div>
           </div>
           <div class="form-group row">
@@ -60,7 +60,7 @@
           <div class="form-group row">
             <button class="btn btn-primary">Enviar solicitud</button>
           </div>
-          <div *ngIf="loading" class="alert alert-info form-group row">Porfavor espere...</div>
+          <div *ngIf="loading" class="alert alert-info form-group row">Enviando solicitud...</div>
           <div *ngIf="error" class="alert alert-danger form-group row">{{error}}</div>
         </form>
       </div>

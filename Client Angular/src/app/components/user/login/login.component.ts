@@ -5,6 +5,7 @@ import {UserService} from "../../../../services/user.service";
 import {AuthenticationService} from "../../../../services/authentication.service";
 import {delay, first} from "rxjs/operators";
 import swal from'sweetalert2';
+import { Regex } from '../../../regex/regex.validation';
 
 @Component({
   selector: 'app-login',
@@ -16,6 +17,7 @@ export class LoginComponent implements OnInit {
   submitted = false;
   error: string;
   loading: boolean = false;
+  regex: Regex = new Regex();
 
   constructor(private formBuilder: FormBuilder,
               private router: Router,
@@ -23,8 +25,8 @@ export class LoginComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
-      pass: ['', [Validators.required]],
+      email: ['', [Validators.required, Validators.email, Validators.minLength(10), Validators.maxLength(320)]],
+      pass: ['', [Validators.required,Validators.pattern(this.regex.password),Validators.minLength(8),Validators.maxLength(8)]]
     });
   }
 

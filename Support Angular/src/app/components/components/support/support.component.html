@@ -1,4 +1,20 @@
 <div class="container">
+<<<<<<< HEAD
+    <br>
+    <h3>Registro de Soportista</h3>
+    <br>
+    <!--<form [formGroup]="supportForm" (ngSubmit)="save()" #formDir="ngForm" novalidate>-->
+    <form [formGroup]="form" (ngSubmit)="submit()">
+        <div class="form-group">
+            <label>Nombre: </label>
+            <input id="Name" type="text" formControlName="name" class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && this.name.errors }" />
+            <div *ngIf="submitted && this.name.errors" class="invalid-feedback">
+                <div *ngIf="this.name.errors.required">Se requiere el nombre</div>
+                <div *ngIf="this.name.errors.pattern">Solo se permiten letras</div>
+            </div>
+        </div>
+=======
   <br>
   <h3>Registro</h3>
   <br>
@@ -14,6 +30,7 @@
         <div *ngIf="this.name.errors.pattern">Solo se permiten letras</div>
       </div>
     </div>
+>>>>>>> 83d725c7d7f9b9414f3cdedd6839b7ab2fca11a5
 
     <div class="form-group">
       <label>Primer apellido: </label>
@@ -25,6 +42,47 @@
       </div>
     </div>
 
+<<<<<<< HEAD
+        <div class="form-group">
+            <label>Segundo apellido: </label>
+            <input id="Second_L" type="text" formControlName="Second_L" class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && this.Second_L.errors }" />
+            <div *ngIf="submitted && this.Second_L.errors" class="invalid-feedback">
+                <div *ngIf="this.Second_L.errors.required">Se requiere el segundo apellido</div>
+                <div *ngIf="this.Second_L.errors.pattern">Solo se permiten letras</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Correo electrónico: </label>
+            <input id="Email" type="text" formControlName="email" class="form-control"
+            [ngClass]="{ 'is-invalid': submitted && this.email.errors }" />
+            <div *ngIf="submitted && this.email.errors" class="invalid-feedback">
+                <div *ngIf="this.email.errors.required">Se requiere el correo</div>
+                <div *ngIf="this.email.errors.email">Debe ingresar un correo válido, con mínimo 10 caracteres.</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>Contraseña: </label>
+            <input  id="Pass" type="password" formControlName="pass" class="form-control" maxlength="8" minlength="8"
+            [ngClass]="{ 'is-invalid': submitted && this.pass.errors }" />
+            <div *ngIf="submitted && this.pass.errors" class="invalid-feedback">
+                <div *ngIf="this.pass.errors.required">Se requiere la contraseña</div>
+                <div *ngIf="this.pass.errors">La contraseña debe llevar, una mayúscula, una minúscula, un número, un simbolo y extensión mínima de 8 caracteres.</div>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <button class="btn btn-primary">Registrarse</button>
+        </div>
+
+        <div class="form-group">
+            <div *ngIf="loading" class="alert alert-info form-group row">Registrando...</div>
+            <div *ngIf="error" class="alert alert-danger form-group row">{{error}}</div>
+        </div>
+    </form>
+=======
     <div class="form-group">
       <label>Segundo apellido: </label>
       <input id="Second_L" type="text" formControlName="Second_L" class="form-control"
@@ -81,4 +139,5 @@
     </div>
 
   </form>
+>>>>>>> 83d725c7d7f9b9414f3cdedd6839b7ab2fca11a5
 </div>
