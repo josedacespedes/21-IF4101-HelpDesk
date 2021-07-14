@@ -4,7 +4,9 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Support } from '../models/Support';
 import { SupportService } from '../services/Support.service';
 import swal from "sweetalert2";
-import { AuthenticationService } from '../services/authentication.service';
+import {AuthenticationService} from '../services/authentication.service';
+import { Regex } from '../../../regex/regex.validation';
+
 
 //JALAR EL SERVICIO
 
@@ -18,21 +20,22 @@ export class SupportComponent implements OnInit {
   submitted = false;
   error = '';
   loading: boolean = false;
-
+  regex: Regex = new Regex();
 
   constructor(private formBuilder: FormBuilder,
     private router: Router,
     private supportService: SupportService, private auth: AuthenticationService) {
-    if (!this.auth.isUserLoggedIn()) { this.router.navigate(['login']); }
-    this.form = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
-      pass: ['', [Validators.required]],
-      name: ['', [Validators.required, Validators.pattern('^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$')]],
-      First_L: ['', [Validators.required, Validators.pattern('^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$')]],
-      Second_L: ['', [Validators.required, Validators.pattern('^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$')]],
-      radioButton: ['radioButtonSupport']
-    });
-  }
+    if (!this.auth.isUserLoggedIn()) 
+    { this.router.navigate(['login']); }
+  this.form = this.formBuilder.group({
+    email: ['', [Validators.required, Validators.email, Validators.minLength(10), Validators.maxLength(320)]],
+    pass: ['', [Validators.required, Validators.pattern(this.regex.password),Validators.minLength(8),Validators.maxLength(8)]],
+    name: ['', [Validators.required, Validators.pattern(this.regex.name), Validators.minLength(3), Validators.maxLength(50)]],
+    First_L: ['', [Validators.required, Validators.pattern(this.regex.surname), Validators.minLength(4), Validators.maxLength(50)]],
+    Second_L: ['', [Validators.required, Validators.pattern(this.regex.surname), Validators.minLength(4), Validators.maxLength(50)]],
+  });
+}
+
 
 
   ngOnInit(): void {

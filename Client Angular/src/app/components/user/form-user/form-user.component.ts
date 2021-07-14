@@ -6,6 +6,7 @@ import {Router} from "@angular/router";
 import {Observable} from "rxjs";
 import {AuthenticationService} from "../../../../services/authentication.service";
 import swal from "sweetalert2";
+import { Regex } from '../../../regex/regex.validation';
 
 @Component({
   selector: 'app-form-user',
@@ -17,6 +18,8 @@ export class FormUserComponent implements OnInit {
   submitted = false;
   error = '';
   loading: boolean = false;
+  regex: Regex = new Regex();
+  
 
   servicesData = [
     {id: 1, name: 'Telefonía Móvil'},
@@ -29,14 +32,14 @@ export class FormUserComponent implements OnInit {
               private router: Router,
               private userService: UserService) {
     this.form = this.formBuilder.group({
-      email: ['', [Validators.required, Validators.email]],
-      pass: ['', [Validators.required]],
-      name: ['', [Validators.required, Validators.pattern('^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$')]],
-      firstSurname: ['', [Validators.required, Validators.pattern('^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$')]],
-      secondSurname: ['', [Validators.required, Validators.pattern('^[a-zA-ZÀ-ÿ\u00f1\u00d1]+(\s*[a-zA-ZÀ-ÿ\u00f1\u00d1]*)*[a-zA-ZÀ-ÿ\u00f1\u00d1]+$')]],
-      address: ['', [Validators.required]],
-      phone: ['', [Validators.required, Validators.pattern('([0-9]){8}')]],
-      secondContact:  ['', [Validators.required, Validators.pattern('([0-9]){8}')]],
+      email: ['', [Validators.required, Validators.email, Validators.minLength(10), Validators.maxLength(320)]],
+      pass: ['', [Validators.required, Validators.pattern(this.regex.password),Validators.minLength(8),Validators.maxLength(8)]],
+      name: ['', [Validators.required, Validators.pattern(this.regex.name), Validators.minLength(3), Validators.maxLength(50)]],
+      firstSurname: ['', [Validators.required, Validators.pattern(this.regex.surname), Validators.minLength(4), Validators.maxLength(50)]],
+      secondSurname: ['', [Validators.required, Validators.pattern(this.regex.surname), Validators.minLength(4), Validators.maxLength(50)]],
+      address: ['', [Validators.required,  Validators.minLength(20), Validators.maxLength(255)]],
+      phone: ['', [Validators.required, Validators.pattern(this.regex.number), Validators.minLength(8), Validators.maxLength(8)]],
+      secondContact:  ['', [Validators.required, Validators.pattern(this.regex.number), Validators.minLength(8), Validators.maxLength(8)]],
       services: new FormArray([])
     });
   }

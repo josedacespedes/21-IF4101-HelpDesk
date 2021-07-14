@@ -8,6 +8,7 @@ import {IssueService} from "../../../../services/issue.service";
 import {User} from "../../../../models/User";
 import {AuthenticationService} from "../../../../services/authentication.service";
 import swal from'sweetalert2';
+import { Regex } from '../../../regex/regex.validation';
 
 @Component({
   selector: 'app-form-issue',
@@ -20,6 +21,7 @@ export class FormIssueComponent implements OnInit {
   error = '';
   loading: boolean = false;
   servicesData = new Array<Service>();
+  regex: Regex = new Regex();
 
   constructor(private formBuilder: FormBuilder,
               private router: Router,
@@ -30,10 +32,10 @@ export class FormIssueComponent implements OnInit {
 
   ngOnInit() {
     this.form = this.formBuilder.group({
-      description: ['', [Validators.required]],
-      phone: ['', [Validators.required, Validators.pattern('([0-9]){8}')]],
-      email: ['', [Validators.required, Validators.email]],
-      address: ['', [Validators.required]],
+      description: ['', [Validators.required], Validators.minLength(5), Validators.maxLength(255)],
+      phone: ['', [Validators.required, Validators.pattern(this.regex.number), Validators.minLength(8), Validators.maxLength(8)]],
+      email: ['', [Validators.required, Validators.email, Validators.minLength(10), Validators.maxLength(320)]],
+      address: ['', [Validators.required], Validators.minLength(20), Validators.maxLength(255)],
       service: ['', [Validators.required]],
       services: new FormArray([], [Validators.required])
     });
