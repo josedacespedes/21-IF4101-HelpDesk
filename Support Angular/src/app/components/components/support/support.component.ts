@@ -62,7 +62,7 @@ export class SupportComponent implements OnInit {
           this.router.navigate(['/Issue']);
         });
       }, res => {
-        this.error = res.error;
+        this.error = "El correo ya existe";
         this.unBlockForm();
       });
     }else{
@@ -74,7 +74,7 @@ export class SupportComponent implements OnInit {
           this.router.navigate(['/Issue']);
         });
       }, res => {
-        this.error = res.error;
+        this.error = "El correo ya existe";
         this.unBlockForm();
       });
     }
