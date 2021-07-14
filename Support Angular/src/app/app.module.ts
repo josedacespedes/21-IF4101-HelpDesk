@@ -11,19 +11,26 @@ import { AppComponent } from './app.component';
 import { SupportComponent } from './components/components/support/support.component';
 import { DetailsComponent } from './components/components/Issue/details/details.component';
 import { LoginComponent } from './components/components/login/login.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MaterialModule } from './material/material.module';
+import { NavMainComponent } from './components/nav-main/nav-main.component';
+import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
+import { MainSupportComponent } from './components/main-support/main-support.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    ListComponent, SupportComponent, DetailsComponent, LoginComponent
+    ListComponent, SupportComponent, DetailsComponent, LoginComponent, NavMainComponent, NavMenuComponent, MainSupportComponent
   ],
   imports: [
     BrowserModule,
+    MaterialModule,
     AppRoutingModule,
     ReactiveFormsModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -44,7 +44,7 @@ export class LoginComponent implements OnInit {
             icon: 'success',
             text: 'Se ha iniciado sesión correctamente'
           }).finally(() => {
-            this.router.navigate(['issue/list'])
+            this.router.navigate(['main/client'])
           });
         },
         res => {
