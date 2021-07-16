@@ -5,7 +5,6 @@ import { IssueClient } from '../../models/IssueClient';
 import { User } from '../../models/User';
 import { Comment } from '../../models/Comment';
 import { Note } from '../../models/Note';
-
 import { IssueService } from '../../services/Issue.service';
 import { SupportService } from '../../services/Support.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -51,8 +50,8 @@ export class DetailsComponent implements OnInit {
     errorAddNote = null;
 
     constructor(private route: ActivatedRoute, private router: Router,
-                private issueService: IssueService, private suppService: SupportService, private auth: AuthenticationService) {
-      if (!this.auth.isUserLoggedIn()) { this.router.navigate(['login']); }
+                private issueService: IssueService, private suppService: SupportService, private authenticationService: AuthenticationService) {
+      if (!this.authenticationService.isUserLoggedIn()) { this.router.navigate(['login']); }
     }
 
     ngOnInit() {

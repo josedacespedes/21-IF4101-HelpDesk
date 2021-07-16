@@ -24,8 +24,8 @@ export class SupportComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
     private router: Router,
-    private supportService: SupportService, private auth: AuthenticationService) {
-    if (!this.auth.isUserLoggedIn()) 
+    private supportService: SupportService, private authenticationService: AuthenticationService) {
+    if (!this.authenticationService.isUserLoggedIn()) 
     { this.router.navigate(['login']); }
   this.form = this.formBuilder.group({
     email: ['', [Validators.required, Validators.email, Validators.minLength(10), Validators.maxLength(320)]],
@@ -54,7 +54,7 @@ export class SupportComponent implements OnInit {
     user.Name = this.name.value;
     user.First_SurName = this.First_L.value;
     user.Second_Surname = this.Second_L.value;
-    user.Id_Supervisor = this.auth.userId;
+    user.Id_Supervisor = this.authenticationService.userId;
 
     if(this.radioButton.value=="radioButtonSupport"){
       this.supportService.createSupport(user).subscribe(data => {

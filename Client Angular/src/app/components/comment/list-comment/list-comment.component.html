@@ -12,17 +12,26 @@
   <div class="card">
     <div class="card-body">
 
-      <div>
-        <h4>Número de solicitud:</h4>
-        <p>{{this.issue.reportNumber}}</p>
-        <h4>Descripción:</h4>
-        <p>{{this.issue.description}}</p>
-        <h4>Fecha y Hora:</h4>
-        <p>{{this.issue.registerTime.toString().split("T")[0]
-        + "/" + this.issue.registerTime.toString().split("T")[1].split(".")[0] }}</p>
-        <h4>Estado:</h4>
-        <p>{{this.issue.status}}</p>
+      <div class="row text-center">
+        <div class="col-6">
+          <div>
+            <h4>Número de solicitud:</h4>
+            <p>{{this.issue.reportNumber}}</p>
+            <h4>Descripción:</h4>
+            <p>{{this.issue.description}}</p>
+          </div>
+        </div>
+        <div class="col-6">
+          <div>
+            <h4>Fecha y Hora:</h4>
+            <p>{{this.issue.registerTime.toString().split("T")[0]
+            + "/" + this.issue.registerTime.toString().split("T")[1].split(".")[0] }}</p>
+            <h4>Estado:</h4>
+            <p>{{this.issue.status}}</p>
+          </div>
+        </div>
       </div>
+
 
       <div>
         <h4>Comentarios</h4>
