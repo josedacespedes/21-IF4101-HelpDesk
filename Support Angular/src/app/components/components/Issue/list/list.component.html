@@ -1,9 +1,11 @@
-<div class="panel panel-primary">
-    <div class="panel-heading">
+<app-nav-menu></app-nav-menu>
+
+<div class="container panel panel-primary mt-5">
+    <div class="panel-heading text-center">
         <h2>Lista de Casos</h2>
     </div>
     <div class="panel-body table-responsive">
-        <table class="table">
+        <table class="table table-hover table-dark text-light text-center">
             <thead>
                 <tr>
                     <th>Número de reporte</th>
@@ -31,6 +33,5 @@
     <div>
         <button (click)="reloadData()" class="btn btn-info" style="margin-left: 10px"><i
                 class="fas fa-sync"></i></button>
-
     </div>
 </div>

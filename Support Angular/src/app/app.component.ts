@@ -9,14 +9,12 @@ import { Router } from '@angular/router';
 })
 export class AppComponent {
 
-  constructor(private auth: AuthenticationService,
+  constructor(private authenticationService: AuthenticationService,
               private router: Router) { }
   title = 'appAngularSupport';
 
   logout() {
-    this.auth.logout();
+    this.authenticationService.logout();
     this.router.navigate(['/login']);
   }
 }
-
-

@@ -14,8 +14,8 @@ export class ListComponent implements OnInit {
     issues: Observable<Issue[]>;
 
     constructor(private issueService: IssueService,
-                private router: Router, private auth: AuthenticationService) {
-      if (!this.auth.isUserLoggedIn()) { this.router.navigate(['login']); }
+                private router: Router, private authenticationService: AuthenticationService) {
+      if (!this.authenticationService.isUserLoggedIn()) { this.router.navigate(['login']); }
     }
 
     ngOnInit() {
@@ -23,7 +23,7 @@ export class ListComponent implements OnInit {
     }
 
     reloadData() {
-        if (this.auth.role === 'USO') { this.issues = this.issueService.getIssueListBySupportId(this.auth.userId); }
+        if (this.authenticationService.role === 'USO') { this.issues = this.issueService.getIssueListBySupportId(this.authenticationService.userId); }
         else { this.issues = this.issueService.getIssueList(); }
     }
 

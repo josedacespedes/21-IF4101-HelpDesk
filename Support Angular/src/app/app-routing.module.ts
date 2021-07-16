@@ -9,7 +9,6 @@ import { MainSupportComponent } from './components/main-support/main-support.com
 
 
 const routes: Routes = [
-
   { path: '', redirectTo: 'Issue', pathMatch: 'full' },
   { path: 'Issue', component: ListComponent },
   { path: 'CreateSupport', component: SupportComponent },
