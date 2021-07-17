@@ -67,7 +67,7 @@
               <div class="form-group mb-2">
                 <label for="phone">Télefono</label>
                 <input id="phone" type="text" formControlName="phone" class="form-control"
-                      [ngClass]="{ 'is-invalid': submitted && this.phone.errors }" />
+                      [ngClass]="{ 'is-invalid': submitted && this.phone.errors }" maxlength="8" minlength="8"/>
                 <div *ngIf="submitted && this.phone.errors" class="invalid-feedback">
                   <div *ngIf="this.phone.errors.required">Se requiere el télefono</div>
                   <div *ngIf="this.phone.errors.pattern">El valor ingresado no corresponde a un número de télefono</div>
@@ -76,7 +76,7 @@
               <div class="form-group mb-2">
                 <label for="secondContact">Segundo Contacto</label>
                 <input id="secondContact" type="text" formControlName="secondContact" class="form-control"
-                      [ngClass]="{ 'is-invalid': submitted && this.secondContact.errors }" />
+                      [ngClass]="{ 'is-invalid': submitted && this.secondContact.errors }" maxlength="8" minlength="8"/>
                 <div *ngIf="submitted && this.secondContact.errors" class="invalid-feedback">
                   <div *ngIf="this.secondContact.errors.required">Se requiere un segundo contacto</div>
                   <div *ngIf="this.secondContact.errors.pattern">El valor ingresado no corresponde a un número de télefono</div>

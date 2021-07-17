@@ -2,34 +2,36 @@
 <br>
 <p *ngIf="!issueList"><em>Loading...</em></p>
 <div class="container" *ngIf="issueList">
-  <h2>Solicitudes</h2>
+  <div class="text-center">
+    <h2>Solicitudes</h2>
+  </div>
   <button class="btn btn-info" [routerLink]="['/issue/register']"><i class="fas fa-plus-circle"></i> Agregar solicitud</button>
   <hr>
-  <div class="card">
+  <!-- <div class="card"> -->
     <div class="table-responsive">
       <table class="table table-hover table-dark text-light text-center">
         <thead >
-        <tr>
-          <th>Número</th>
-          <th>Servicio</th>
-          <th>Fecha/Hora</th>
-          <th>Estado</th>
-          <th>Acción</th>
-        </tr>
+          <tr>
+            <th>Número</th>
+            <th>Servicio</th>
+            <th>Fecha/Hora</th>
+            <th>Estado</th>
+            <th>Acción</th>
+          </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let issue of issueList | async">
-          <td>{{ issue.reportNumber }}</td>
-          <td>{{ servicesData[issue.serviceById - 1].name }}</td>
-          <td>{{ issue.registerTime.toString().split("T")[0]
-          + "/" + this.issue.registerTime.toString().split("T")[1].split(".")[0] }}</td>
-          <td>{{ issue.status }}</td>
-          <td>
-            <button class="btn-primary btn" [routerLink]="['/comment/list', issue.reportNumber]" title="Detalles"><i class="fas fa-eye"></i></button>
-          </td>
-        </tr>
+          <tr *ngFor="let issue of issueList | async">
+            <td>{{ issue.reportNumber }}</td>
+            <td>{{ servicesData[issue.serviceById - 1].name }}</td>
+            <td>{{ issue.registerTime.toString().split("T")[0]
+            + "/" + this.issue.registerTime.toString().split("T")[1].split(".")[0] }}</td>
+            <td>{{ issue.status }}</td>
+            <td>
+              <button class="btn-primary btn" [routerLink]="['/comment/list', issue.reportNumber]" title="Detalles"><i class="fas fa-eye"></i></button>
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>
-  </div>
+  <!-- </div> -->
 </div>

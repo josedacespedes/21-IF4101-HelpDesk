@@ -14,7 +14,7 @@ export class AppComponent {
               private auth: AuthenticationService) { }
 
   ngOnInit() {
-    if(this.auth.isUserLoggedIn())
-      this.router.navigate(["/login"]);
+    // if(this.auth.isUserLoggedIn())
+    //   this.router.navigate(["/login"]);
   }
 }

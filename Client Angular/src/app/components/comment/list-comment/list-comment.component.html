@@ -6,7 +6,9 @@
 </div>
 
 <div class="container" *ngIf="this.issue && this.commentList">
-  <h2>Solicitud</h2>
+  <div class="text-center">
+    <h2>Solicitud</h2>
+  </div>
   <button class="btn btn-info" [routerLink]="['/issue/list']">Lista de solicitudes</button>
   <hr>
   <div class="card">

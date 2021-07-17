@@ -37,7 +37,7 @@ export class ListCommentComponent implements OnInit {
       this.reportNumber = this.avRoute.snapshot.params["reportNumber"];
     }
     this.form = this.formBuilder.group({
-      description: ['', [Validators.required], Validators.minLength(5), Validators.maxLength(255)]
+      description: ['', [Validators.required]]
     });
     this.getIssue();
   }
