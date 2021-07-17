@@ -1,7 +1,9 @@
 <app-nav-menu></app-nav-menu>
 <br>
 <div id="container" class="container">
-  <h2>Ingresar Solicitud</h2>
+  <div class="text-center">
+    <h2>Ingresar Solicitud</h2>
+  </div>
   <button class="btn btn-info" [routerLink]="['/issue/list']">Lista de solicitudes</button>
   <hr>
   <div class="card">
@@ -19,7 +21,7 @@
           <div class="form-group row">
             <label for="phone">Teléfono de Contacto</label>
             <input id="phone" type="text" formControlName="phone" class="form-control"
-                   [ngClass]="{ 'is-invalid': submitted && this.phone.errors }" />
+                   [ngClass]="{ 'is-invalid': submitted && this.phone.errors }"  maxlength="8" minlength="8"/>
             <div *ngIf="submitted && this.phone.errors" class="invalid-feedback">
               <div *ngIf="this.phone.errors.required">Se requiere el télefono contacto</div>
               <div *ngIf="this.phone.errors.pattern">El valor ingresado no corresponde a un número de télefono</div>
@@ -31,7 +33,7 @@
                    [ngClass]="{ 'is-invalid': submitted && this.email.errors }" />
             <div *ngIf="submitted && this.email.errors" class="invalid-feedback">
               <div *ngIf="this.email.errors.required">Se requiere el correo de referencia</div>
-              <div *ngIf="this.email.errors.email">Debe ingresar un correo válido, con minimo 10 caracteres.</div>
+              <div *ngIf="this.email.errors.email">Debe ingresar un correo válido</div>
             </div>
           </div>
           <div class="form-group row">
@@ -60,7 +62,7 @@
           <div class="form-group row">
             <button class="btn btn-primary">Enviar solicitud</button>
           </div>
-          <div *ngIf="loading" class="alert alert-info form-group row">Enviando solicitud...</div>
+          <div *ngIf="loading" class="alert alert-info form-group row">Porfavor espere...</div>
           <div *ngIf="error" class="alert alert-danger form-group row">{{error}}</div>
         </form>
       </div>

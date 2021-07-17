@@ -6,6 +6,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @ResponseStatus(value = HttpStatus.UNAUTHORIZED)
 public class InvalidCredentialsException extends RuntimeException {
     public InvalidCredentialsException() {
-        super("Datos incorrectos");
+        super("Usuario no registrado");
     }
 }
