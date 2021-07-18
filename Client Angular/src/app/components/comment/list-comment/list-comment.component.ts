@@ -70,7 +70,9 @@ export class ListCommentComponent implements OnInit {
           icon: 'success',
           text: 'Se ha agregado el comentario'
         }).finally(() => {
-          window.location.reload();
+          this.clear();
+          this.router.navigate(['issue/list']);
+          this.getComments();
         });
       }, error => {
         this.unBlockForm();
@@ -88,6 +90,13 @@ export class ListCommentComponent implements OnInit {
     this.form.enable();
   }
 
+  clear() {
+    this.form.reset();
+  }
+  
   get description() { return this.form.get('description'); }
 
+
+
 }
+

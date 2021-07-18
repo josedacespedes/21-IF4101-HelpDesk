@@ -81,9 +81,9 @@ export class DetailsComponent implements OnInit {
     }
 
     reloadData() {
-        this.supports = this.suppService.getSupportList();
-        this.comments = this.issueService.getCommentList(this.id);
-        this.notes = this.issueService.getNote(this.id);
+      this.supports = this.suppService.getSupportList();
+      this.comments = this.issueService.getCommentList(this.id);
+      this.notes = this.issueService.getNote(this.id);
     }
 
     list() {
@@ -97,7 +97,8 @@ export class DetailsComponent implements OnInit {
                 icon: 'success',
                 text: 'Se ha actualizado el estado'
             }).finally(() => {
-                window.location.reload();
+                this.list();
+                this.loadingSetSupporter = false;
             });
         }, res => {
             this.errorUpdateStatus = res.error.text;
@@ -115,7 +116,7 @@ export class DetailsComponent implements OnInit {
               icon: 'success',
               text: 'Se ha agregado el comentario'
             }).finally(() => {
-              window.location.reload();
+              this.list();
             });
           }, res => {
             this.errorAddComment = res.error.text;
@@ -134,7 +135,8 @@ export class DetailsComponent implements OnInit {
               icon: 'success',
               text: 'Se ha agregado la nota'
             }).finally(() => {
-              window.location.reload();
+              this.list();
+              this.loadingSetSupporter = false;
             });
           }, res => {
             this.errorAddNote = res.error.text;
@@ -142,6 +144,8 @@ export class DetailsComponent implements OnInit {
           });
         }
     }
+
+    
 
     setSupportUser() {
       const idSupportUser = (document.querySelector('#support') as HTMLSelectElement).value;
@@ -157,7 +161,9 @@ export class DetailsComponent implements OnInit {
                   icon: 'success',
                   text: 'Se ha seleccionado un soportista para la solicitud'
                 }).finally(() => {
-                  window.location.reload();
+                  // window.location.reload();
+                  this.loadingSetSupporter = false;
+                  this.list();
                 });
               }, res => {
                 this.loadingSetSupporter = false;
@@ -184,7 +190,8 @@ export class DetailsComponent implements OnInit {
               icon: 'success',
               text: 'Se ha resuelto el caso '
             }).finally(() => {
-              window.location.reload();
+              this.list();
+              this.loadingSetSupporter = false;
             });
           }, res => {
             this.errorResolveIssue = res.error.text;

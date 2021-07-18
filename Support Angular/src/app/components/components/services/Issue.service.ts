@@ -12,8 +12,8 @@ import { ActivatedRoute, Router } from '@angular/router';
     providedIn: 'root'
 })
 export class IssueService {
-    private baseUrl = 'http://localhost:50044/api/Issue/';
-    private urlNote = 'http://localhost:50044/api/Note/';
+    private baseUrl = 'http://localhost:44016/api/Issue/';
+    private urlNote = 'http://localhost:44016/api/Note/';
     issue: Issue;
 
     constructor(private http: HttpClient, private router: Router) { }

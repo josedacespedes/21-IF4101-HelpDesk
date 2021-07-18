@@ -22,7 +22,7 @@ export class AuthenticationService {
   }
 
   authentication(email: string, pass: string) {
-    return this.http.post<any>(`http://localhost:50044/api/Login`,
+    return this.http.post<any>(`http://localhost:44016/api/Login`,
       {email, pass})
       .pipe(map((res) => {
         this.registerSuccessfulLogin(res);

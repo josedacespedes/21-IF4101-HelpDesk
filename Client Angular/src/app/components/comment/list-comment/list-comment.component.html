@@ -56,6 +56,10 @@
         </div>
       </div>
 
+      <div class="mt-3">
+        <button (click)="getComments()" class="btn btn-info" style="margin-left: 10px"><i class="fas fa-sync"></i></button>
+      </div>
+
       <!-- Modal -->
       <div class="modal" id="addCommentModal">
         <div class="modal-dialog">
@@ -71,7 +75,7 @@
               <div class="card">
                 <div class="card-body">
                   <div class="form-group">
-                    <form [formGroup]="form">
+                    <form [formGroup]="form" >
                       <div class="form-group row">
                         <textarea id="description" type="text" formControlName="description" class="form-control"
                                   [ngClass]="{ 'is-invalid': submitted && this.description.errors }"></textarea>
@@ -88,8 +92,8 @@
             </div>
             <!-- Modal footer -->
             <div class="modal-footer">
-              <button (click)="addComment()" type="button" class="btn btn-primary">Agregar</button>
-              <button type="button" class="btn btn-danger" data-dismiss="modal">Cerrar</button>
+              <button (click)="addComment(); clear();" type="button" class="btn btn-primary" data-dismiss="modal">Agregar</button>
+              <button type="button" class="btn btn-danger" (click)="clear();" data-dismiss="modal">Cerrar</button>
             </div>
           </div>
         </div>

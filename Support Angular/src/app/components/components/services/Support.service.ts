@@ -8,8 +8,8 @@ import { Support } from '../models/Support';
     providedIn: 'root'
 })
 export class SupportService {
-    private baseUrl = 'http://localhost:50044/api/Supporter/';
-    private urlSupervisor = 'http://localhost:50044/api/supervisor/';
+    private baseUrl = 'http://localhost:44016/api/Supporter/';
+    private urlSupervisor = 'http://localhost:44016/api/supervisor/';
 
     //private urlClient = '';
     constructor(private http: HttpClient) { }
