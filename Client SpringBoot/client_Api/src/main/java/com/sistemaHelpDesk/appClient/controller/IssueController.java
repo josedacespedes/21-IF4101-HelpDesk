@@ -28,7 +28,7 @@ public class IssueController {
     private IssueConverter converter;
     @Autowired
     private RestTemplate template;
-    private String _url = "http://localhost:50044/api/Issue/";
+    private String _url = "http://localhost:44016/api/Issue/";
 
     @RequestMapping(path = "/", method = RequestMethod.POST)
     public IssueDTO save(@RequestBody IssueDTO dto) {

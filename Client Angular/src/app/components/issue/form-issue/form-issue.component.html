@@ -9,7 +9,7 @@
   <div class="card">
     <div class="card-body">
       <div class="form-group">
-        <form [formGroup]="form" (ngSubmit)="submit()">
+        <form [formGroup]="form" (ngSubmit)="submit()" autocomplete="off">
           <div class="form-group row">
             <label for="description">Descripción</label>
             <textarea id="description" type="text" formControlName="description" class="form-control"
@@ -61,6 +61,8 @@
           </div>
           <div class="form-group row">
             <button class="btn btn-primary">Enviar solicitud</button>
+            <button class="bg bg-danger text-white" id="button_cancel"
+             [routerLink]="['/issue/list']" mat-raised-button>Cancelar</button>
           </div>
           <div *ngIf="loading" class="alert alert-info form-group row">Porfavor espere...</div>
           <div *ngIf="error" class="alert alert-danger form-group row">{{error}}</div>
