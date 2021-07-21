@@ -40,11 +40,7 @@ export class SupportComponent implements OnInit {
     name: ['', [Validators.required, Validators.pattern(this.regex.name), Validators.minLength(3), Validators.maxLength(50)]],
     First_L: ['', [Validators.required, Validators.pattern(this.regex.surname), Validators.minLength(4), Validators.maxLength(50)]],
     Second_L: ['', [Validators.required, Validators.pattern(this.regex.surname), Validators.minLength(4), Validators.maxLength(50)]],
-<<<<<<< HEAD
     radioButton: ['radioButtonSupport'],
-=======
-    services: new FormArray([])
->>>>>>> 4796ced8aae4e96e31e2575d18c52d500b05bf35
   });
 }
 
