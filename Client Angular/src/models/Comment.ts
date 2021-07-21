@@ -3,4 +3,5 @@ export class Comment {
   issueByReportNumber: number;
   description: string;
   commentTime: Date;
+  author: string;
 }

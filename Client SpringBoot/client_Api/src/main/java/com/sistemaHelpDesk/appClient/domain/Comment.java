@@ -16,10 +16,20 @@ public class Comment {
     private String description;
     @Column(name = "Comment_Time")
     private Date commentTime;
+    @Column(name = "Author")
+    private String author;
 
     @ManyToOne
     @JoinColumn(name = "Report_Number")
     private Issue issue;
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
 
     public int getId() {
         return id;

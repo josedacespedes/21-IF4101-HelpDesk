@@ -47,10 +47,12 @@
         <div>
           <ul class="list-group">
             <li class="list-group-item" *ngFor="let comment of commentList | async">
+              <b>Usuario: </b>{{ comment.author }}
+              <br>
               <b>Descripción: </b>{{ comment.description }}
               <br>
               <b>Fecha: </b>{{ comment.commentTime.toString().split("T")[0]
-            + "/" + this.issue.registerTime.toString().split("T")[1].split(".")[0] }}
+               + "/" + this.issue.registerTime.toString().split("T")[1].split(".")[0] }}
             </li>
           </ul>
         </div>

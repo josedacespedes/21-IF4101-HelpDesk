@@ -16,7 +16,9 @@ public class CommentConverter implements ConverterInterface<Comment, CommentDTO>
         Comment entity = new Comment();
         entity.setDescription(dto.getDescription());
         entity.setCommentTime(dto.getCommentTime());
+        entity.setAuthor(dto.getAuthor());
         entity.setIssue(issueService.findById(dto.getIssueByReportNumber()));
+
         return entity;
     }
 
@@ -26,6 +28,7 @@ public class CommentConverter implements ConverterInterface<Comment, CommentDTO>
         dto.setId(entity.getId());
         dto.setDescription(entity.getDescription());
         dto.setCommentTime(entity.getCommentTime());
+        dto.setAuthor(entity.getAuthor());
         dto.setIssueByReportNumber(entity.getIssue().getReportNumber());
         return dto;
     }

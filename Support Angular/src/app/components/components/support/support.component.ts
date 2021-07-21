@@ -41,41 +41,11 @@ export class SupportComponent implements OnInit {
     First_L: ['', [Validators.required, Validators.pattern(this.regex.surname), Validators.minLength(4), Validators.maxLength(50)]],
     Second_L: ['', [Validators.required, Validators.pattern(this.regex.surname), Validators.minLength(4), Validators.maxLength(50)]],
     radioButton: ['radioButtonSupport'],
+    services: new FormArray([])
   });
 }
-
-
-
-  ngOnInit(): void {
+  ngOnInit() {
     this.addCheckbox();
-  }
-
-
-  submit() {
-    this.error = '';
-    this.submitted = true;
-    if (this.form.invalid || this.loading) {return;}
-    
-    this.blockForm();
-    const user = new Support();
-    user.Email = this.email.value;
-    user.Pass = this.pass.value;
-    user.Name = this.name.value;
-    user.First_SurName = this.First_L.value;
-    user.Second_Surname = this.Second_L.value;
-    user.Id_Supervisor = this.authenticationService.userId;
-    user.servicesById = this.selectedServices;
-      this.supportService.createSupport(user).subscribe(data => {
-        swal.fire({
-          icon: 'success',
-          text: 'El registro fue éxitoso'
-        }).finally(() => {
-          this.router.navigate(['/Issue']);
-        });
-      }, res => {
-        this.error = "El correo ya existe";
-        this.unBlockForm();
-      });
   }
 
   addCheckbox() {
@@ -88,6 +58,35 @@ export class SupportComponent implements OnInit {
   isSelectedCheckboxes() {
     if(this.selectedServices.length > 0 ) return true;
     else return false;
+  }
+
+  submit() {
+    //alert("selected: "+this.selectedServices);
+    
+    this.error = '';
+    this.submitted = true;
+    if (this.form.invalid || this.loading) {return;}
+    this.blockForm();
+    const user = new Support();
+    user.Email = this.email.value;
+    user.Pass = this.pass.value;
+    user.Name = this.name.value;
+    user.First_SurName = this.First_L.value;
+    user.Second_Surname = this.Second_L.value;
+    user.Id_Supervisor = this.authenticationService.userId;
+    user.servicesById = this.selectedServices;
+    alert("services by id: "+ user.servicesById);
+      this.supportService.createSupport(user).subscribe(data => {
+        swal.fire({
+          icon: 'success',
+          text: 'El registro fue éxitoso'
+        }).finally(() => {
+          this.router.navigate(['/Issue']);
+        });
+      }, res => {
+        this.error = "El correo ya existe";
+        this.unBlockForm();
+      });
   }
 
   blockForm() {

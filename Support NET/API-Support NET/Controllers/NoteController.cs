@@ -28,8 +28,10 @@ namespace support_Api.Controllers
                 //Id = note.Id_Note,
                 ReportNumberIssue = note.Report_Number,
                 Description = note.Description,
-                NoteTime = DateTime.Now
+                NoteTime = DateTime.Now,
+                Author = note.Author
             });
+
             _context.SaveChanges();
             return Ok();
         }
@@ -43,7 +45,8 @@ namespace support_Api.Controllers
                     Id_Note = noteItem.Id,
                     Report_Number = noteItem.ReportNumberIssue,
                     Description = noteItem.Description,
-                    Note_Time = noteItem.NoteTime
+                    Note_Time = noteItem.NoteTime,
+                    Author = noteItem.Author
 
                 }).ToList<NoteModel>());
 
@@ -65,7 +68,8 @@ namespace support_Api.Controllers
                     Id_Note = noteItem.Id,
                     Report_Number = noteItem.ReportNumberIssue,
                     Description = noteItem.Description,
-                    Note_Time = noteItem.NoteTime
+                    Note_Time = noteItem.NoteTime,
+                    Author = noteItem.Author
 
                 }).ToList<NoteModel>());
 

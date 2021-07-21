@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Issue } from '../../models/Issue';
 import { Support } from '../../models/Support';
+import { Supervisor } from '../../models/Supervisor';
 import { IssueClient } from '../../models/IssueClient';
 import { User } from '../../models/User';
 import { Comment } from '../../models/Comment';
@@ -29,7 +30,8 @@ export class DetailsComponent implements OnInit {
     comments: Observable<Comment[]>;
     notes: Observable<Note[]>;
     supports: Observable<Support[]>;
-
+    author: String;
+    session: Session;
 
     loadingUpdateStatus: boolean;
     errorUpdateStatus: null;
@@ -57,11 +59,11 @@ export class DetailsComponent implements OnInit {
 
     constructor(private route: ActivatedRoute, private router: Router,
                 private issueService: IssueService, private suppService: SupportService, private authenticationService: AuthenticationService) {
-      if (!this.authenticationService.isUserLoggedIn()) { this.router.navigate(['login']); }
+      if (!this.authenticationService.isUserLoggedIn()) { this.router.navigate(['login']); 
+    }
     }
 
     ngOnInit() {
-        
         this.issue = new Issue();
         
         this.issueClient = new IssueClient();
@@ -132,6 +134,13 @@ export class DetailsComponent implements OnInit {
     addComment() {
         this.comment.description = (document.querySelector('#comment') as HTMLTextAreaElement).value;
         this.comment.issueByReportNumber = this.issue.Report_Number;
+        if(this.authenticationService.getUserLoggedRole() == 'USU'){
+          this.comment.author = 'Supervisor';
+          alert(this.note.Author);
+        }else {
+          this.comment.author = 'Soportista';
+          alert(this.note.Author);
+        }
         if (this.comment.description === '') { this.validAddComment = true; } else {
           this.loadingAddComment = true;
           this.issueService.createCommet(this.comment).subscribe(() => {
@@ -149,8 +158,18 @@ export class DetailsComponent implements OnInit {
     }
 
     addNote() {
+        
         this.note.Report_Number = this.issue.Report_Number;
         this.note.Description = (document.querySelector('#note') as HTMLTextAreaElement).value;
+
+        if(this.authenticationService.getUserLoggedRole() == 'USU'){
+          this.note.Author = 'Supervisor';
+          alert(this.note.Author);
+        }else {
+          this.note.Author = 'Soporte';
+          alert(this.note.Author);
+        }
+        
         if (this.note.Description === '') { this.validAddNote = true; } else {
           this.loadingAddNote = true;
           this.issueService.createNote(this.note).subscribe(() => {
@@ -243,4 +262,12 @@ export class DetailsComponent implements OnInit {
           });
         }
     }
+
+    
+}
+
+interface Session {
+  IdUser: number;
+  Role: string;
+  Token: string;
 }
