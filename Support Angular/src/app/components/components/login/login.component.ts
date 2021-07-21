@@ -49,7 +49,7 @@ export class LoginComponent implements OnInit {
         });
       },
       res => {
-        this.error = res.error;
+        this.error = "No se encuentra el usuario";
         this.unBlockForm();
       });
 }

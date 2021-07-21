@@ -12,6 +12,7 @@ namespace support_Api.Controllers
 
     public class SupporterController : Controller
     {
+        private int[] values = new int[100];
         private readonly _21IF4101HelpDeskSupportContext _context;
         public SupporterController(_21IF4101HelpDeskSupportContext context)
         {
@@ -21,6 +22,7 @@ namespace support_Api.Controllers
         [HttpPost]
         public ActionResult Post(SupporterModel supp)
         {
+
             var existSupport = _context.Supporter.Where(s => s.Email == supp.Email).FirstOrDefault<Supporter>();
             if (existSupport != null)
             {
@@ -34,9 +36,19 @@ namespace support_Api.Controllers
                 Name = supp.Name,
                 FirstSurname = supp.First_SurName,
                 SecondSurname = supp.Second_Surname,
-                Email = supp.Email
-
+                Email = supp.Email,
+                SupporterService = supp.Supporter_Service
             });
+
+            //for (int index = 0; index <= supp.Supporter_Service.Count(); index++)
+            //{
+            //    _context.SupporterService.Add(new SupporterService()
+            //    {
+            //        IdSupporter = supp.Id_Supporter,
+            //        IdService = values[index + 1]
+            //    });
+            //}
+
             _context.SaveChanges();
             return Ok();
         }
