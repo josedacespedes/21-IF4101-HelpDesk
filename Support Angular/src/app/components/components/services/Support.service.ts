@@ -20,6 +20,8 @@ export class SupportService {
     }
 
     createSupport(supp: Support): Observable<any> {
+        alert("support: "+supp.servicesById);
+        
         return this.http.post(`${this.baseUrl}`, supp);
     }
 
@@ -29,5 +31,13 @@ export class SupportService {
 
     getSupportList(): Observable<any> {
         return this.http.get(`${this.baseUrl}`);
+    }
+
+    getSupportById(id: number): Observable<any>{
+        return this.http.get(`${this.baseUrl}${id}`);
+    }
+
+    getSupervisorById(id: number): Observable<any> {
+        return this.http.get(`${this.urlSupervisor}${id}`);
     }
 }

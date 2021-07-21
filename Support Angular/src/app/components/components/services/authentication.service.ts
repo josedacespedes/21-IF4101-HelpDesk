@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {map} from 'rxjs/operators';
+import { Support } from '../models/Support';
+import { SupportService } from './Support.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,6 +12,9 @@ export class AuthenticationService {
   userId: number;
   role: string;
   token: string;
+  session: Session;
+  authorId: number;
+  authorRole: string;
 
   constructor(private http: HttpClient) {
     if (this.isUserLoggedIn()) {
@@ -18,6 +23,8 @@ export class AuthenticationService {
       this.userId = sessionData.IdUser;
       this.role = sessionData.Role;
       this.token = sessionData.Token;
+      this.authorId = sessionData.IdUser;
+      this.authorRole = sessionData.Role;
     }
   }
 
@@ -36,6 +43,15 @@ export class AuthenticationService {
     this.userId = sessionData.IdUser;
     this.token = sessionData.Token;
     this.role = sessionData.Role;
+    this.authorId = sessionData.IdUser;
+    this.authorRole = sessionData.Role;
+  }
+
+  getUserLoggedId(){
+    return this.authorId;
+  }
+  getUserLoggedRole(){
+    return this.authorRole;
   }
 
   logout() {

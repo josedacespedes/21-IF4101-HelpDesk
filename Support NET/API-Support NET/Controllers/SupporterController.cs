@@ -45,7 +45,7 @@ namespace support_Api.Controllers
             //    _context.SupporterService.Add(new SupporterService()
             //    {
             //        IdSupporter = supp.Id_Supporter,
-            //        IdService = values[index + 1]
+            //        IdService = values[index]
             //    });
             //}
 

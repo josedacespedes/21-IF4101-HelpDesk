@@ -4,6 +4,5 @@ export class Note {
     Note_Time: string;
     //Por el aquello 
     Id: number;
-
-
+    Author: string;
 }

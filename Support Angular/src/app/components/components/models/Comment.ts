@@ -3,5 +3,5 @@ export class Comment {
     id: number;
     description: string;
     commentTime: string;
-
+    author: string;
 }
