@@ -5,7 +5,6 @@ import java.util.Date;
 public class IssueSupportDTO {
     private int Report_Number;
     private int Id_Supporter;
-    private String Classification;
     private String Status;
     private Date Report_Time;
     private String Resolution_Comment;
@@ -24,14 +23,6 @@ public class IssueSupportDTO {
 
     public void setId_Supporter(int id_Supporter) {
         Id_Supporter = id_Supporter;
-    }
-
-    public String getClassification() {
-        return Classification;
-    }
-
-    public void setClassification(String classification) {
-        Classification = classification;
     }
 
     public String getStatus() {

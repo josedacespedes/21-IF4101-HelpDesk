@@ -47,6 +47,10 @@ export class IssueService {
         return this.http.put(this.baseUrl + 'UpdateStatus', { reportNumber, val });
     }
 
+    updateClassificationIssue(reportNumber: number, val: string): Observable<any> {
+        return this.http.put(this.baseUrl + 'UpdateClassification', { reportNumber, val });
+    }
+
   // tslint:disable-next-line:variable-name
     setSupportUser(Report_Number: number, Id_Supporter: string): Observable<any> {
       return this.http.put(this.baseUrl + 'UpdateSupportAssigned', { Report_Number, Id_Supporter });

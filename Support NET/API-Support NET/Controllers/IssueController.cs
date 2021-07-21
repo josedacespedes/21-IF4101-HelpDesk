@@ -32,7 +32,7 @@ namespace support_Api.Controllers
             {
                 ReportNumber = issue.Report_Number,
                 IdSupporter = null,
-                Classification = "Media",
+                Classification = "Ingresada",
                 Status = "Ingresado",
                 ReportTime = DateTime.Now,
                 ResolutionComment = "Nuevo caso"
@@ -228,6 +228,91 @@ namespace support_Api.Controllers
             }
             return Ok();
         }
+
+
+
+        //[HttpPut]
+        //[Route("UpdateClassification")]
+        //public async Task<ActionResult> PutClassificationAsync(UpdateIntStringClientModel model)
+        //{
+        //    if (!ModelState.IsValid)
+        //        return BadRequest("Not a valid model");
+
+
+        //    var existingIssue = _context.Issue.Where(s => s.ReportNumber == model.reportNumber)
+        //                                            .FirstOrDefault<Issue>();
+        //    if (existingIssue != null)
+        //    {
+        //        string url = "http://localhost:8080/api/issue/updateClassification";
+        //        var client = new HttpClient();
+        //        HttpResponseMessage response = await client.PutAsJsonAsync(url, model);
+        //        response.EnsureSuccessStatusCode();
+        //        existingIssue.Classification = model.val;
+        //        _context.SaveChanges();
+        //    }
+        //    else
+        //    {
+        //        return NotFound();
+        //    }
+        //    return Ok();
+        //}
+
+
+        //[HttpPut]
+        //[Route("PutIssue/{reportNumber}")]
+        [Route("[action]")]
+        [HttpPut("{reportNumber}")]
+        public async Task<IActionResult> PutIssue(int reportNumber, IssueModel issue)
+        {
+            if (reportNumber != issue.Report_Number)
+            {
+                return BadRequest();
+            }
+
+            //_context.Entry(issue).State = EntityState.Modified;
+
+
+            var existingIssue = _context.Issue.Where(s => s.ReportNumber == issue.Report_Number)
+                                                    .FirstOrDefault<Issue>();
+
+            if (existingIssue != null)
+            {
+                existingIssue.Classification = issue.Classification;
+
+                _context.SaveChanges();
+            }
+            else
+            {
+                return NotFound();
+            }
+            return Ok();
+
+
+            //try
+            //{
+            //    await _context.SaveChangesAsync();
+            //}
+            //catch (DbUpdateException)
+            //{
+            //    if (!IssueExists(reportNumber))
+            //    {
+            //        return NotFound();
+            //    }
+            //    else
+            //    {
+            //        throw;
+            //    }
+            //}
+
+            //return NoContent();
+        }
+
+        private bool IssueExists(int id)
+        {
+            return _context.Issue.Any(e => e.ReportNumber == id);
+        }
+
+
 
         [HttpPut]
         [Route("UpdateSupportAssigned")]
