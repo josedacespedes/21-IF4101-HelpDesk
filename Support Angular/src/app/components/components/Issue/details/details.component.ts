@@ -30,12 +30,18 @@ export class DetailsComponent implements OnInit {
     notes: Observable<Note[]>;
     supports: Observable<Support[]>;
 
+
     loadingUpdateStatus: boolean;
     errorUpdateStatus: null;
 
     loadingSetSupporter: boolean;
     validSelectSupport = false;
     errorSelectSupport = null;
+
+    loadingUpdateClassification: boolean;
+    loadingSetClassification: boolean;
+    validSelectClassification = false;
+    errorSelectClassification = null;
 
     loadingResolveIssue: boolean;
     validResolveIssue = false;
@@ -55,13 +61,14 @@ export class DetailsComponent implements OnInit {
     }
 
     ngOnInit() {
+        
         this.issue = new Issue();
+        
         this.issueClient = new IssueClient();
         this.user = new User();
         this.comment = new Comment();
         this.note = new Note();
         this.id = this.route.snapshot.params.id;
-
 
         this.issueService.getIssueClient(this.id).subscribe(data => {
             this.issueClient = data;
@@ -76,7 +83,6 @@ export class DetailsComponent implements OnInit {
             .subscribe(data => {
                 this.issue = data;
             }, error => console.log());
-
         this.reloadData();
     }
 
@@ -87,9 +93,10 @@ export class DetailsComponent implements OnInit {
     }
 
     list() {
-        this.router.navigate(['Issue']);
+      this.router.navigate(['Issue']);
     }
 
+    
     updateStatus(status: string) {
         this.loadingUpdateStatus = true;
         this.issueService.updateStatusIssue(this.id, status).subscribe(data => {
@@ -104,6 +111,22 @@ export class DetailsComponent implements OnInit {
             this.errorUpdateStatus = res.error.text;
             this.loadingUpdateStatus = false;
         });
+    }
+
+    updateClassification(classification: string) {
+      this.loadingUpdateClassification = true;
+      this.issueService.updateClassificationIssue(this.id, classification).subscribe(data => {
+          swal.fire({
+              icon: 'success',
+              text: 'Se ha actualizado la clasificación'
+          }).finally(() => {
+              this.list();
+              this.loadingUpdateClassification = false;
+          });
+      }, res => {
+          this.errorSelectClassification = res.error.text;
+          this.loadingUpdateClassification = false;
+      });
     }
 
     addComment() {
@@ -145,8 +168,6 @@ export class DetailsComponent implements OnInit {
         }
     }
 
-    
-
     setSupportUser() {
       const idSupportUser = (document.querySelector('#support') as HTMLSelectElement).value;
       if (idSupportUser === '') { this.validSelectSupport = true; } else {
@@ -175,6 +196,29 @@ export class DetailsComponent implements OnInit {
           });
       }
     }
+
+    setClassificationUser() {
+      const classificationUser = (document.querySelector('#classification') as HTMLSelectElement).value;
+      if (classificationUser === '') { this.validSelectClassification = true; } else {
+        this.loadingSetClassification = true;
+        this.validSelectClassification = false;
+        this.issueService.updateClassificationIssue(this.id, '').subscribe(
+        data => {
+          swal.fire({
+            icon: 'success',
+            text: 'Se ha seleccionado una clasificación para la solicitud'
+          }).finally(() => {
+            // window.location.reload();
+            this.loadingSetSupporter = false;
+            this.list();
+          });
+        },  res => {
+        this.loadingSetSupporter = false;
+        this.errorSelectSupport = res.error.text;
+      });
+      }
+    }
+
 
     resolveIssue() {
         this.comment.description = 'Comentario de resolución: ' + (document.querySelector('#resolComment') as HTMLTextAreaElement).value;

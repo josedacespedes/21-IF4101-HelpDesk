@@ -27,6 +27,35 @@
                 <div>
                     <label><b>Dirección del cliente: </b> {{ user.address }}</label>
                 </div>
+
+                <!-- <div>
+                    <label *ngIf="issue.Classification !== 'Ingresada'"><b>Clasificación de reporte: </b> </label>
+                    <label *ngIf="issue.Classification === 'Ingresada'" style="margin-right: 5px"><b>Clasificacion de reporte:</b></label>
+                    <select *ngIf="issue.Classification= 'Ingresada'" id="classification" name="classification"
+                            style="margin-right: 5px" class="custom-select-sm custom-select">
+                        <option value="" selected disabled hidden>Seleccione una clasificación</option>
+                             <option *ngFor="let Support of supports | async" value="{{Support.Id_Supporter}}">
+                            {{Support.Name + " " + Support.First_SurName + " " + Support.Second_Surname}}
+                        </option> -->
+                      <!--  <option value="Baja">Baja</option>
+                        <option value="Media">Media</option>
+                        <option value="Alta">Alta</option>
+                    </select>
+                    <div *ngIf="this.validSelectClassification" class="text-danger">
+                    <p>Debe seleccionar un servicio</p>
+                    </div>
+                    <button class="btn btn-primary" (click)="setClassificationUser(); reloadData();" style="margin-top: 5px"
+                        *ngIf="issue.Classification === 'Ingresada'">Seleccionar la clasificación</button>
+                    <div *ngIf="loadingSetClassification || errorSelectClassification">
+                        <br>
+                        <div *ngIf="loadingSetClassification" class="alert alert-info">Por favor espere...</div>
+                        <div *ngIf="errorSelectClassification" class="alert alert-danger">{{errorUpdateClassification}}</div>
+                        <br>
+                    </div>
+                </div> -->
+
+
+
             </div>
             <div class="col-6">
                 <div>
