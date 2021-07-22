@@ -63,6 +63,7 @@ export class ListCommentComponent implements OnInit {
     let comment = new Comment();
     comment.description = this.description.value;
     comment.commentTime = new Date();
+    comment.author = "Cliente";
     comment.issueByReportNumber = this.reportNumber;
     this.commentService.createComment(comment).subscribe(
       data => {

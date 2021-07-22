@@ -13,6 +13,7 @@ namespace API_Support_NET.Models
         public int ReportNumberIssue { get; set; }
         public string Description { get; set; }
         public DateTime NoteTime { get; set; }
+        public string Author { get; set; }
 
         public virtual Issue Issue { get; set; }
     }

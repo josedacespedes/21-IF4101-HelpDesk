@@ -1,6 +1,4 @@
-﻿using System;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
+﻿using Microsoft.EntityFrameworkCore;
 
 // Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
 // If you have enabled NRTs for your project, then un-comment the following line:
@@ -50,7 +48,7 @@ namespace API_Support_NET.Models
                     .IsRequired()
                     .HasMaxLength(15)
                     .IsUnicode(false)
-                    .HasDefaultValueSql("('Media')");
+                    .HasDefaultValueSql("('Ingresada')");
 
                 entity.Property(e => e.IdSupporter).HasColumnName("Id_Supporter");
 
@@ -84,6 +82,10 @@ namespace API_Support_NET.Models
                 entity.Property(e => e.Id).ValueGeneratedOnAdd();
 
                 entity.Property(e => e.ReportNumberIssue).HasColumnName("Report_Number_Issue");
+
+                entity.Property(e => e.Author)
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.Description)
                     .IsRequired()
