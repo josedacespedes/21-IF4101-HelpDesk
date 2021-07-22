@@ -113,20 +113,101 @@ export class DetailsComponent implements OnInit {
         });
     }
 
-    updateClassification(classification: string) {
-      this.loadingUpdateClassification = true;
-      this.issueService.updateClassificationIssue(this.id, classification).subscribe(data => {
+    // updateClassification(classification: string) {
+    //   this.loadingUpdateClassification = true;
+    //   let issue = new Issue();
+    //   issue.Report_Number = this.issue.Report_Number;
+    //   issue.Id_Supporter = this.issue.Id_Supporter;
+    //   issue.Classification = classification;
+    //   issue.Status = this.issue.Status;
+    //   issue.Report_Time = this.issue.Report_Time;
+    //   issue.Resolution_Comment = this.issue.Resolution_Comment;
+    //   this.issueService.updateClassificationIssue(this.id, issue).subscribe(data => {
+    //       swal.fire({
+    //           icon: 'success',
+    //           text: 'Se ha actualizado la clasificación'
+    //       }).finally(() => {
+    //           this.list();
+    //           this.loadingUpdateClassification = false;
+    //       });
+    //   }, res => {
+    //       this.errorSelectClassification = res.error.text;
+    //       this.loadingUpdateClassification = false;
+    //   });
+    // }
+
+    // updateClassification(classification: string) {
+    //   this.loadingUpdateClassification = true;
+    //   let issue = new Issue();
+    //   issue.Report_Number = this.issue.Report_Number;
+    //   issue.Id_Supporter = this.issue.Id_Supporter;
+    //   issue.Classification = classification;
+    //   issue.Status = this.issue.Status;
+    //   issue.Report_Time = "2021-07-19T23:48:58.09";
+    //   issue.Resolution_Comment = "Nuevo caso";
+    //   this.issueService.updateClassificationIssue(this.id, issue).subscribe(data => {
+    //       swal.fire({
+    //           icon: 'success',
+    //           text: 'Se ha actualizado la clasificación'
+    //       }).finally(() => {
+    //           this.list();
+    //           this.loadingUpdateClassification = false;
+    //       });
+    //   }, res => {
+    //       this.errorSelectClassification = res.error.text;
+    //       this.loadingUpdateClassification = false;
+    //   });
+    // }
+
+        // setClassificationUser() {
+    //   const classificationUser = (document.querySelector('#classification') as HTMLSelectElement).value;
+    //   if (classificationUser === '') { this.validSelectClassification = true; } else {
+    //     this.loadingSetClassification = true;
+    //     this.validSelectClassification = false;
+    //     this.issueService.updateClassificationIssue(this.id, '').subscribe(
+    //     data => {
+    //       swal.fire({
+    //         icon: 'success',
+    //         text: 'Se ha seleccionado una clasificación para la solicitud'
+    //       }).finally(() => {
+    //         // window.location.reload();
+    //         this.loadingSetSupporter = false;
+    //         this.list();
+    //       });
+    //     },  res => {
+    //     this.loadingSetSupporter = false;
+    //     this.errorSelectSupport = res.error.text;
+    //   });
+    //   }
+    // }
+
+    setClassificationUser() {
+      const classificationUser = (document.querySelector('#classification') as HTMLSelectElement).value;
+      if (classificationUser === '') { this.validSelectClassification = true; } else {
+        this.loadingSetClassification = true;
+        this.validSelectClassification = false;
+        // let issue = new Issue();
+        this.issue.Report_Number = 197;
+        this.issue.Id_Supporter = this.issue.Id_Supporter;
+        this.issue.Classification = classificationUser;
+        this.issue.Status = "Ingresado";
+        this.issue.Report_Time = "2021-07-19T23:48:58.09";
+        this.issue.Resolution_Comment = "Nuevo caso";
+        this.issueService.updateClassificationIssue(this.issue.Report_Number, this.issue).subscribe(
+        data => {
           swal.fire({
-              icon: 'success',
-              text: 'Se ha actualizado la clasificación'
+            icon: 'success',
+            text: 'Se ha seleccionado una clasificación para la solicitud'
           }).finally(() => {
-              this.list();
-              this.loadingUpdateClassification = false;
+            // window.location.reload();
+            this.loadingSetSupporter = false;
+            this.list();
           });
-      }, res => {
-          this.errorSelectClassification = res.error.text;
-          this.loadingUpdateClassification = false;
+        },  res => {
+        this.loadingSetSupporter = false;
+        this.errorSelectSupport = res.error.text;
       });
+      }
     }
 
     addComment() {
@@ -197,27 +278,7 @@ export class DetailsComponent implements OnInit {
       }
     }
 
-    setClassificationUser() {
-      const classificationUser = (document.querySelector('#classification') as HTMLSelectElement).value;
-      if (classificationUser === '') { this.validSelectClassification = true; } else {
-        this.loadingSetClassification = true;
-        this.validSelectClassification = false;
-        this.issueService.updateClassificationIssue(this.id, '').subscribe(
-        data => {
-          swal.fire({
-            icon: 'success',
-            text: 'Se ha seleccionado una clasificación para la solicitud'
-          }).finally(() => {
-            // window.location.reload();
-            this.loadingSetSupporter = false;
-            this.list();
-          });
-        },  res => {
-        this.loadingSetSupporter = false;
-        this.errorSelectSupport = res.error.text;
-      });
-      }
-    }
+
 
 
     resolveIssue() {

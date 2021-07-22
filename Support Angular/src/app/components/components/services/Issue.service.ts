@@ -47,13 +47,17 @@ export class IssueService {
         return this.http.put(this.baseUrl + 'UpdateStatus', { reportNumber, val });
     }
 
-    updateClassificationIssue(reportNumber: number, val: string): Observable<any> {
-        return this.http.put(this.baseUrl + 'UpdateClassification', { reportNumber, val });
+    // updateClassificationIssue(reportNumber: number, val: string): Observable<any> {
+    //     return this.http.put(this.baseUrl + reportNumber,{ reportNumber, val });
+    // }
+
+    updateClassificationIssue(reportNumber: number, val: Issue): Observable<any> {
+    return this.http.put(this.baseUrl + reportNumber,{ reportNumber, val });
     }
 
   // tslint:disable-next-line:variable-name
     setSupportUser(Report_Number: number, Id_Supporter: string): Observable<any> {
-      return this.http.put(this.baseUrl + 'UpdateSupportAssigned', { Report_Number, Id_Supporter });
+        return this.http.put(this.baseUrl + 'UpdateSupportAssigned', { Report_Number, Id_Supporter });
     }
 
     getIssueList(): Observable<any> {
@@ -61,7 +65,7 @@ export class IssueService {
     }
 
     getIssueListBySupportId(id: number): Observable<any> {
-      return this.http.get(`${this.baseUrl + 'findIssueBySuppId/' + id}`);
+        return this.http.get(`${this.baseUrl + 'findIssueBySuppId/' + id}`);
     }
 
     getIssueClient(id: number): Observable<any> {

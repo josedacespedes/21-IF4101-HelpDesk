@@ -47,7 +47,7 @@ export class SupportComponent implements OnInit {
 
 
   ngOnInit(): void {
-    this.addCheckbox();
+    // this.addCheckbox();
   }
 
 
@@ -78,12 +78,12 @@ export class SupportComponent implements OnInit {
       });
   }
 
-  addCheckbox() {
-    this.servicesData.forEach((o, i) => {
-      const control = new FormControl();
-      (this.form.controls.services as FormArray).push(control);
-    });
-  }
+  // addCheckbox() {
+  //   this.servicesData.forEach((o, i) => {
+  //     const control = new FormControl();
+  //     (this.form.controls.services as FormArray).push(control);
+  //   });
+  // }
 
   isSelectedCheckboxes() {
     if(this.selectedServices.length > 0 ) return true;
