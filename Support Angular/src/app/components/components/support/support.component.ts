@@ -22,13 +22,6 @@ export class SupportComponent implements OnInit {
   loading: boolean = false;
   regex: Regex = new Regex();
 
-  servicesData = [
-    {id: 1, name: 'Telefonía Móvil'},
-    {id: 2, name: 'Cable'},
-    {id: 3, name: 'Internet'},
-    {id: 4, name: 'Telefonía Fija'}
-  ];
-
   constructor(private formBuilder: FormBuilder,
     private router: Router,
     private supportService: SupportService, private authenticationService: AuthenticationService) {
@@ -41,27 +34,13 @@ export class SupportComponent implements OnInit {
     First_L: ['', [Validators.required, Validators.pattern(this.regex.surname), Validators.minLength(4), Validators.maxLength(50)]],
     Second_L: ['', [Validators.required, Validators.pattern(this.regex.surname), Validators.minLength(4), Validators.maxLength(50)]],
     radioButton: ['radioButtonSupport'],
-    services: new FormArray([])
   });
 }
   ngOnInit() {
-    this.addCheckbox();
-  }
-
-  addCheckbox() {
-    this.servicesData.forEach((o, i) => {
-      const control = new FormControl();
-      (this.form.controls.services as FormArray).push(control);
-    });
-  }
-
-  isSelectedCheckboxes() {
-    if(this.selectedServices.length > 0 ) return true;
-    else return false;
+    
   }
 
   submit() {
-    //alert("selected: "+this.selectedServices);
     
     this.error = '';
     this.submitted = true;
@@ -74,8 +53,6 @@ export class SupportComponent implements OnInit {
     user.First_SurName = this.First_L.value;
     user.Second_Surname = this.Second_L.value;
     user.Id_Supervisor = this.authenticationService.userId;
-    user.servicesById = this.selectedServices;
-    alert("services by id: "+ user.servicesById);
       this.supportService.createSupport(user).subscribe(data => {
         swal.fire({
           icon: 'success',
@@ -105,10 +82,5 @@ export class SupportComponent implements OnInit {
   get First_L() { return this.form.get('First_L'); }
   get Second_L() { return this.form.get('Second_L'); }
   get radioButton() { return this.form.get('radioButton'); }
-  get selectedServices() {
-    const selectedServiceIds = this.form.value.services
-    .map((v, i) => (v ? this.servicesData[i].id : null))
-    .filter(v => v !== null);
-    return selectedServiceIds;
-  }
+
 }

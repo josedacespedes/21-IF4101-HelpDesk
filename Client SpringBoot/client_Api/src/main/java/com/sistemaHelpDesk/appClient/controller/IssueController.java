@@ -14,6 +14,7 @@ import org.springframework.web.client.RestTemplate;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -57,8 +58,10 @@ public class IssueController {
 
     @RequestMapping(path = "/findAllByUserId/{id}", method = RequestMethod.GET)
     public List<IssueDTO> findAllByUserId(@PathVariable("id") int userId) {
-        return service.findAllByUserId(userId).stream().map(it -> converter.toDTO(it))
+        List<IssueDTO> list = service.findAllByUserId(userId).stream().map(it -> converter.toDTO(it))
                 .collect(Collectors.toList());
+        list.sort(Comparator.comparingInt(IssueDTO::getReportNumber).reversed());
+        return list;
     }
 
     @RequestMapping(path = "/{id}", method = RequestMethod.GET)

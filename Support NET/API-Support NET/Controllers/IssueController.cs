@@ -229,9 +229,9 @@ namespace support_Api.Controllers
             return Ok();
         }
 
-        [Route("[action]")]
-        [HttpPut("{reportNumber}")]
-        public async Task<IActionResult> PutIssue(int reportNumber, IssueModel issue)
+        [HttpPut]
+        [Route("PutClassificationIssue/{reportNumber}")]
+        public async Task<IActionResult> PutClassificationIssue(int reportNumber, IssueModel issue)
         {
             if (reportNumber != issue.Report_Number)
             {

@@ -106,7 +106,19 @@ export class DetailsComponent implements OnInit {
                 icon: 'success',
                 text: 'Se ha actualizado el estado'
             }).finally(() => {
-                this.list();
+              this.issueService.getIssueClient(this.id).subscribe(data => {
+                this.issueClient = data;
+                this.issueService.getUserClient(this.issueClient.userById)
+                    // tslint:disable-next-line:no-shadowed-variable
+                    .subscribe(data => {
+                        this.user = data;
+                    }, error => console.log());
+            }, error => console.log());
+    
+            this.issueService.getIssue(this.id)
+                .subscribe(data => {
+                    this.issue = data;
+                }, error => console.log());
                 this.loadingSetSupporter = false;
             });
         }, res => {
@@ -115,95 +127,38 @@ export class DetailsComponent implements OnInit {
         });
     }
 
-    // updateClassification(classification: string) {
-    //   this.loadingUpdateClassification = true;
-    //   let issue = new Issue();
-    //   issue.Report_Number = this.issue.Report_Number;
-    //   issue.Id_Supporter = this.issue.Id_Supporter;
-    //   issue.Classification = classification;
-    //   issue.Status = this.issue.Status;
-    //   issue.Report_Time = this.issue.Report_Time;
-    //   issue.Resolution_Comment = this.issue.Resolution_Comment;
-    //   this.issueService.updateClassificationIssue(this.id, issue).subscribe(data => {
-    //       swal.fire({
-    //           icon: 'success',
-    //           text: 'Se ha actualizado la clasificación'
-    //       }).finally(() => {
-    //           this.list();
-    //           this.loadingUpdateClassification = false;
-    //       });
-    //   }, res => {
-    //       this.errorSelectClassification = res.error.text;
-    //       this.loadingUpdateClassification = false;
-    //   });
-    // }
-
-    // updateClassification(classification: string) {
-    //   this.loadingUpdateClassification = true;
-    //   let issue = new Issue();
-    //   issue.Report_Number = this.issue.Report_Number;
-    //   issue.Id_Supporter = this.issue.Id_Supporter;
-    //   issue.Classification = classification;
-    //   issue.Status = this.issue.Status;
-    //   issue.Report_Time = "2021-07-19T23:48:58.09";
-    //   issue.Resolution_Comment = "Nuevo caso";
-    //   this.issueService.updateClassificationIssue(this.id, issue).subscribe(data => {
-    //       swal.fire({
-    //           icon: 'success',
-    //           text: 'Se ha actualizado la clasificación'
-    //       }).finally(() => {
-    //           this.list();
-    //           this.loadingUpdateClassification = false;
-    //       });
-    //   }, res => {
-    //       this.errorSelectClassification = res.error.text;
-    //       this.loadingUpdateClassification = false;
-    //   });
-    // }
-
-        // setClassificationUser() {
-    //   const classificationUser = (document.querySelector('#classification') as HTMLSelectElement).value;
-    //   if (classificationUser === '') { this.validSelectClassification = true; } else {
-    //     this.loadingSetClassification = true;
-    //     this.validSelectClassification = false;
-    //     this.issueService.updateClassificationIssue(this.id, '').subscribe(
-    //     data => {
-    //       swal.fire({
-    //         icon: 'success',
-    //         text: 'Se ha seleccionado una clasificación para la solicitud'
-    //       }).finally(() => {
-    //         // window.location.reload();
-    //         this.loadingSetSupporter = false;
-    //         this.list();
-    //       });
-    //     },  res => {
-    //     this.loadingSetSupporter = false;
-    //     this.errorSelectSupport = res.error.text;
-    //   });
-    //   }
-    // }
-
     setClassificationUser() {
       const classificationUser = (document.querySelector('#classification') as HTMLSelectElement).value;
       if (classificationUser === '') { this.validSelectClassification = true; } else {
         this.loadingSetClassification = true;
         this.validSelectClassification = false;
-        // let issue = new Issue();
-        this.issue.Report_Number = 197;
+        this.issue.Report_Number = this.issueClient.reportNumber;
         this.issue.Id_Supporter = this.issue.Id_Supporter;
         this.issue.Classification = classificationUser;
         this.issue.Status = "Ingresado";
         this.issue.Report_Time = "2021-07-19T23:48:58.09";
         this.issue.Resolution_Comment = "Nuevo caso";
-        this.issueService.updateClassificationIssue(this.issue.Report_Number, this.issue).subscribe(
+        this.issueService.PutClassificationIssue(this.issue.Report_Number, this.issue).subscribe(
         data => {
           swal.fire({
             icon: 'success',
             text: 'Se ha seleccionado una clasificación para la solicitud'
           }).finally(() => {
             // window.location.reload();
-            this.loadingSetSupporter = false;
-            this.list();
+            this.loadingSetClassification = false;
+            this.issueService.getIssueClient(this.id).subscribe(data => {
+              this.issueClient = data;
+              this.issueService.getUserClient(this.issueClient.userById)
+                  // tslint:disable-next-line:no-shadowed-variable
+                  .subscribe(data => {
+                      this.user = data;
+                  }, error => console.log());
+          }, error => console.log());
+  
+          this.issueService.getIssue(this.id)
+              .subscribe(data => {
+                  this.issue = data;
+              }, error => console.log());
           });
         },  res => {
         this.loadingSetSupporter = false;
@@ -217,10 +172,8 @@ export class DetailsComponent implements OnInit {
         this.comment.issueByReportNumber = this.issue.Report_Number;
         if(this.authenticationService.getUserLoggedRole() == 'USU'){
           this.comment.author = 'Supervisor';
-          alert(this.note.Author);
         }else {
           this.comment.author = 'Soportista';
-          alert(this.note.Author);
         }
         if (this.comment.description === '') { this.validAddComment = true; } else {
           this.loadingAddComment = true;
@@ -229,7 +182,8 @@ export class DetailsComponent implements OnInit {
               icon: 'success',
               text: 'Se ha agregado el comentario'
             }).finally(() => {
-              this.list();
+              this.comments = this.issueService.getCommentList(this.id);
+              this.loadingAddComment= false;
             });
           }, res => {
             this.errorAddComment = res.error.text;
@@ -245,10 +199,8 @@ export class DetailsComponent implements OnInit {
 
         if(this.authenticationService.getUserLoggedRole() == 'USU'){
           this.note.Author = 'Supervisor';
-          alert(this.note.Author);
         }else {
           this.note.Author = 'Soporte';
-          alert(this.note.Author);
         }
         
         if (this.note.Description === '') { this.validAddNote = true; } else {
@@ -258,8 +210,9 @@ export class DetailsComponent implements OnInit {
               icon: 'success',
               text: 'Se ha agregado la nota'
             }).finally(() => {
-              this.list();
-              this.loadingSetSupporter = false;
+              this.notes = this.issueService.getNote(this.id);
+              this.comment.description = (document.querySelector('#note') as HTMLTextAreaElement).value = '';
+              this.loadingAddNote = false;
             });
           }, res => {
             this.errorAddNote = res.error.text;
@@ -282,9 +235,21 @@ export class DetailsComponent implements OnInit {
                   icon: 'success',
                   text: 'Se ha seleccionado un soportista para la solicitud'
                 }).finally(() => {
-                  // window.location.reload();
+                  this.issueService.getIssueClient(this.id).subscribe(data => {
+                    this.issueClient = data;
+                    this.issueService.getUserClient(this.issueClient.userById)
+                        // tslint:disable-next-line:no-shadowed-variable
+                        .subscribe(data => {
+                            this.user = data;
+                        }, error => console.log());
+                }, error => console.log());
+        
+                this.issueService.getIssue(this.id)
+                    .subscribe(data => {
+                        this.issue = data;
+                    }, error => console.log());
                   this.loadingSetSupporter = false;
-                  this.list();
+                  
                 });
               }, res => {
                 this.loadingSetSupporter = false;
@@ -323,7 +288,6 @@ export class DetailsComponent implements OnInit {
           });
         }
     }
-
     
 }
 

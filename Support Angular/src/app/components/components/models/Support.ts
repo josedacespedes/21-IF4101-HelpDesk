@@ -6,5 +6,4 @@ export class Support {
     First_SurName: string;
     Second_Surname: string;
     Email: string;
-    servicesById: number[]
 }

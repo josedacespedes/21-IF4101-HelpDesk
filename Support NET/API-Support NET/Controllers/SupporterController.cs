@@ -29,7 +29,7 @@ namespace support_Api.Controllers
                 return NoContent();
             }
 
-            _context.Supporter.Add(new Supporter()
+             _context.Supporter.Add(new Supporter()
             {
                 IdSupervisor = supp.Id_Supervisor,
                 Pass = supp.Pass,
@@ -37,17 +37,7 @@ namespace support_Api.Controllers
                 FirstSurname = supp.First_SurName,
                 SecondSurname = supp.Second_Surname,
                 Email = supp.Email,
-                SupporterService = supp.Supporter_Service
             });
-
-            //for (int index = 0; index <= supp.Supporter_Service.Count(); index++)
-            //{
-            //    _context.SupporterService.Add(new SupporterService()
-            //    {
-            //        IdSupporter = supp.Id_Supporter,
-            //        IdService = values[index]
-            //    });
-            //}
 
             _context.SaveChanges();
             return Ok();
