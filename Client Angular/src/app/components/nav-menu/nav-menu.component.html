@@ -1,0 +1,26 @@
+<nav class="navbar navbar-expand-sm grey h-5 navbar-dark">
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" routerLinkActive="active"  routerLink="/main/client"
+          *ngIf="this.authenticationService.isUserLoggedIn()"><span class="far fa-building"></span>
+          <span> HelpDesk TeleAtlántico </span></a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="add" class="nav-link" routerLinkActive="active" [routerLink]="['/issue/list']"
+        *ngIf="this.authenticationService.isUserLoggedIn()">Solicitudes</a>
+      </li>
+    </ul>
+    <form class="form-inline my-2 my-lg-0">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a routerLink="add" class="nav-link pull-right" routerLinkActive="active" (click)="logout()"
+          *ngIf="this.authenticationService.isUserLoggedIn()"><span class="fas fa-sign-out-alt" ></span>Cerrar sesión</a>
+        </li>
+      </ul>
+    </form>
+  </div>
+</nav>

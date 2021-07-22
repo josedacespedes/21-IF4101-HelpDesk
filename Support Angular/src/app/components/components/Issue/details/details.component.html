@@ -1,0 +1,282 @@
+<app-nav-menu></app-nav-menu>
+
+<div class="container mt-5">
+    <div class="text-center">
+        <h2>Detalles del caso</h2>
+    </div>
+
+    <hr />
+    <!-- <div *ngIf=""></div> -->
+    <div *ngIf="issueClient && user && issue">
+
+        <div class="row">
+            <div class="col-6">
+                <div>
+                    <label><b>Número de Reporte: </b></label> {{ issueClient.reportNumber }}
+                </div>
+                <div>
+                    <label><b>Nombre y apellidos: </b></label> {{user.name}} {{user.firstSurname}} {{user.secondSurname}}
+                </div>
+                <div>
+                    <label><b>Correo del cliente: </b> {{ user.email }}</label>
+                </div>
+                <div>
+                    <label><b>Correo de la solicitud: </b>{{ issueClient.contactEmail }}</label>
+                </div>
+                
+                <div>
+                    <label><b>Dirección del cliente: </b> {{ user.address }}</label>
+                </div>
+            </div>
+            <div class="col-6">
+                <div>
+                    <label><b>Estado de la solicitud: </b>{{ issue.Status }}</label>
+                </div>
+                <div>
+                    <label><b>Classification de la solicitud: </b>{{ issue.Classification }}</label>
+                </div>
+                <div>
+                    <label><b>Segundo contacto del cliente: </b> {{user.secondContact}}</label>
+                </div>
+                <div>
+                    <label><b>Teléfono de la solicitud: </b>{{ issueClient.contactPhone }}</label>
+                </div>
+                <div>
+                    <label><b>Teléfono del cliente: </b>{{user.phone}}</label>
+                </div>
+                <div>
+                    <label *ngIf="issue.Status !== 'Ingresado'"><b>Usuario de soporte asignado: </b>
+                    {{ issueClient.supportUserAssigned }} </label>
+                    <label *ngIf="supports && issue.Status === 'Ingresado'" style="margin-right: 5px"><b>Usuario de soporte asignado:</b></label>
+                    <select *ngIf="supports && issue.Status === 'Ingresado'" id="support" name="support"
+                            style="margin-right: 5px" class="custom-select-sm custom-select">
+                        <option value="" selected disabled hidden>Seleccione un soportista</option>
+                        <option *ngFor="let Support of supports | async" value="{{Support.Id_Supporter}}">
+                            {{Support.Name + " " + Support.First_SurName + " " + Support.Second_Surname}}
+                        </option>
+                    </select>
+                    <div *ngIf="this.validSelectSupport" class="text-danger">
+                    <p>Debe seleccionar un servicio</p>
+                    </div>
+                    <button class="btn btn-primary" (click)="setSupportUser(); reloadData();" style="margin-top: 5px"
+                        *ngIf="supports && issue.Status === 'Ingresado'">Seleccionar soportista</button>
+                    <div *ngIf="loadingSetSupporter || errorSelectSupport">
+                        <br>
+                        <div *ngIf="loadingSetSupporter" class="alert alert-info">Por favor espere...</div>
+                        <div *ngIf="errorSelectSupport" class="alert alert-danger">{{errorUpdateStatus}}</div>
+                        <br>
+                    </div>
+                </div>
+
+                <div>
+                    <label *ngIf="issue.Classification !== 'Ingresada'"> <b>Clasificación de reporte: </b> {{ issue.Classification }} </label>
+                    <label *ngIf="issue.Classification === 'Ingresada'" style="margin-right: 5px"> <b> Clasificacion de reporte: </b> </label>
+                    <select *ngIf="issue.Classification === 'Ingresada'" id="classification" name="classification" style="margin-right: 5px" class="custom-select-sm custom-select">
+                        <option value="" selected disabled hidden>Seleccione una clasificación</option>
+                        <option value="Baja"> Baja </option>
+                        <option value="Media"> Media </option>
+                        <option value="Alta"> Alta </option>
+                    </select>
+
+                    <div *ngIf="this.validSelectClassification" class="text-danger">
+                        <p>Debe seleccionar un servicio</p>
+                    </div>
+                    <button class="btn btn-primary" (click)="setClassificationUser(); reloadData();" style="margin-top: 5px"
+                        *ngIf="issue.Classification === 'Ingresada'">Seleccionar la clasificación</button>
+
+                    <div *ngIf="loadingSetClassification || errorSelectClassification">
+                        <br>
+                        <div *ngIf="loadingSetClassification" class="alert alert-info">Por favor espere...</div>
+                        <div *ngIf="errorSelectClassification" class="alert alert-danger">{{errorUpdateClassification}}</div>
+                        <br>
+                    </div>
+                </div>
+
+
+            </div>
+        </div>
+
+        <div>
+            <br>
+            <label><b>Comentarios:</b></label>
+            <hr>
+            <ul class="list-group">
+                <li class="list-group-item" *ngFor="let comment of comments | async">
+                    <b>Usuario: </b>{{ comment.author }}
+                    <br>
+                    <b>Descripción: </b>{{ comment.description }}
+                    <br>
+                    <b>Fecha: </b>{{ comment.commentTime }}
+                </li>
+            </ul>
+        </div>
+        <div class="mt-3">
+            <button (click)="reloadData()" class="btn btn-info" style="margin-left: 10px"><i
+                    class="fas fa-sync"></i></button>
+        </div>
+        <br>
+        <div *ngIf="issue.Status == 'En Progreso' && this.authenticationService.role == 'USO'">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addCommentsModal">
+                Agregar Comentario
+            </button>
+            <br>
+            <br>
+        </div>
+
+        <div>
+            <label><b>Notas:</b></label>
+            <hr>
+            <ul class="list-group list-group-horizontal-sm">
+                <li class="list-group-item post-it" *ngFor="let note of notes | async">
+                    <b>Autor: </b> {{note.Author}}
+                    <br>
+                    <b>Descripción: </b>{{note.Description}}
+                    <br>
+                    <b>Fecha: </b>{{note.Note_Time}}
+                </li>
+            </ul>
+        </div>
+        <br>
+
+        <div *ngIf="issue.Status !== 'Resuelto'">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addNotesModal">
+                Agregar Nota
+            </button>
+            <br>
+            <br>
+        </div>
+
+        <div>
+        <h3>Opciones:</h3>
+        <hr>
+
+        <div *ngIf="issue.Status === 'Asignado' && this.authenticationService.role == 'USO'" style="margin-top: 15px">
+            <button type="button" class="btn btn-success" (click)="updateStatus('En Progreso')">
+            Iniciar Proceso
+            </button>
+            <div>
+            <div *ngIf="loadingUpdateStatus" class="alert alert-info">Porfavor espere...</div>
+            <div *ngIf="errorUpdateStatus" class="alert alert-danger">{{errorUpdateStatus}}</div>
+            </div>
+            <br>
+        </div>
+
+        <div *ngIf="issue.Status == 'En Progreso' && this.authenticationService.role == 'USO'">
+            <button type="button" class="btn btn-success" data-toggle="modal" data-target="#resolveIssueModal">
+            Resolver solicitud
+            </button>
+        </div>
+        <br>
+        </div>
+
+        <div>
+        <button (click)="list()" class="btn btn-danger">Volver a lista de casos</button>
+        </div>
+    </div>
+
+    <div class="modal" id="addNotesModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Asignar nota</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="form-group">
+                        <label for="comment">Nota:</label>
+                        <textarea class="form-control" rows="5" id="note"></textarea>
+                        </div>
+                        <div class="form-group" *ngIf="loadingAddNote || errorAddNote || validAddNote">
+                        <div *ngIf="loadingAddNote" class="alert alert-info">Porfavor espere...</div>
+                        <div *ngIf="validAddNote" class="alert alert-danger">Se requiere una nota</div>
+                        <div *ngIf="errorAddNote" class="alert alert-danger">{{errorResolveIssue}}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button (click)="addNote()" type="button" class="btn btn-success" data-dismiss="modal">Guardar Cambios</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <div class="modal" id="addCommentsModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Agregar comentario</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="form-group">
+                        <div class="form-group">
+                        <label for="comment">Comentario:</label>
+                        <textarea type="text" class="form-control" rows="5" id="comment"></textarea>
+                        </div>
+                        <div class="form-group" *ngIf="loadingAddComment || errorAddComment || validAddComment">
+                        <div *ngIf="loadingAddComment" class="alert alert-info">Porfavor espere...</div>
+                        <div *ngIf="validAddComment" class="alert alert-danger">Se requiere un comentario</div>
+                        <div *ngIf="errorAddComment" class="alert alert-danger">{{errorResolveIssue}}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button (click)="addComment()" type="button" class="btn btn-success" data-dismiss="modal">Guardar Cambios</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <div class="modal" id="resolveIssueModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Resolver solicitud</h4>
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <div class="form-group">
+                    <div class="form-group">
+                        <label for="comment">Comentario de resolución:</label>
+                        <textarea class="form-control" rows="5" id="resolComment"></textarea>
+                    </div>
+                    <div class="form-group" *ngIf="loadingResolveIssue || errorResolveIssue || validResolveIssue">
+                        <div *ngIf="loadingResolveIssue" class="alert alert-info">Porfavor espere...</div>
+                        <div *ngIf="validResolveIssue" class="alert alert-danger">Se requiere un comentario</div>
+                        <div *ngIf="errorResolveIssue" class="alert alert-danger">{{errorResolveIssue}}</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button (click)="resolveIssue()" type="button" class="btn btn-success" data-dismiss="modal">Guardar Cambios</button>
+                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>

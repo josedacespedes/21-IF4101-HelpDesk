@@ -1,0 +1,6 @@
+img{
+    box-shadow: 5px 6px 10px #888888;
+}
+.card{
+    background-image: linear-gradient(to top, #e6e9f0 0%, #eef1f5 100%);
+}

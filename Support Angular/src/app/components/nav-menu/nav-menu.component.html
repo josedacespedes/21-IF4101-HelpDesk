@@ -1,0 +1,33 @@
+<!-- <div id="wrapper"> -->
+<nav class="navbar navbar-expand-sm grey h-5 navbar-dark">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+    <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+            <a class="nav-link" routerLinkActive="active"  routerLink="/main/support"
+                *ngIf="this.authenticationService.isUserLoggedIn()"><span class="far fa-building"></span>
+                <span> HelpDesk TeleAtlántico </span></a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" routerLinkActive="active" routerLink="/CreateSupport"
+                *ngIf="this.authenticationService.isUserLoggedIn() && this.authenticationService.role == 'USU'"><span class="fas fa-user"></span>
+                Registros</a>
+            </li>
+            <li class="nav-item">
+            <a class="nav-link" routerLinkActive="active" routerLink="/Issue"
+                *ngIf="this.authenticationService.isUserLoggedIn()"><span class="fas fa-info-circle"></span> Solicitudes</a>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link pull-right" routerLinkActive="active" (click)="logout()"
+                    *ngIf="this.authenticationService.isUserLoggedIn()"><span class="fas fa-sign-out-alt"></span>Cerrar sesión</a>
+                </li>
+            </ul>
+        </form>
+    </div>
+</nav>
+<!-- </div> -->

@@ -1,0 +1,106 @@
+<app-nav-menu></app-nav-menu>
+<br>
+
+<div  *ngIf="!this.commentList && !this.commentList" class="loading">
+  <div class="loader"></div>
+</div>
+
+<div class="container" *ngIf="this.issue && this.commentList">
+  <div class="text-center">
+    <h2>Solicitud</h2>
+  </div>
+  <button class="btn btn-info" [routerLink]="['/issue/list']">Lista de solicitudes</button>
+  <hr>
+  <div class="card">
+    <div class="card-body">
+
+      <div class="row text-center">
+        <div class="col-6">
+          <div>
+            <h4>Número de solicitud:</h4>
+            <p>{{this.issue.reportNumber}}</p>
+            <h4>Descripción:</h4>
+            <p>{{this.issue.description}}</p>
+          </div>
+        </div>
+        <div class="col-6">
+          <div>
+            <h4>Fecha y Hora:</h4>
+            <p>{{this.issue.registerTime.toString().split("T")[0]
+            + "/" + this.issue.registerTime.toString().split("T")[1].split(".")[0] }}</p>
+            <h4>Estado:</h4>
+            <p>{{this.issue.status}}</p>
+          </div>
+        </div>
+      </div>
+
+
+      <div>
+        <h4>Comentarios</h4>
+        <hr>
+        <div>
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addCommentModal">
+            Agregar Comentario
+          </button>
+        </div>
+        <br>
+        <div>
+          <ul class="list-group">
+            <li class="list-group-item" *ngFor="let comment of commentList | async">
+              <b>Usuario: </b>{{ comment.author }}
+              <br>
+              <b>Descripción: </b>{{ comment.description }}
+              <br>
+              <b>Fecha: </b>{{ comment.commentTime.toString().split("T")[0]
+               + "/" + this.issue.registerTime.toString().split("T")[1].split(".")[0] }}
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="mt-3">
+        <button (click)="getComments()" class="btn btn-info" style="margin-left: 10px"><i class="fas fa-sync"></i></button>
+      </div>
+
+      <!-- Modal -->
+      <div class="modal" id="addCommentModal">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <!-- Modal Header -->
+            <div class="modal-header">
+              <h4 class="modal-title">Agregar un comentario a la solicitud</h4>
+              <button type="button" class="close" data-dismiss="modal">&times;</button>
+            </div>
+            <!-- Modal body -->
+            <div class="modal-body">
+              <label for="description">Descripción</label>
+              <div class="card">
+                <div class="card-body">
+                  <div class="form-group">
+                    <form [formGroup]="form" >
+                      <div class="form-group row">
+                        <textarea id="description" type="text" formControlName="description" class="form-control"
+                                  [ngClass]="{ 'is-invalid': submitted && this.description.errors }"></textarea>
+                        <div *ngIf="submitted && this.description.errors" class="invalid-feedback">
+                          <div *ngIf="this.description.errors.required">Se requiere la descripción</div>
+                        </div>
+                      </div>
+                      <div *ngIf="loading" class="alert alert-info form-group row">Enviando...</div>
+                      <div *ngIf="error" class="alert alert-danger form-group row">{{error}}</div>
+                    </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Modal footer -->
+            <div class="modal-footer">
+              <button (click)="addComment(); clear();" type="button" class="btn btn-primary" data-dismiss="modal">Agregar</button>
+              <button type="button" class="btn btn-danger" (click)="clear();" data-dismiss="modal">Cerrar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- Modal -->
+    </div>
+  </div>
+</div>
