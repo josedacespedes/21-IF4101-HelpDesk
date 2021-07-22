@@ -72,7 +72,7 @@ export class ListCommentComponent implements OnInit {
           text: 'Se ha agregado el comentario'
         }).finally(() => {
           this.clear();
-          this.router.navigate(['issue/list']);
+          this.unBlockForm();
           this.getComments();
         });
       }, error => {

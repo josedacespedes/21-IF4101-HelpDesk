@@ -20,8 +20,6 @@ export class SupportService {
     }
 
     createSupport(supp: Support): Observable<any> {
-        alert("support: "+supp.servicesById);
-        
         return this.http.post(`${this.baseUrl}`, supp);
     }
 

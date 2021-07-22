@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 // Code scaffolded by EF Core assumes nullable reference types (NRTs) are not used or disabled.
 // If you have enabled NRTs for your project, then un-comment the following line:
@@ -11,6 +12,7 @@ namespace API_Support_NET.Models
         public Supporter()
         {
             Issue = new HashSet<Issue>();
+            SupporterService = new HashSet<SupporterService>();
         }
 
         public int Id { get; set; }

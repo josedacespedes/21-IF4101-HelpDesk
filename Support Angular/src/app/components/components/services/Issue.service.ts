@@ -1,19 +1,26 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators'
 import { Issue } from '../models/Issue';
 import { Comment } from '../models/Comment';
 import { Note } from '../models/Note';
 import { ActivatedRoute, Router } from '@angular/router';
+import { HttpClient, HttpHeaders, HttpErrorResponse } from '@angular/common/http';
 
+const httpOptions = {
+    headers: new HttpHeaders({
+    'Content-Type': 'application/json'
+    })
+};
 
 @Injectable({
     providedIn: 'root'
 })
+
 export class IssueService {
     private baseUrl = 'http://localhost:44016/api/Issue/';
     private urlNote = 'http://localhost:44016/api/Note/';
+    
     issue: Issue;
 
     constructor(private http: HttpClient, private router: Router) { }
@@ -47,13 +54,15 @@ export class IssueService {
         return this.http.put(this.baseUrl + 'UpdateStatus', { reportNumber, val });
     }
 
-    updateClassificationIssue(reportNumber: number, val: string): Observable<any> {
-        return this.http.put(this.baseUrl + 'UpdateClassification', { reportNumber, val });
+
+    PutClassificationIssue(reportNumber: number, val: Issue): Observable<any> {
+        
+    return this.http.put(this.baseUrl + 'PutClassificationIssue/' + reportNumber,JSON.stringify(val), httpOptions);
     }
 
   // tslint:disable-next-line:variable-name
     setSupportUser(Report_Number: number, Id_Supporter: string): Observable<any> {
-      return this.http.put(this.baseUrl + 'UpdateSupportAssigned', { Report_Number, Id_Supporter });
+        return this.http.put(this.baseUrl + 'UpdateSupportAssigned', { Report_Number, Id_Supporter });
     }
 
     getIssueList(): Observable<any> {
@@ -61,7 +70,7 @@ export class IssueService {
     }
 
     getIssueListBySupportId(id: number): Observable<any> {
-      return this.http.get(`${this.baseUrl + 'findIssueBySuppId/' + id}`);
+        return this.http.get(`${this.baseUrl + 'findIssueBySuppId/' + id}`);
     }
 
     getIssueClient(id: number): Observable<any> {
